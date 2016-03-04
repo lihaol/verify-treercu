@@ -261,6 +261,9 @@ int irqs_disabled_flags(unsigned long flags)
   return irq_lock[smp_processor_id()] > 0;
 }
 
+// #undef CONFIG_NO_HZ_FULL
+static inline bool tick_nohz_full_enabled(void) { return false; }
+static inline void housekeeping_affine(struct task_struct *t) {}
 
 #include <linux/rcupdate.h>
 #ifdef TINY
