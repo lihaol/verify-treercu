@@ -224,6 +224,7 @@ typedef int wait_queue_head_t;
 struct mutex {
 	int a;
 };
+
 struct completion {
 	int a;
 };

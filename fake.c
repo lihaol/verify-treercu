@@ -33,10 +33,11 @@ void kfree(const void *p)
 }
 
 /* Model callback wakeme_after_rcu() */
-bool wait_rcu;
+int wait_rcu_gp_flag;
 void wait_rcu_gp(call_rcu_func_t crf)
 {
-  wait_rcu = 0;
+  wait_rcu_gp_flag = 1;
+  __CPROVER_assume(wait_rcu_gp_flag == 0);
 }
 
 /*
@@ -259,6 +260,12 @@ void raw_spin_unlock_irq(raw_spinlock_t *lock)
 int irqs_disabled_flags(unsigned long flags)
 {
   return irq_lock[smp_processor_id()] > 0;
+}
+
+/* Completion */
+static inline void init_completion(struct completion *x)
+{
+  x->a = 0;  
 }
 
 // #undef CONFIG_NO_HZ_FULL

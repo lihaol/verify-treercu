@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
 
   // start to rock
   // timer interrupts
-  //__CPROVER_ASYNC_0: timer_interrupt_loop();
+  __CPROVER_ASYNC_0: timer_interrupt_loop();
 
   __CPROVER_ASYNC_1: thread_update(0);
   __CPROVER_ASYNC_2: thread_process_reader(0);

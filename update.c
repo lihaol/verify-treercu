@@ -329,7 +329,7 @@ EXPORT_SYMBOL_GPL(wakeme_after_rcu);
 void __wait_rcu_gp(bool checktiny, int n, call_rcu_func_t *crcu_array,
 		   struct rcu_synchronize *rs_array)
 {
-#if 0 // Lihao
+#ifndef CBMC
 	int i;
 
 	/* Initialize and register callbacks for each flavor specified. */

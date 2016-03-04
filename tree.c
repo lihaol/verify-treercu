@@ -2376,6 +2376,7 @@ static void rcu_report_qs_rsp(struct rcu_state *rsp, unsigned long flags)
 	raw_spin_unlock_irqrestore(&rcu_get_root(rsp)->lock, flags);
 	rcu_gp_kthread_wake(rsp);
 #ifdef CBMC
+	wait_rcu_gp_flag = 0;
 	rcu_get_root(rsp)->lock = 0;
 #endif
 }
@@ -2442,6 +2443,11 @@ rcu_report_qs_rnp(unsigned long mask, struct rcu_state *rsp,
 	 * to clean up and start the next grace period if one is needed.
 	 */
 	rcu_report_qs_rsp(rsp, flags); /* releases rnp->lock. */
+
+#ifdef CBMC
+	rnp->lock = 0;
+#endif
+
 }
 
 /*
@@ -3971,6 +3977,7 @@ static void rcu_barrier_func(void *type)
  */
 static void _rcu_barrier(struct rcu_state *rsp)
 {
+#ifndef CBMC
 	int cpu;
 	struct rcu_data *rdp;
 	unsigned long s = rcu_seq_snap(&rsp->barrier_sequence);
@@ -4050,6 +4057,7 @@ static void _rcu_barrier(struct rcu_state *rsp)
 
 	/* Other rcu_barrier() invocations can now safely proceed. */
 	mutex_unlock(&rsp->barrier_mutex);
+#endif
 }
 
 /**
