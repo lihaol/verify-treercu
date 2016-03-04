@@ -113,19 +113,6 @@ enum {
 #define CONFIG_TINY_RCU
 #undef CONFIG_SMP
 #undef CONFIG_TREE_RCU
-#else
-// config Tree RCU
-#define CONFIG_SMP
-#define CONFIG_TREE_RCU
-#define CONFIG_HZ_PERIODIC
-#define CONFIG_RCU_FANOUT_EXACT 
-#undef CONFIG_RCU_BOOST
-#undef CONFIG_RCU_EXPEDITED_GP
-
-#define NR_CPUS 4 
-#define CONFIG_RCU_FANOUT_LEAF 16
-
-#define HZ 1000
 #endif
 
 /* "Cheater" definitions based on restricted Kconfig choices. */

@@ -1,10 +1,22 @@
+/* config Tree RCU */
+#define CONFIG_SMP
+#define CONFIG_TREE_RCU
+#define CONFIG_HZ_PERIODIC
+#define CONFIG_RCU_FANOUT_EXACT 
+#undef CONFIG_RCU_BOOST
+#undef CONFIG_RCU_EXPEDITED_GP
+
+#define NR_CPUS 4 
+#define CONFIG_RCU_FANOUT_LEAF 16
+
+#define HZ 1000
+
 #include <linux/list.h>
 
 #define __read_mostly
 #define __must_check
 #define __force
 #define __noreturn
-
 
 #define __MUTEX_INITIALIZER(x) { .a = 0 }
 #define READ_ONCE(x) x
