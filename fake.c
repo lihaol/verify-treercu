@@ -146,6 +146,7 @@ inline void mutex_lock(struct mutex *m) { m->a = 1; }
 inline void mutex_unlock(struct mutex *m) { m->a = 0; } 
 
 inline void raw_spin_lock_init(raw_spinlock_t *lock) { *lock = 0; }
+inline void spin_lock_init(spinlock_t *lock) { *lock = 0; }
 
 void raw_spin_lock(raw_spinlock_t *lock) 
 {
@@ -269,6 +270,38 @@ static inline void init_completion(struct completion *x)
 {
   x->a = 0;  
 }
+
+void complete(struct completion *x)
+{
+  x->a = 1;
+}
+
+/*
+struct wait_queue_head_t {
+  spinlock_t lock;
+  struct list_head task_list;
+};
+*/
+
+void init_waitqueue_head(wait_queue_head_t *q)
+{
+  //spin_lock_init(&q->lock);
+  //INIT_LIST_HEAD(&q->task_list);
+}
+
+bool need_resched(void);
+
+#define schedule_timeout_uninterruptible(delay)
+#define signal_pending(current) 0
+#define wake_up(x)
+
+#define wait_event_interruptible(wq, condition) \
+({                                              \
+  __CPROVER_assume(condition);                  \
+  1;                                            \
+})
+
+#define wait_event_interruptible_timeout(wq, condition, timeout) wait_event_interruptible(wq, condition)
 
 // #undef CONFIG_NO_HZ_FULL
 static inline bool tick_nohz_full_enabled(void) { return false; }
