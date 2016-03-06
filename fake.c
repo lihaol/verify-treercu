@@ -149,33 +149,33 @@ inline void raw_spin_lock_init(raw_spinlock_t *lock) { *lock = 0; }
 
 void raw_spin_lock(raw_spinlock_t *lock) 
 {
-#ifdef CBMC
-  __CPROVER_atomic_begin(); 
-#else
+#ifndef CBMC
   preempt_disable();
 #endif
   raw_local_irq_save(flags);
 #ifdef CBMC
+  __CPROVER_atomic_begin(); 
   __CPROVER_assume(*lock == 0);
-#endif
   *lock = 1;
-  raw_local_irq_restore(flags);
-#ifdef CBMC
   __CPROVER_atomic_end();
+#else
+  *lock = 1;
 #endif
+  raw_local_irq_restore(flags);
 }
 
 void raw_spin_unlock(raw_spinlock_t *lock) 
 {
+  raw_local_irq_save(flags);
 #ifdef CBMC
   __CPROVER_atomic_begin(); 
-#endif
-  raw_local_irq_save(flags);
   *lock = 0;
-  raw_local_irq_restore(flags);
-#ifdef CBMC
   __CPROVER_atomic_end();
 #else
+  *lock = 0;
+#endif
+  raw_local_irq_restore(flags);
+#ifndef CBMC
   preempt_enable();
 #endif
 }
@@ -218,12 +218,13 @@ void raw_spin_unlock_irqrestore(raw_spinlock_t *lock, unsigned long flags)
 {
 #ifdef CBMC
   __CPROVER_atomic_begin();
-#endif
   *lock = 0; 
-  local_irq_restore(flags);
-#ifdef CBMC
   __CPROVER_atomic_end();
 #else
+  *lock = 0;
+#endif
+  local_irq_restore(flags);
+#ifndef CBMC
   preempt_enable();
 #endif
 }
@@ -247,12 +248,13 @@ void raw_spin_unlock_irq(raw_spinlock_t *lock)
 {
 #ifdef CBMC
   __CPROVER_atomic_begin();
-#endif
   *lock = 0; 
-  local_irq_enable();
-#ifdef CBMC
   __CPROVER_atomic_end();
 #else
+  *lock = 0; 
+#endif
+  local_irq_enable();
+#ifndef CBMC
   preempt_enable();
 #endif
 }
