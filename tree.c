@@ -4551,11 +4551,12 @@ void __init rcu_init(void)
 #endif // #ifdef PER_CPU_DATA_ARRAY
 
 	rcu_init_geometry();
-	rcu_init_one(&rcu_bh_state, &rcu_bh_data);
+        // Lihao
+	//rcu_init_one(&rcu_bh_state, &rcu_bh_data);
 	rcu_init_one(&rcu_sched_state, &rcu_sched_data);
 	if (dump_tree)
 		rcu_dump_rcu_node_tree(&rcu_sched_state);
-	__rcu_init_preempt();
+	//__rcu_init_preempt();
 	open_softirq(RCU_SOFTIRQ, rcu_process_callbacks);
 
 #ifndef CBMC
