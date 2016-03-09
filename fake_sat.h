@@ -150,7 +150,6 @@ void (*cpu_relax_func)(void) = cpu_relax_poll;
 			abort(); \
 	} while (0)
 
-//#define BUG_ON(c) WARN_ON(c) // Lihao
 
 #define offsetof(TYPE, MEMBER) ((size_t) &((TYPE *)0)->MEMBER)
 

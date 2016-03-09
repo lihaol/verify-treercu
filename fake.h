@@ -156,7 +156,11 @@ int noassert;
 #define WARN_ONCE(condition, format...) assert(!(condition) || CK_NOASSERT())
 #define WARN_ON_ONCE(condition)	assert(!(condition) || CK_NOASSERT())
 #endif
+
+#define BUG_ON(c) WARN_ON(c)
 */
+
+#define SET_NOASSERT() do { noassert = 1; smp_mb(); } while (0)
 
 #ifdef TINY
 #define smp_processor_id() 0
