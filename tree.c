@@ -290,14 +290,14 @@ void rcu_sched_qs(void)
 		rcu_sched_data[my_cpu_id].passed_quiesce = 1;
 	}
 
-#else
+#else // !#ifdef PER_CPU_DATA_ARRAY
 	if (!__this_cpu_read(rcu_sched_data.passed_quiesce)) {
 		trace_rcu_grace_period(TPS("rcu_sched"),
 				       __this_cpu_read(rcu_sched_data.gpnum),
 				       TPS("cpuqs"));
 		__this_cpu_write(rcu_sched_data.passed_quiesce, 1);
 	}
-#endif
+#endif // #ifdef PER_CPU_DATA_ARRAY
 }
 
 void rcu_bh_qs(void)
@@ -311,21 +311,21 @@ void rcu_bh_qs(void)
 		rcu_bh_data[my_cpu_id].passed_quiesce = 1;
 	}
 
-#else
+#else // !#ifdef PER_CPU_DATA_ARRAY
 	if (!__this_cpu_read(rcu_bh_data.passed_quiesce)) {
 		trace_rcu_grace_period(TPS("rcu_bh"),
 				       __this_cpu_read(rcu_bh_data.gpnum),
 				       TPS("cpuqs"));
 		__this_cpu_write(rcu_bh_data.passed_quiesce, 1);
 	}
-#endif
+#endif // #ifdef PER_CPU_DATA_ARRAY
 }
 
 static DEFINE_PER_CPU(int, rcu_sched_qs_mask);
 
 #ifdef PER_CPU_DATA_ARRAY
 static DEFINE_PER_CPU(struct rcu_dynticks, rcu_dynticks);
-#else
+#else // !#ifdef PER_CPU_DATA_ARRAY
 static DEFINE_PER_CPU(struct rcu_dynticks, rcu_dynticks) = {
 	.dynticks_nesting = DYNTICK_TASK_EXIT_IDLE,
 	.dynticks = ATOMIC_INIT(1),
@@ -334,7 +334,7 @@ static DEFINE_PER_CPU(struct rcu_dynticks, rcu_dynticks) = {
 	.dynticks_idle = ATOMIC_INIT(1),
 #endif /* #ifdef CONFIG_NO_HZ_FULL_SYSIDLE */
 };
-#endif
+#endif // #ifdef PER_CPU_DATA_ARRAY
 
 DEFINE_PER_CPU_SHARED_ALIGNED(unsigned long, rcu_qs_ctr);
 EXPORT_PER_CPU_SYMBOL_GPL(rcu_qs_ctr);
@@ -4057,7 +4057,7 @@ static void _rcu_barrier(struct rcu_state *rsp)
 
 	/* Other rcu_barrier() invocations can now safely proceed. */
 	mutex_unlock(&rsp->barrier_mutex);
-#endif
+#endif // #ifndef CBMC
 }
 
 /**
@@ -4514,6 +4514,7 @@ static void __init rcu_init_geometry(void)
  */
 static void __init rcu_dump_rcu_node_tree(struct rcu_state *rsp)
 {
+#ifndef CBMC
 	int level = 0;
 	struct rcu_node *rnp;
 
@@ -4528,6 +4529,7 @@ static void __init rcu_dump_rcu_node_tree(struct rcu_state *rsp)
 		pr_cont("%d:%d ^%d  ", rnp->grplo, rnp->grphi, rnp->grpnum);
 	}
 	pr_cont("\n");
+#endif // #ifndef CBMC
 }
 
 void __init rcu_init(void)
@@ -4546,7 +4548,7 @@ void __init rcu_init(void)
         	rcu_dynticks[i].dynticks_idle = ATOMIC_INIT(1);
         #endif /* #ifdef CONFIG_NO_HZ_FULL_SYSIDLE */
         }
-#endif
+#endif // #ifdef PER_CPU_DATA_ARRAY
 
 	rcu_init_geometry();
 	rcu_init_one(&rcu_bh_state, &rcu_bh_data);
