@@ -34,10 +34,16 @@ void kfree(const void *p)
 
 /* Model callback wakeme_after_rcu() */
 int wait_rcu_gp_flag;
+
 void wait_rcu_gp(call_rcu_func_t crf)
 {
   wait_rcu_gp_flag = 1;
   __CPROVER_assume(wait_rcu_gp_flag == 0);
+}
+
+void pass_rcu_gp(raw_spinlock_t *lock) {
+  wait_rcu_gp_flag = 0;
+  *lock = 0;
 }
 
 /*
