@@ -21,16 +21,16 @@ __CPROVER_atomic_end();
 
   rcu_check_callbacks(cpu);
 }
-*/
 
 void timer_interrupt_loop() {
   for (int i=0; i<NUM_INTS; i++) {
-    //int c = nondet_int();
-    //__CPROVER_assume(c >= 0 && c < NUM_THREADS);
-    //timer_interrupt(c);
-    rcu_check_callbacks(NULL);
+    int c = nondet_int();
+    __CPROVER_assume(c >= 0 && c < NUM_THREADS);
+    timer_interrupt(c);
+    //rcu_check_callbacks(NULL);
   }
 }
+*/
 
 
 /*
@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
 
   // start to rock
   // timer interrupts
-  __CPROVER_ASYNC_0: timer_interrupt_loop();
+  //__CPROVER_ASYNC_0: timer_interrupt_loop();
 
   __CPROVER_ASYNC_1: thread_update(0);
   __CPROVER_ASYNC_2: thread_process_reader(0);
