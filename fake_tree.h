@@ -6,7 +6,7 @@
 #undef CONFIG_RCU_BOOST
 #undef CONFIG_RCU_EXPEDITED_GP
 
-#define NR_CPUS 4 
+#define NR_CPUS 2 
 #define CONFIG_RCU_FANOUT_LEAF 16
 
 #define HZ 1000
