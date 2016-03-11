@@ -4541,7 +4541,7 @@ void __init rcu_init(void)
         int i;
         for (i=0; i<NR_CPUS; i++) {
 		rcu_dynticks[i].dynticks_nesting = DYNTICK_TASK_EXIT_IDLE;
-		//rcu_dynticks[i].dynticks = ATOMIC_INIT(1); // Lihao
+		rcu_dynticks[i].dynticks.counter = 1; 
         #ifdef CONFIG_NO_HZ_FULL_SYSIDLE
 		rcu_dynticks[i].dynticks_idle_nesting = DYNTICK_TASK_NEST_VALUE;
         	rcu_dynticks[i].dynticks_idle = ATOMIC_INIT(1);
