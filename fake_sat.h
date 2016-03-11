@@ -134,6 +134,7 @@ void (*cpu_relax_func)(void) = cpu_relax_poll;
 
 #define cpu_relax() cpu_relax_func()
 
+/*
 #define WARN_ON_ONCE(c) ({ int __c = (c);  if (__c) abort(); c; })
 
 #define WARN_ONCE(c, format...) WARN_ON_ONCE(c)
@@ -149,7 +150,7 @@ void (*cpu_relax_func)(void) = cpu_relax_poll;
 		if (c) \
 			abort(); \
 	} while (0)
-
+*/
 
 #define offsetof(TYPE, MEMBER) ((size_t) &((TYPE *)0)->MEMBER)
 

@@ -19,7 +19,7 @@
 #define __noreturn
 
 #define __MUTEX_INITIALIZER(x) { .a = 0 }
-#define READ_ONCE(x) x
+#define READ_ONCE(x) (x)
 #define WRITE_ONCE(x, v) x = v 
 #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]) + __must_be_array(arr))
 
@@ -105,6 +105,20 @@ static inline bool __must_check IS_ERR(__force const void *ptr)
 #define BUILD_BUG_ON(condition) ((void)sizeof(char[1 - 2*!!(condition)]))
 #define BUILD_BUG_ON_ZERO(e) (sizeof(struct { int:-!!(e); }))
 #define __must_be_array(a)      BUILD_BUG_ON_ZERO(__same_type((a), &(a)[0]))
+
+
+#ifdef CBMC_ORDERING_BUG
+#define SET_NOASSERT() do { noassert = 1; } while (0)
+#define CK_NOASSERT() noassert
+#else
+#define SET_NOASSERT() do { noassert = 1; smp_mb(); } while (0)
+#define CK_NOASSERT() ({ smp_mb(); noassert; })
+#endif
+
+#define WARN_ON(condition) assert(!(condition))
+#define WARN_ON_ONCE(condition)	({ assert(!(condition)); condition; }) 
+#define WARN_ONCE(condition, format...) WARN_ON_ONCE(condition) 
+#define BUG_ON(c) WARN_ON(c)
 
 
 /* disable trace */
