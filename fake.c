@@ -78,8 +78,10 @@ int rcu_jiffies_till_stall_check(void);
 void fake_acquire_cpu(void)
 {
 #ifdef CBMC
-	if (__sync_fetch_and_add(&cpu_lock[smp_processor_id()], 1))
-		SET_NOASSERT();
+	__CPROVER_assume(cpu_lock[smp_processor_id()] == 0);
+	__sync_fetch_and_add(&cpu_lock[smp_processor_id()], 1);
+	//if (__sync_fetch_and_add(&cpu_lock[smp_processor_id()], 1))
+	//	SET_NOASSERT();
 #else
 	if (pthread_mutex_lock(&cpu_lock))
 		exit(-1);
@@ -119,8 +121,10 @@ void local_irq_disable()
 	unsigned long my_cpu_id = smp_processor_id();
 	if (!local_irq_depth[my_cpu_id]++) {
 #ifdef CBMC
-		if (__sync_fetch_and_add(&irq_lock[my_cpu_id], 1))
-			SET_NOASSERT();
+		__CPROVER_assume(irq_lock[my_cpu_id] == 0);	
+		__sync_fetch_and_add(&irq_lock[my_cpu_id], 1);
+		//if (__sync_fetch_and_add(&irq_lock[my_cpu_id], 1))
+		//	SET_NOASSERT();
 #else
 		if (pthread_mutex_lock(&irq_lock))
 			exit(-1);
