@@ -128,7 +128,7 @@ int main(int argc, char *argv[])
   //rcu_register_oom_notifier(); // !defined(CONFIG_RCU_FAST_NO_HZ)
   //check_cpu_stall_init(); //!#ifdef CONFIG_RCU_STALL_COMMON 
 #endif
-  rcu_verify_early_boot_tests();
+  //rcu_verify_early_boot_tests();
 
   // start to rock
   // timer interrupts
