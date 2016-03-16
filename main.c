@@ -94,26 +94,26 @@ void *thread_process_reader(void *arg)
 /* Actually run the test. */
 int main(int argc, char *argv[])
 {
-  pthread_t tu;
-  pthread_t tpr;
-     
-  // Do not consider dyntick-idle mode
-  // Use context switch instead
-  //rcu_idle_enter();
-  rcu_note_context_switch(); 
-
-  if (pthread_create(&tu, NULL, thread_update, NULL))
-  	abort();
-  if (pthread_create(&tpr, NULL, thread_process_reader, NULL))
-  	abort();
-  if (pthread_join(tu, NULL))
-  	abort();
-  if (pthread_join(tpr, NULL))
-  	abort();
-  assert(__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1 ||
-         CK_NOASSERT());
-  
-  return 0;
+	pthread_t tu;
+	pthread_t tpr;
+	   
+	// Do not consider dyntick-idle mode
+	// Use context switch instead
+	//rcu_idle_enter();
+	rcu_note_context_switch(); 
+	
+	if (pthread_create(&tu, NULL, thread_update, NULL))
+		abort();
+	if (pthread_create(&tpr, NULL, thread_process_reader, NULL))
+		abort();
+	if (pthread_join(tu, NULL))
+		abort();
+	if (pthread_join(tpr, NULL))
+		abort();
+	assert(__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1 ||
+	       CK_NOASSERT());
+	
+	return 0;
 }
 
 #else
@@ -121,30 +121,30 @@ int main(int argc, char *argv[])
 /* Formally verify the test. */
 int main(int argc, char *argv[])
 {
-  // initialisation
-  rcu_init();
-  rcu_spawn_gp_kthread();
+	// initialisation
+	rcu_init();
+	rcu_spawn_gp_kthread();
 #ifndef CBMC
-  //rcu_register_oom_notifier(); // !defined(CONFIG_RCU_FAST_NO_HZ)
-  //check_cpu_stall_init(); //!#ifdef CONFIG_RCU_STALL_COMMON 
+	//rcu_register_oom_notifier(); // !defined(CONFIG_RCU_FAST_NO_HZ)
+	//check_cpu_stall_init(); //!#ifdef CONFIG_RCU_STALL_COMMON 
 #endif
-  //rcu_verify_early_boot_tests();
-
-  // start to rock
-  // timer interrupts
-  //__CPROVER_ASYNC_0: timer_interrupt_loop();
-
-  __CPROVER_ASYNC_1: thread_update(0);
-  __CPROVER_ASYNC_2: thread_process_reader(0);
-
-  __CPROVER_assume(__unbuffered_cnt == NUM_THREADS);
-  assert(__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1);
-
-  // grace period has finished
-  //assert(ACCESS_ONCE(rcu_sched_state->completed) == 
-  //       ACCESS_ONCE(rcu_sched_state->gpnum));
-
-  return 0;
+	//rcu_verify_early_boot_tests();
+	
+	// start to rock
+	// timer interrupts
+	//__CPROVER_ASYNC_0: timer_interrupt_loop();
+	
+	__CPROVER_ASYNC_1: thread_update(0);
+	__CPROVER_ASYNC_2: thread_process_reader(0);
+	
+	__CPROVER_assume(__unbuffered_cnt == NUM_THREADS);
+	assert(__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1);
+	
+	// grace period has finished
+	//assert(ACCESS_ONCE(rcu_sched_state->completed) == 
+	//       ACCESS_ONCE(rcu_sched_state->gpnum));
+	
+	return 0;
 }
 
 #endif
