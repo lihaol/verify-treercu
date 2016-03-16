@@ -4259,7 +4259,6 @@ static int rcu_pm_notify(struct notifier_block *self,
  */
 static int __init rcu_spawn_gp_kthread(void)
 {
-#ifndef CBMC
 	unsigned long flags;
 	int kthread_prio_in = kthread_prio;
 	struct rcu_node *rnp;
@@ -4294,7 +4293,6 @@ static int __init rcu_spawn_gp_kthread(void)
 	}
 	rcu_spawn_nocb_kthreads();
 	rcu_spawn_boost_kthreads();
-#endif
 	return 0;
 }
 early_initcall(rcu_spawn_gp_kthread);
