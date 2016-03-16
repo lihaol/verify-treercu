@@ -86,12 +86,12 @@ void fake_acquire_cpu(void)
 	if (pthread_mutex_lock(&cpu_lock))
 		exit(-1);
 #endif
-	rcu_idle_exit();
+	//rcu_idle_exit();
 }
 
 void fake_release_cpu(void)
 {
-	rcu_idle_enter();
+	//rcu_idle_enter();
 #ifdef CBMC
 	(void)__sync_fetch_and_sub(&cpu_lock[smp_processor_id()], 1);
 #else
@@ -102,6 +102,7 @@ void fake_release_cpu(void)
 		need_softirq = 0;
 		rcu_process_callbacks(NULL); /* cbmc recurses. */
 	}
+	rcu_note_context_switch();
 }
 
 // Lihao

@@ -96,8 +96,12 @@ int main(int argc, char *argv[])
 {
   pthread_t tu;
   pthread_t tpr;
-  
-  rcu_idle_enter();
+     
+  // Do not consider dyntick-idle mode
+  // Use context switch instead
+  //rcu_idle_enter();
+  rcu_note_context_switch(); 
+
   if (pthread_create(&tu, NULL, thread_update, NULL))
   	abort();
   if (pthread_create(&tpr, NULL, thread_process_reader, NULL))
