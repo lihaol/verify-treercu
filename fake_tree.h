@@ -44,7 +44,7 @@ void get_online_cpus(void) {}
 /* CBMC thread id used to refer per-cpu structures modelled by shared arrays
  * CONFIG_PREEMPT=n
  * */
-extern __CPROVER_thread_local unsigned long __CPROVER_thread_id;
+extern __thread unsigned long __CPROVER_thread_id;
 #define my_smp_processor_id __CPROVER_thread_id
 #define raw_smp_processor_id() my_smp_processor_id
 #define smp_processor_id() my_smp_processor_id
