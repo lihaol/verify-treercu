@@ -176,9 +176,11 @@ int __thread need_softirq;
 //  rcu_process_callbacks(); \ 
 //} while(0) 
 
+#ifdef TINY 
 static inline void rcu_early_boot_tests(void)
 {
 }
+#endif
 
 #define EXPORT_SYMBOL_GPL(x)
 #define EXPORT_SYMBOL(x)

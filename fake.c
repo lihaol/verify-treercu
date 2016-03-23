@@ -27,6 +27,8 @@
 
 int nr_cpu_ids = NR_CPUS;
 
+void rcu_note_context_switch(void);
+
 /* Just say "no" to memory allocation. */
 void kfree(const void *p)
 {
