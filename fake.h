@@ -215,7 +215,12 @@ struct softirq_action {
 
 void fake_acquire_cpu(void);
 void fake_release_cpu(void);
+#ifdef TINY
 void cond_resched(void);
+#else
+int cond_resched(void);
+#endif
+
 #define might_sleep() do { } while (0)
 void local_irq_save(unsigned long flags);
 void local_irq_restore(unsigned long flags);
