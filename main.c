@@ -96,7 +96,14 @@ int main(int argc, char *argv[])
 {
 	pthread_t tu;
 	pthread_t tpr;
-	   
+
+	// initialisation
+	rcu_init();
+	rcu_spawn_gp_kthread();
+	//rcu_register_oom_notifier(); // !defined(CONFIG_RCU_FAST_NO_HZ)
+	//check_cpu_stall_init(); //!#ifdef CONFIG_RCU_STALL_COMMON 
+	//rcu_verify_early_boot_tests();
+   
 	// Do not consider dyntick-idle mode
 	// Use context switch instead
 	//rcu_idle_enter();
@@ -124,10 +131,8 @@ int main(int argc, char *argv[])
 	// initialisation
 	rcu_init();
 	rcu_spawn_gp_kthread();
-#ifndef CBMC
 	//rcu_register_oom_notifier(); // !defined(CONFIG_RCU_FAST_NO_HZ)
 	//check_cpu_stall_init(); //!#ifdef CONFIG_RCU_STALL_COMMON 
-#endif
 	//rcu_verify_early_boot_tests();
 	
 	// start to rock
