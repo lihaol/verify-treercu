@@ -273,7 +273,7 @@ void raw_spin_unlock_irq(raw_spinlock_t *lock)
 
 int irqs_disabled_flags(unsigned long flags)
 {
-  return irq_lock[smp_processor_id()] > 0;
+  return local_irq_depth[smp_processor_id()];
 }
 
 /* Completion */
