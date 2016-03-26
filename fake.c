@@ -74,8 +74,6 @@ pthread_mutex_t nmi_lock = PTHREAD_MUTEX_INITIALIZER;
 void rcu_idle_enter(void);
 void rcu_idle_exit(void);
 static void rcu_process_callbacks(struct softirq_action *unused);
-static int rcu_gp_in_progress(struct rcu_state *rsp);
-int rcu_jiffies_till_stall_check(void);
 
 void fake_acquire_cpu(void)
 {
