@@ -91,7 +91,7 @@ static const char *tp_##sname##_varname __used __tracepoint_string = sname##_var
 # define RCU_STATE_NAME(sname) __stringify(sname)
 #endif
 
-#ifdef CBMC
+#ifdef PER_CPU_DATA_ARRAY
 struct rcu_state rcu_sched_state = { 
 	.level = { &rcu_sched_state.node[0] }, 
 	.rda = rcu_sched_data, 
@@ -125,7 +125,7 @@ struct rcu_state rcu_bh_state = {
 	.name = RCU_STATE_NAME(rcu_bh), 
 	.abbr = 'b', 
 };
-#else // #ifdef CBMC
+#else // #ifdef PER_CPU_DATA_ARRAY
 #define RCU_STATE_INITIALIZER(sname, sabbr, cr) \
 DEFINE_RCU_TPS(sname) \
 static DEFINE_PER_CPU_SHARED_ALIGNED(struct rcu_data, sname##_data); \
@@ -146,7 +146,7 @@ struct rcu_state sname##_state = { \
 
 RCU_STATE_INITIALIZER(rcu_sched, 's', call_rcu_sched);
 RCU_STATE_INITIALIZER(rcu_bh, 'b', call_rcu_bh);
-#endif // #ifdef CBMC
+#endif // #ifdef PER_CPU_DATA_ARRAY
 
 static struct rcu_state *const rcu_state_p;
 static struct rcu_data __percpu *const rcu_data_p;
