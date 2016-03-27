@@ -80,6 +80,7 @@ enum
         NR_SOFTIRQS
 };
 
+int rcu_cpu_stall_suppress = 1; /* 1 = suppress stall warnings. */ 
 
 #define __read_mostly
 #define __must_check
