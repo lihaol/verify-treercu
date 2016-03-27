@@ -58,6 +58,28 @@
 #define CPU_DYING_FROZEN	(CPU_DYING | CPU_TASKS_FROZEN)
 #define CPU_STARTING_FROZEN	(CPU_STARTING | CPU_TASKS_FROZEN)
 
+#define NOTIFY_DONE             0x0000          /* Don't care */
+#define NOTIFY_OK               0x0001          /* Suits me */
+#define NOTIFY_STOP_MASK        0x8000          /* Don't call further */
+#define NOTIFY_BAD              (NOTIFY_STOP_MASK|0x0002) /* Bad/Veto action */
+
+enum
+{
+        HI_SOFTIRQ=0,
+        TIMER_SOFTIRQ,
+        NET_TX_SOFTIRQ,
+        NET_RX_SOFTIRQ,
+        BLOCK_SOFTIRQ,
+        BLOCK_IOPOLL_SOFTIRQ,
+        TASKLET_SOFTIRQ,
+        SCHED_SOFTIRQ,
+        HRTIMER_SOFTIRQ, /* Unused, but kept as tools rely on the
+                            numbering. Sigh! */
+        RCU_SOFTIRQ,    /* Preferable RCU should always be the last softirq */
+
+        NR_SOFTIRQS
+};
+
 
 #define __read_mostly
 #define __must_check
