@@ -3571,7 +3571,7 @@ static bool rcu_seq_done(unsigned long *sp, unsigned long s)
 	return ULONG_CMP_GE(READ_ONCE(*sp), s);
 }
 
-#ifdef CONFIG_RCU_EXPEDITED_GP
+#ifdef VERIFY_RCU_EXPEDITED_GP
 /* Wrapper functions for expedited grace periods.  */
 static void rcu_exp_gp_seq_start(struct rcu_state *rsp)
 {
@@ -3795,6 +3795,8 @@ void synchronize_sched_expedited(void)
 	put_online_cpus();
 }
 EXPORT_SYMBOL_GPL(synchronize_sched_expedited);
+#else
+void synchronize_sched_expedited(void) {}
 #endif
 
 /*
