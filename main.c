@@ -44,6 +44,13 @@ int __unbuffered_cnt;
 int __unbuffered_tpr_x;
 int __unbuffered_tpr_y;
 
+
+#ifdef RUN
+struct thread_info {
+	unsigned __CPROVER_thread_id;
+};
+#endif
+
 void rcu_reader(void)
 {
 	rcu_read_lock();
@@ -59,6 +66,11 @@ void rcu_reader(void)
 
 void *thread_update(void *arg)
 {
+#ifdef RUN
+	struct thread_info *tinfo = arg;
+	__CPROVER_thread_id = tinfo->__CPROVER_thread_id;
+#endif
+
 	fake_acquire_cpu();
 
 	x = 1;
@@ -77,6 +89,11 @@ void *thread_update(void *arg)
 
 void *thread_process_reader(void *arg)
 {
+#ifdef RUN
+	struct thread_info *tinfo = arg;
+	__CPROVER_thread_id = tinfo->__CPROVER_thread_id;
+#endif
+
 	fake_acquire_cpu();
 
 	rcu_reader();
@@ -96,6 +113,8 @@ int main(int argc, char *argv[])
 {
 	pthread_t tu;
 	pthread_t tpr;
+	struct thread_info tinfo_tu = {(0)};
+	struct thread_info tinfo_tpr = {(1)};
 
 	// initialisation
 	rcu_init();
@@ -109,9 +128,9 @@ int main(int argc, char *argv[])
 	//rcu_idle_enter();
 	rcu_note_context_switch(); 
 	
-	if (pthread_create(&tu, NULL, thread_update, NULL))
+	if (pthread_create(&tu, NULL, thread_update, &tinfo_tu))
 		abort();
-	if (pthread_create(&tpr, NULL, thread_process_reader, NULL))
+	if (pthread_create(&tpr, NULL, thread_process_reader, &tinfo_tpr))
 		abort();
 	if (pthread_join(tu, NULL))
 		abort();
