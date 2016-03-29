@@ -117,8 +117,8 @@ int main(int argc, char *argv[])
 		abort();
 	if (pthread_join(tpr, NULL))
 		abort();
-	assert(__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1 ||
-	       CK_NOASSERT());
+	assert(__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1);
+	       //|| CK_NOASSERT());
 	
 	return 0;
 }
