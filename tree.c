@@ -2790,7 +2790,6 @@ static void rcu_cleanup_dying_idle_cpu(int cpu, struct rcu_state *rsp)
 	raw_spin_unlock_irqrestore(&rnp->lock, flags);
 }
 
-#ifdef CONFIG_RCU_ORPHAN_CB
 /*
  * The CPU has been completely removed, and some other CPU is reporting
  * this fact from process context.  Do the remainder of the cleanup,
@@ -2820,7 +2819,6 @@ static void rcu_cleanup_dead_cpu(int cpu, struct rcu_state *rsp)
 		  "rcu_cleanup_dead_cpu: Callbacks on offline CPU %d: qlen=%lu, nxtlist=%p\n",
 		  cpu, rdp->qlen, rdp->nxtlist);
 }
-#endif
 
 /*
  * Invoke any RCU callbacks that have made it to the end of their grace
@@ -4556,7 +4554,7 @@ void __init rcu_init(void)
 	//__rcu_init_preempt();
 	open_softirq(RCU_SOFTIRQ, rcu_process_callbacks);
 
-#ifndef CBMC
+#if !(defined(CBMC) || defined(RUN))  
 	/*
 	 * We don't need protection against CPU-hotplug here because
 	 * this is called early in boot, before either interrupts
@@ -4566,7 +4564,7 @@ void __init rcu_init(void)
 	pm_notifier(rcu_pm_notify, 0);
 	for_each_online_cpu(cpu)
 		rcu_cpu_notify(NULL, CPU_UP_PREPARE, (void *)(long)cpu);
-#endif // #ifndef CBMC
+#endif 
 }
 
 #include "tree_plugin.h"
