@@ -109,6 +109,7 @@ void get_online_cpus(void) {}
 #define per_cpu_ptr(p, cpu) (&(p)[cpu])
 #define per_cpu(x, cpu) ((x)[cpu])
 
+void dump_cpu_task(int cpu) {}
 
 /* CBMC thread id used to refer per-cpu structures modelled by shared arrays
  * CONFIG_PREEMPT=n

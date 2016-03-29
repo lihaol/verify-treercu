@@ -1289,6 +1289,7 @@ static int rcu_implicit_dynticks_qs(struct rcu_data *rdp,
 	return 0;
 }
 
+#ifdef VERIFY_RCU_CPU_STALL
 static void record_gp_stall_check_time(struct rcu_state *rsp)
 {
 	unsigned long j = jiffies;
@@ -1302,7 +1303,6 @@ static void record_gp_stall_check_time(struct rcu_state *rsp)
 	rsp->n_force_qs_gpstart = READ_ONCE(rsp->n_force_qs);
 }
 
-#ifndef CBMC
 /*
  * Complain about starvation of grace-period kthread.
  */
@@ -1959,7 +1959,9 @@ static int rcu_gp_init(struct rcu_state *rsp)
 	}
 
 	/* Advance to a new grace period and initialize state. */
+#ifdef VERIFY_RCU_CPU_STALL
 	record_gp_stall_check_time(rsp);
+#endif
 	/* Record GP times before starting GP, hence smp_store_release(). */
 	smp_store_release(&rsp->gpnum, rsp->gpnum + 1);
 	trace_rcu_grace_period(rsp->name, rsp->gpnum, TPS("start"));
@@ -3809,7 +3811,7 @@ static int __rcu_pending(struct rcu_state *rsp, struct rcu_data *rdp)
 	rdp->n_rcu_pending++;
 
 	/* Check for CPU stalls, if enabled. */
-#ifndef CBMC
+#ifdef VERIFY_RCU_CPU_STALL
 	check_cpu_stall(rsp, rdp);
 #endif
 
