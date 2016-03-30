@@ -113,6 +113,7 @@ void get_online_cpus(void) {}
 
 void dump_cpu_task(int cpu) {}
 static inline unsigned int kstat_softirqs_cpu(unsigned int irq, int cpu) { return 0; }
+typedef void (*smp_call_func_t)(void *info);
 int smp_call_function_single(int cpu, smp_call_func_t func, void *info, int wait) { return 0; }
 
 /* CBMC thread id used to refer per-cpu structures modelled by shared arrays
