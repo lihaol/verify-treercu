@@ -315,21 +315,21 @@ EXPORT_SYMBOL_GPL(rcu_read_lock_bh_held);
  *
  * Awaken the corresponding task now that a grace period has elapsed.
  */
-#ifndef CBMC
 void wakeme_after_rcu(struct rcu_head *head)
 {
+#if !(defined(CBMC) || defined(RUN))  
 	struct rcu_synchronize *rcu;
 
 	rcu = container_of(head, struct rcu_synchronize, head);
 	complete(&rcu->completion);
+#endif
 }
 EXPORT_SYMBOL_GPL(wakeme_after_rcu);
-#endif
 
 void __wait_rcu_gp(bool checktiny, int n, call_rcu_func_t *crcu_array,
 		   struct rcu_synchronize *rs_array)
 {
-#ifndef CBMC
+#if !(defined(CBMC) || defined(RUN))  
 	int i;
 
 	/* Initialize and register callbacks for each flavor specified. */

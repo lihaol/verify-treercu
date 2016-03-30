@@ -37,10 +37,15 @@ void kfree(const void *p)
 /* Model callback wakeme_after_rcu() */
 int wait_rcu_gp_flag;
 
+// Lihao: works for single grace period
 void wait_rcu_gp(call_rcu_func_t crf)
 {
   wait_rcu_gp_flag = 1;
+#ifdef CBMC
   __CPROVER_assume(wait_rcu_gp_flag == 0);
+#else
+  while(READ_ONCE(wait_rcu_gp_flag)) {}
+#endif
 }
 
 void pass_rcu_gp(raw_spinlock_t *lock) {
@@ -306,11 +311,19 @@ bool need_resched(void);
 #define signal_pending(current) 0
 #define wake_up(x)
 
+#ifdef CBMC
 #define wait_event_interruptible(wq, condition) \
 ({                                              \
   __CPROVER_assume(condition);                  \
   1;                                            \
 })
+#else
+#define wait_event_interruptible(wq, condition) \
+({                                              \
+  while(!condition) {}                  	\
+  1;                                            \
+})
+#endif
 
 #define wait_event_interruptible_timeout(wq, condition, timeout) wait_event_interruptible(wq, condition)
 

@@ -3978,7 +3978,7 @@ static void rcu_barrier_func(void *type)
  */
 static void _rcu_barrier(struct rcu_state *rsp)
 {
-#ifndef CBMC
+#if !(defined(CBMC) || defined(RUN))  
 	int cpu;
 	struct rcu_data *rdp;
 	unsigned long s = rcu_seq_snap(&rsp->barrier_sequence);
@@ -4058,7 +4058,7 @@ static void _rcu_barrier(struct rcu_state *rsp)
 
 	/* Other rcu_barrier() invocations can now safely proceed. */
 	mutex_unlock(&rsp->barrier_mutex);
-#endif // #ifndef CBMC
+#endif // #if !(defined(CBMC) || defined(RUN))  
 }
 
 /**
