@@ -40,7 +40,7 @@ int wait_rcu_gp_flag;
 // Lihao: works for single grace period
 void wait_rcu_gp(call_rcu_func_t crf)
 {
-  wait_rcu_gp_flag = 1;
+  WRITE_ONCE(wait_rcu_gp_flag, 1);
 #ifdef CBMC
   __CPROVER_assume(wait_rcu_gp_flag == 0);
 #else
@@ -49,7 +49,7 @@ void wait_rcu_gp(call_rcu_func_t crf)
 }
 
 void pass_rcu_gp(raw_spinlock_t *lock) {
-  wait_rcu_gp_flag = 0;
+  WRITE_ONCE(wait_rcu_gp_flag, 0);
   *lock = 0;
 }
 
