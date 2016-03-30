@@ -282,7 +282,7 @@ static int rcu_gp_in_progress(struct rcu_state *rsp)
 void rcu_sched_qs(void)
 {
 #ifdef PER_CPU_DATA_ARRAY
-        unsigned long my_cpu_id = smp_processor_id();
+        unsigned int my_cpu_id = smp_processor_id();
 	if (!rcu_sched_data[my_cpu_id].passed_quiesce) {
 		trace_rcu_grace_period(TPS("rcu_sched"),
 				       __this_cpu_read(rcu_sched_data.gpnum),
@@ -303,7 +303,7 @@ void rcu_sched_qs(void)
 void rcu_bh_qs(void)
 {
 #ifdef PER_CPU_DATA_ARRAY
-        unsigned long my_cpu_id = smp_processor_id();
+        unsigned int my_cpu_id = smp_processor_id();
 	if (!rcu_bh_data[my_cpu_id].passed_quiesce) {
 		trace_rcu_grace_period(TPS("rcu_bh"),
 				       __this_cpu_read(rcu_bh_data.gpnum),
@@ -365,7 +365,7 @@ static void rcu_momentary_dyntick_idle(void)
 	 * the flag will be set again after some delay.
 	 */
 #ifdef PER_CPU_DATA_ARRAY
-        unsigned long my_cpu_id = smp_processor_id();
+        unsigned int my_cpu_id = smp_processor_id();
 	resched_mask = rcu_sched_qs_mask[my_cpu_id];
 	rcu_sched_qs_mask[my_cpu_id] = 0;
 #else
@@ -706,7 +706,7 @@ static void rcu_eqs_enter_common(long long oldval, bool user)
 	struct rcu_state *rsp;
 	struct rcu_data *rdp;
 #ifdef PER_CPU_DATA_ARRAY
-        unsigned long my_cpu_id = smp_processor_id();
+        unsigned int my_cpu_id = smp_processor_id();
 	struct rcu_dynticks *rdtp = &rcu_dynticks[my_cpu_id];
 #else
 	struct rcu_dynticks *rdtp = this_cpu_ptr(&rcu_dynticks);
@@ -2508,7 +2508,7 @@ rcu_report_qs_rdp(int cpu, struct rcu_state *rsp, struct rcu_data *rdp)
 	bool needwake;
 	struct rcu_node *rnp;
 #ifdef PER_CPU_DATA_ARRAY
-        unsigned long my_cpu_id = smp_processor_id();
+        unsigned int my_cpu_id = smp_processor_id();
 #endif
 
 	rnp = rdp->mynode;

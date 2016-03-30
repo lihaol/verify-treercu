@@ -1397,7 +1397,7 @@ static bool __maybe_unused rcu_try_advance_all_cbs(void)
 	bool cbs_ready = false;
 	struct rcu_data *rdp;
 #ifdef PER_CPU_DATA_ARRAY
-        unsigned long my_cpu_id = smp_processor_id();
+        unsigned int my_cpu_id = smp_processor_id();
 	struct rcu_dynticks *rdtp = &rcu_dynticks[my_cpu_id];
 #else
 	struct rcu_dynticks *rdtp = this_cpu_ptr(&rcu_dynticks);
@@ -1499,7 +1499,7 @@ static void rcu_prepare_for_idle(void)
 	bool needwake;
 	struct rcu_data *rdp;
 #ifdef PER_CPU_DATA_ARRAY
-        unsigned long my_cpu_id = smp_processor_id();
+        unsigned int my_cpu_id = smp_processor_id();
 	struct rcu_dynticks *rdtp = &rcu_dynticks[my_cpu_id];
 #else
 	struct rcu_dynticks *rdtp = this_cpu_ptr(&rcu_dynticks);

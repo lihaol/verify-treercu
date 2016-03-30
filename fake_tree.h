@@ -119,9 +119,9 @@ int smp_call_function_single(int cpu, smp_call_func_t func, void *info, int wait
  * CONFIG_PREEMPT=n
  * */
 #ifdef CBMC
-extern  __CPROVER_thread_local unsigned __CPROVER_thread_id;
+extern  __CPROVER_thread_local unsigned int __CPROVER_thread_id;
 #else // #elif defined RUN
-unsigned __thread __CPROVER_thread_id;
+unsigned int __thread __CPROVER_thread_id;
 #endif
 #define my_smp_processor_id __CPROVER_thread_id
 #define raw_smp_processor_id() my_smp_processor_id

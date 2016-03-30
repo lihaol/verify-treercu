@@ -119,7 +119,7 @@ static int local_irq_depth[NR_CPUS];
 
 void local_irq_disable()
 {
-	unsigned long my_cpu_id = smp_processor_id();
+	unsigned int my_cpu_id = smp_processor_id();
 	if (!local_irq_depth[my_cpu_id]++) {
 #ifdef CBMC
 		__CPROVER_assume(irq_lock[my_cpu_id] == 0);	
@@ -135,7 +135,7 @@ void local_irq_disable()
 
 void local_irq_enable()
 {
-	unsigned long my_cpu_id = smp_processor_id();
+	unsigned int my_cpu_id = smp_processor_id();
 	if (!--local_irq_depth[my_cpu_id]) {
 #ifdef CBMC
 		(void)__sync_fetch_and_sub(&irq_lock[my_cpu_id], 1);
