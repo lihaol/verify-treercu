@@ -125,7 +125,7 @@ static atomic_t rcu_expedited_nesting =
  */
 bool rcu_gp_is_expedited(void)
 {
-#ifdef CONFIG_RCU_EXPEDITED_GP 
+#ifdef VERIFY_RCU_EXPEDITED_GP 
 	return rcu_expedited || atomic_read(&rcu_expedited_nesting);
 #else
         return 0;

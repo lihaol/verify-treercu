@@ -99,7 +99,7 @@ struct rcu_state rcu_sched_state = {
 	.fqs_state = RCU_GP_IDLE, 
 	.gpnum = 0UL - 300UL, 
 	.completed = 0UL - 300UL, 
-#ifdef CONFIG_RCU_ORPHAN_CB_
+#ifdef VERIFY_RCU_ORPHAN_CB
 	.orphan_lock = __RAW_SPIN_LOCK_UNLOCKED(&rcu_sched_state.orphan_lock), 
 	.orphan_nxttail = &rcu_sched_state.orphan_nxtlist, 
 	.orphan_donetail = &rcu_sched_state.orphan_donelist, 
@@ -116,7 +116,7 @@ struct rcu_state rcu_bh_state = {
 	.fqs_state = RCU_GP_IDLE, 
 	.gpnum = 0UL - 300UL, 
 	.completed = 0UL - 300UL, 
-#ifdef CONFIG_RCU_ORPHAN_CB_
+#ifdef VERIFY_RCU_ORPHAN_CB
 	.orphan_lock = __RAW_SPIN_LOCK_UNLOCKED(&rcu_bh_state.orphan_lock), 
 	.orphan_nxttail = &rcu_bh_state.orphan_nxtlist, 
 	.orphan_donetail = &rcu_bh_state.orphan_donelist, 
@@ -2595,7 +2595,7 @@ rcu_check_quiescent_state(struct rcu_state *rsp, struct rcu_data *rdp)
 	rcu_report_qs_rdp(rdp->cpu, rsp, rdp);
 }
 
-#ifdef CONFIG_RCU_ORPHAN_CB
+#ifdef VERIFY_RCU_ORPHAN_CB
 /*
  * Send the specified CPU's RCU callbacks to the orphanage.  The
  * specified CPU must be offline, and the caller must hold the

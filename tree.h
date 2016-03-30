@@ -309,7 +309,7 @@ struct rcu_data {
 					/*  ticks this CPU has handled */
 					/*  during and after the last grace */
 					/* period it is aware of. */
-#ifdef CONFIG_RCU_EXPEDITED_GP
+#ifdef VERIFY_RCU_EXPEDITED_GP
 	struct cpu_stop_work exp_stop_work;
 					/* Expedited grace-period control */
 					/*  for CPU stopping. */
