@@ -101,9 +101,7 @@ void rcu_irq_exit(void);
 void exit_rcu(void);
 
 void rcu_scheduler_starting(void);
-#ifndef CBMC
 extern int rcu_scheduler_active __read_mostly;
-#endif
 
 bool rcu_is_watching(void);
 

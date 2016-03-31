@@ -317,7 +317,7 @@ EXPORT_SYMBOL_GPL(rcu_read_lock_bh_held);
  */
 void wakeme_after_rcu(struct rcu_head *head)
 {
-	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN))  
+	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN)) 
 		return;
 
 	struct rcu_synchronize *rcu;
