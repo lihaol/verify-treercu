@@ -47,7 +47,7 @@ int __unbuffered_tpr_y;
 
 #ifdef RUN
 struct thread_info {
-	unsigned int __CPROVER_thread_id;
+	unsigned long __CPROVER_thread_id;
 };
 #endif
 
