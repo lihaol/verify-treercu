@@ -118,6 +118,9 @@ int cond_resched(void)
         return 1;
 }
 
+bool need_resched(void) { return 0; } 
+void resched_cpu(int cpu) {}
+
 /* Interrupts */
 //static int __thread local_irq_depth;
 static int local_irq_depth[NR_CPUS];
@@ -305,7 +308,6 @@ void init_waitqueue_head(wait_queue_head_t *q)
   //INIT_LIST_HEAD(&q->task_list);
 }
 
-bool need_resched(void);
 
 #define schedule_timeout_uninterruptible(delay)
 #define signal_pending(current) 0
