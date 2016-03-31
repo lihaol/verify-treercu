@@ -566,7 +566,9 @@ EXPORT_SYMBOL_GPL(rcu_sched_force_quiescent_state);
  */
 void show_rcu_gp_kthreads(void)
 {
-#ifndef CBMC
+	if (IS_ENABLED(CBMC))
+		return;
+
 	struct rcu_state *rsp;
 
 	for_each_rcu_flavor(rsp) {
@@ -574,7 +576,6 @@ void show_rcu_gp_kthreads(void)
 			rsp->name, rsp->gp_state, rsp->gp_kthread->state);
 		/* sched_show_task(rsp->gp_kthread); */
 	}
-#endif // #ifndef CBMC
 }
 EXPORT_SYMBOL_GPL(show_rcu_gp_kthreads);
 
@@ -1532,7 +1533,7 @@ void rcu_cpu_stall_reset(void)
 	for_each_rcu_flavor(rsp)
 		WRITE_ONCE(rsp->jiffies_stall, jiffies + ULONG_MAX / 2);
 }
-#endif // #ifndef CBMC
+#endif // #ifndef VERIFY_RCU_CPU_STALL
 
 /*
  * Initialize the specified rcu_data structure's default callback list
@@ -2377,9 +2378,9 @@ static void rcu_report_qs_rsp(struct rcu_state *rsp, unsigned long flags)
 	WRITE_ONCE(rsp->gp_flags, READ_ONCE(rsp->gp_flags) | RCU_GP_FLAG_FQS);
 	raw_spin_unlock_irqrestore(&rcu_get_root(rsp)->lock, flags);
 	rcu_gp_kthread_wake(rsp);
-#ifdef CBMC
+	if (IS_ENABLED(CBMC))
+		return;
         pass_rcu_gp(rcu_get_root(rsp)->lock);
-#endif
 }
 
 /*
@@ -2445,10 +2446,10 @@ rcu_report_qs_rnp(unsigned long mask, struct rcu_state *rsp,
 	 */
 	rcu_report_qs_rsp(rsp, flags); /* releases rnp->lock. */
 
-#ifdef CBMC
-	rnp->lock = 0;
-#endif
+	if (IS_ENABLED(CBMC))
+		return;
 
+	rnp->lock = 0;
 }
 
 /*
@@ -3335,9 +3336,9 @@ EXPORT_SYMBOL_GPL(kfree_call_rcu);
  */
 static inline int rcu_blocking_is_gp(void)
 {
-#ifdef CBMC
-        return 0;
-#else //#ifdef CBMC
+	if (IS_ENABLED(CBMC))
+        	return 0;
+
 	int ret;
 
 	might_sleep();  /* Check for RCU read-side critical section. */
@@ -3345,7 +3346,6 @@ static inline int rcu_blocking_is_gp(void)
 	ret = num_online_cpus() <= 1;
 	preempt_enable();
 	return ret;
-#endif // #ifdef CBMC
 }
 
 /**
@@ -3978,7 +3978,9 @@ static void rcu_barrier_func(void *type)
  */
 static void _rcu_barrier(struct rcu_state *rsp)
 {
-#if !(defined(CBMC) || defined(RUN))  
+	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN))
+		return;
+
 	int cpu;
 	struct rcu_data *rdp;
 	unsigned long s = rcu_seq_snap(&rsp->barrier_sequence);
@@ -4058,7 +4060,6 @@ static void _rcu_barrier(struct rcu_state *rsp)
 
 	/* Other rcu_barrier() invocations can now safely proceed. */
 	mutex_unlock(&rsp->barrier_mutex);
-#endif // #if !(defined(CBMC) || defined(RUN))  
 }
 
 /**
@@ -4184,13 +4185,15 @@ static void rcu_prepare_cpu(int cpu)
 		rcu_init_percpu_data(cpu, rsp);
 }
 
-#ifndef CBMC
 /*
  * Handle CPU online/offline notification events.
  */
 int rcu_cpu_notify(struct notifier_block *self,
 		   unsigned long action, void *hcpu)
 {
+	if (IS_ENABLED(CBMC))
+		return NOTIFY_OK;
+
 	long cpu = (long)hcpu;
 	struct rcu_data *rdp = per_cpu_ptr(rcu_state_p->rda, cpu);
 	struct rcu_node *rnp = rdp->mynode;
@@ -4238,6 +4241,9 @@ int rcu_cpu_notify(struct notifier_block *self,
 static int rcu_pm_notify(struct notifier_block *self,
 			 unsigned long action, void *hcpu)
 {
+	if (IS_ENABLED(CBMC))
+		return NOTIFY_OK;
+
 	switch (action) {
 	case PM_HIBERNATION_PREPARE:
 	case PM_SUSPEND_PREPARE:
@@ -4254,7 +4260,6 @@ static int rcu_pm_notify(struct notifier_block *self,
 	}
 	return NOTIFY_OK;
 }
-#endif // #ifndef CBMC
 
 /*
  * Spawn the kthreads that handle each RCU flavor's grace periods.
@@ -4513,7 +4518,9 @@ static void __init rcu_init_geometry(void)
  */
 static void __init rcu_dump_rcu_node_tree(struct rcu_state *rsp)
 {
-#ifndef CBMC
+	if (IS_ENABLED(CBMC))
+		return;
+
 	int level = 0;
 	struct rcu_node *rnp;
 
@@ -4528,7 +4535,6 @@ static void __init rcu_dump_rcu_node_tree(struct rcu_state *rsp)
 		pr_cont("%d:%d ^%d  ", rnp->grplo, rnp->grphi, rnp->grpnum);
 	}
 	pr_cont("\n");
-#endif // #ifndef CBMC
 }
 
 void __init rcu_init(void)
@@ -4558,7 +4564,9 @@ void __init rcu_init(void)
 	//__rcu_init_preempt();
 	open_softirq(RCU_SOFTIRQ, rcu_process_callbacks);
 
-#if !(defined(CBMC) || defined(RUN))  
+	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN))  
+		return;
+
 	/*
 	 * We don't need protection against CPU-hotplug here because
 	 * this is called early in boot, before either interrupts
@@ -4568,7 +4576,6 @@ void __init rcu_init(void)
 	pm_notifier(rcu_pm_notify, 0);
 	for_each_online_cpu(cpu)
 		rcu_cpu_notify(NULL, CPU_UP_PREPARE, (void *)(long)cpu);
-#endif 
 }
 
 #include "tree_plugin.h"

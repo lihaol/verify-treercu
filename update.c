@@ -317,19 +317,22 @@ EXPORT_SYMBOL_GPL(rcu_read_lock_bh_held);
  */
 void wakeme_after_rcu(struct rcu_head *head)
 {
-#if !(defined(CBMC) || defined(RUN))  
+	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN))  
+		return;
+
 	struct rcu_synchronize *rcu;
 
 	rcu = container_of(head, struct rcu_synchronize, head);
 	complete(&rcu->completion);
-#endif
 }
 EXPORT_SYMBOL_GPL(wakeme_after_rcu);
 
 void __wait_rcu_gp(bool checktiny, int n, call_rcu_func_t *crcu_array,
 		   struct rcu_synchronize *rs_array)
 {
-#if !(defined(CBMC) || defined(RUN))  
+	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN))  
+		return;
+
 	int i;
 
 	/* Initialize and register callbacks for each flavor specified. */
@@ -354,7 +357,6 @@ void __wait_rcu_gp(bool checktiny, int n, call_rcu_func_t *crcu_array,
 		wait_for_completion(&rs_array[i].completion);
 		destroy_rcu_head_on_stack(&rs_array[i].head);
 	}
-#endif
 }
 EXPORT_SYMBOL_GPL(__wait_rcu_gp);
 

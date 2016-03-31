@@ -1755,6 +1755,7 @@ static void print_cpu_stall_info_end(void)
 {
 	pr_err("\t");
 }
+#endif // #ifndef CBMC
 
 /* Zero ->ticks_this_gp for all flavors of RCU. */
 static void zero_cpu_stall_ticks(struct rcu_data *rdp)
@@ -1762,7 +1763,6 @@ static void zero_cpu_stall_ticks(struct rcu_data *rdp)
 	rdp->ticks_this_gp = 0;
 	rdp->softirq_snap = kstat_softirqs_cpu(RCU_SOFTIRQ, smp_processor_id());
 }
-#endif // #ifndef CBMC
 
 /* Increment ->ticks_this_gp for all flavors of RCU. */
 static void increment_cpu_stall_ticks(void)
