@@ -127,12 +127,11 @@ static int local_irq_depth[NR_CPUS];
 
 void local_irq_disable()
 {
-	unsigned int my_cpu_id = smp_processor_id();
-	if (!local_irq_depth[my_cpu_id]++) {
+	if (!local_irq_depth[smp_processor_id()]++) {
 #ifdef CBMC
-		__CPROVER_assume(irq_lock[my_cpu_id] == 0);	
-		__sync_fetch_and_add(&irq_lock[my_cpu_id], 1);
-		//if (__sync_fetch_and_add(&irq_lock[my_cpu_id], 1))
+		__CPROVER_assume(irq_lock[smp_processor_id()] == 0);	
+		__sync_fetch_and_add(&irq_lock[smp_processor_id()], 1);
+		//if (__sync_fetch_and_add(&irq_lock[smp_processor_id()], 1))
 		//	SET_NOASSERT();
 #else
 		if (pthread_mutex_lock(&irq_lock))
@@ -143,10 +142,9 @@ void local_irq_disable()
 
 void local_irq_enable()
 {
-	unsigned int my_cpu_id = smp_processor_id();
-	if (!--local_irq_depth[my_cpu_id]) {
+	if (!--local_irq_depth[smp_processor_id()]) {
 #ifdef CBMC
-		(void)__sync_fetch_and_sub(&irq_lock[my_cpu_id], 1);
+		(void)__sync_fetch_and_sub(&irq_lock[smp_processor_id()], 1);
 #else
 		if (pthread_mutex_unlock(&irq_lock))
 			exit(-1);

@@ -1397,8 +1397,7 @@ static bool __maybe_unused rcu_try_advance_all_cbs(void)
 	bool cbs_ready = false;
 	struct rcu_data *rdp;
 #ifdef PER_CPU_DATA_ARRAY
-        unsigned int my_cpu_id = smp_processor_id();
-	struct rcu_dynticks *rdtp = &rcu_dynticks[my_cpu_id];
+	struct rcu_dynticks *rdtp = &rcu_dynticks[smp_processor_id()];
 #else
 	struct rcu_dynticks *rdtp = this_cpu_ptr(&rcu_dynticks);
 #endif
@@ -1412,7 +1411,7 @@ static bool __maybe_unused rcu_try_advance_all_cbs(void)
 
 	for_each_rcu_flavor(rsp) {
 #ifdef PER_CPU_DATA_ARRAY
-		rdp = &rsp->rda[my_cpu_id];
+		rdp = &rsp->rda[smp_processor_id()];
 #else
 		rdp = this_cpu_ptr(rsp->rda);
 #endif
@@ -1499,8 +1498,7 @@ static void rcu_prepare_for_idle(void)
 	bool needwake;
 	struct rcu_data *rdp;
 #ifdef PER_CPU_DATA_ARRAY
-        unsigned int my_cpu_id = smp_processor_id();
-	struct rcu_dynticks *rdtp = &rcu_dynticks[my_cpu_id];
+	struct rcu_dynticks *rdtp = &rcu_dynticks[smp_processor_id()];
 #else
 	struct rcu_dynticks *rdtp = this_cpu_ptr(&rcu_dynticks);
 #endif
@@ -1548,7 +1546,7 @@ static void rcu_prepare_for_idle(void)
 	rdtp->last_accelerate = jiffies;
 	for_each_rcu_flavor(rsp) {
 #ifdef PER_CPU_DATA_ARRAY
-		rdp = &rsp->rda[my_cpu_id];
+		rdp = &rsp->rda[smp_processor_id()];
 #else
 		rdp = this_cpu_ptr(rsp->rda);
 #endif

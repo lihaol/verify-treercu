@@ -282,12 +282,11 @@ static int rcu_gp_in_progress(struct rcu_state *rsp)
 void rcu_sched_qs(void)
 {
 #ifdef PER_CPU_DATA_ARRAY
-        unsigned int my_cpu_id = smp_processor_id();
-	if (!rcu_sched_data[my_cpu_id].passed_quiesce) {
+	if (!rcu_sched_data[smp_processor_id()].passed_quiesce) {
 		trace_rcu_grace_period(TPS("rcu_sched"),
 				       __this_cpu_read(rcu_sched_data.gpnum),
 				       TPS("cpuqs"));
-		rcu_sched_data[my_cpu_id].passed_quiesce = 1;
+		rcu_sched_data[smp_processor_id()].passed_quiesce = 1;
 	}
 
 #else // !#ifdef PER_CPU_DATA_ARRAY
@@ -303,12 +302,11 @@ void rcu_sched_qs(void)
 void rcu_bh_qs(void)
 {
 #ifdef PER_CPU_DATA_ARRAY
-        unsigned int my_cpu_id = smp_processor_id();
-	if (!rcu_bh_data[my_cpu_id].passed_quiesce) {
+	if (!rcu_bh_data[smp_processor_id()].passed_quiesce) {
 		trace_rcu_grace_period(TPS("rcu_bh"),
 				       __this_cpu_read(rcu_bh_data.gpnum),
 				       TPS("cpuqs"));
-		rcu_bh_data[my_cpu_id].passed_quiesce = 1;
+		rcu_bh_data[smp_processor_id()].passed_quiesce = 1;
 	}
 
 #else // !#ifdef PER_CPU_DATA_ARRAY
@@ -365,9 +363,8 @@ static void rcu_momentary_dyntick_idle(void)
 	 * the flag will be set again after some delay.
 	 */
 #ifdef PER_CPU_DATA_ARRAY
-        unsigned int my_cpu_id = smp_processor_id();
-	resched_mask = rcu_sched_qs_mask[my_cpu_id];
-	rcu_sched_qs_mask[my_cpu_id] = 0;
+	resched_mask = rcu_sched_qs_mask[smp_processor_id()];
+	rcu_sched_qs_mask[smp_processor_id()] = 0;
 #else
 	resched_mask = raw_cpu_read(rcu_sched_qs_mask);
 	raw_cpu_write(rcu_sched_qs_mask, 0);
@@ -376,7 +373,7 @@ static void rcu_momentary_dyntick_idle(void)
 	/* Find the flavor that needs a quiescent state. */
 	for_each_rcu_flavor(rsp) {
 #ifdef PER_CPU_DATA_ARRAY
-		rdp = &rsp->rda[my_cpu_id];
+		rdp = &rsp->rda[smp_processor_id()];
 #else
 		rdp = raw_cpu_ptr(rsp->rda);
 #endif
@@ -394,7 +391,7 @@ static void rcu_momentary_dyntick_idle(void)
 		 * further.
 		 */
 #ifdef PER_CPU_DATA_ARRAY
-		rdtp = &rcu_dynticks[my_cpu_id];
+		rdtp = &rcu_dynticks[smp_processor_id()];
 #else
 		rdtp = this_cpu_ptr(&rcu_dynticks);
 #endif
@@ -707,8 +704,7 @@ static void rcu_eqs_enter_common(long long oldval, bool user)
 	struct rcu_state *rsp;
 	struct rcu_data *rdp;
 #ifdef PER_CPU_DATA_ARRAY
-        unsigned int my_cpu_id = smp_processor_id();
-	struct rcu_dynticks *rdtp = &rcu_dynticks[my_cpu_id];
+	struct rcu_dynticks *rdtp = &rcu_dynticks[smp_processor_id()];
 #else
 	struct rcu_dynticks *rdtp = this_cpu_ptr(&rcu_dynticks);
 #endif
@@ -727,7 +723,7 @@ static void rcu_eqs_enter_common(long long oldval, bool user)
 	}
 	for_each_rcu_flavor(rsp) {
 #ifdef PER_CPU_DATA_ARRAY
-		rdp = &rsp->rda[my_cpu_id];
+		rdp = &rsp->rda[smp_processor_id()];
 #else
 		rdp = this_cpu_ptr(rsp->rda);
 #endif
@@ -2508,16 +2504,13 @@ rcu_report_qs_rdp(int cpu, struct rcu_state *rsp, struct rcu_data *rdp)
 	unsigned long mask;
 	bool needwake;
 	struct rcu_node *rnp;
-#ifdef PER_CPU_DATA_ARRAY
-        unsigned int my_cpu_id = smp_processor_id();
-#endif
 
 	rnp = rdp->mynode;
 	raw_spin_lock_irqsave(&rnp->lock, flags);
 	smp_mb__after_unlock_lock();
 	if ((rdp->passed_quiesce == 0 &&
 #ifdef PER_CPU_DATA_ARRAY
-	     rdp->rcu_qs_ctr_snap == rcu_qs_ctr[my_cpu_id]) ||
+	     rdp->rcu_qs_ctr_snap == rcu_qs_ctr[smp_processor_id()]) ||
 #else
 	     rdp->rcu_qs_ctr_snap == __this_cpu_read(rcu_qs_ctr)) ||
 #endif
@@ -2532,7 +2525,7 @@ rcu_report_qs_rdp(int cpu, struct rcu_state *rsp, struct rcu_data *rdp)
 		 */
 		rdp->passed_quiesce = 0;	/* need qs for new gp. */
 #ifdef PER_CPU_DATA_ARRAY
-		rdp->rcu_qs_ctr_snap = rcu_qs_ctr[my_cpu_id];
+		rdp->rcu_qs_ctr_snap = rcu_qs_ctr[smp_processor_id()];
 #else
 		rdp->rcu_qs_ctr_snap = __this_cpu_read(rcu_qs_ctr);
 #endif
