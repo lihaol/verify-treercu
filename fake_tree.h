@@ -241,7 +241,6 @@ static inline bool __must_check IS_ERR(__force const void *ptr)
 /* other things */
 #define MODULE_ALIAS(x)
 #define module_param(name, type, perm)
-//#define module_param(name, type, perm) type (name) = (perm)
 
 #define EXPORT_PER_CPU_SYMBOL(var)
 #define EXPORT_PER_CPU_SYMBOL_GPL(var)
