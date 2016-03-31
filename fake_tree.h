@@ -90,8 +90,10 @@ int rcu_cpu_stall_suppress = 1; /* 1 = suppress stall warnings. */
 #define __noreturn
 
 #define __MUTEX_INITIALIZER(x) { .a = 0 }
-#define READ_ONCE(var) (*((volatile typeof(val) *)(&(var))))
-#define WRITE_ONCE(var, val) (*((volatile typeof(val) *)(&(var))) = (val))
+#define READ_ONCE(var) (var)
+#define WRITE_ONCE(var, val) ((var) = (val))
+//#define READ_ONCE(var) (*((volatile typeof(val) *)(&(var))))
+//#define WRITE_ONCE(var, val) (*((volatile typeof(val) *)(&(var))) = (val))
 #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]) + __must_be_array(arr))
 
 /* multi-cores */
@@ -238,7 +240,8 @@ static inline bool __must_check IS_ERR(__force const void *ptr)
 
 /* other things */
 #define MODULE_ALIAS(x)
-#define module_param(name, type, perm) type name = perm;
+#define module_param(name, type, perm)
+//#define module_param(name, type, perm) type (name) = (perm)
 
 #define EXPORT_PER_CPU_SYMBOL(var)
 #define EXPORT_PER_CPU_SYMBOL_GPL(var)
