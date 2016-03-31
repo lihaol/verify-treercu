@@ -90,8 +90,8 @@ int rcu_cpu_stall_suppress = 1; /* 1 = suppress stall warnings. */
 #define __noreturn
 
 #define __MUTEX_INITIALIZER(x) { .a = 0 }
-#define READ_ONCE(x) (x)
-#define WRITE_ONCE(x, v) x = v 
+#define READ_ONCE(var) (*((volatile typeof(val) *)(&(var))))
+#define WRITE_ONCE(var, val) (*((volatile typeof(val) *)(&(var))) = (val))
 #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]) + __must_be_array(arr))
 
 /* multi-cores */
