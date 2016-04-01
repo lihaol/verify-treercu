@@ -2376,7 +2376,7 @@ static void rcu_report_qs_rsp(struct rcu_state *rsp, unsigned long flags)
 	rcu_gp_kthread_wake(rsp);
 	if (IS_ENABLED(CBMC))
 		return;
-        pass_rcu_gp(rcu_get_root(rsp)->lock);
+        pass_rcu_gp(&rcu_get_root(rsp)->lock);
 }
 
 /*
@@ -4551,7 +4551,7 @@ void __init rcu_init(void)
 	rcu_init_geometry();
         // Lihao
 	//rcu_init_one(&rcu_bh_state, &rcu_bh_data);
-	rcu_init_one(&rcu_sched_state, &rcu_sched_data);
+	rcu_init_one(&rcu_sched_state, rcu_sched_data);
 	if (dump_tree)
 		rcu_dump_rcu_node_tree(&rcu_sched_state);
 	//__rcu_init_preempt();
