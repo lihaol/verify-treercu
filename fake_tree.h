@@ -247,7 +247,7 @@ static inline bool __must_check IS_ERR(__force const void *ptr)
 
 #define __releases(x)
 #define early_initcall(x)
-#define __stringify(x) 'x'
+#define __stringify(x) #x
 #define nr_context_switches() 1
 void panic(const char *fmt, ...) {}
 
