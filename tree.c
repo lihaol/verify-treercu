@@ -4549,9 +4549,14 @@ void __init rcu_init(void)
 #endif // #ifdef PER_CPU_DATA_ARRAY
 
 	rcu_init_geometry();
-        // Lihao
+
+#ifdef PER_CPU_DATA_ARRAY
 	//rcu_init_one(&rcu_bh_state, &rcu_bh_data);
 	rcu_init_one(&rcu_sched_state, rcu_sched_data);
+#else
+	rcu_init_one(&rcu_bh_state, &rcu_bh_data);
+	rcu_init_one(&rcu_sched_state, &rcu_sched_data);
+#endif	
 	if (dump_tree)
 		rcu_dump_rcu_node_tree(&rcu_sched_state);
 	//__rcu_init_preempt();

@@ -788,7 +788,11 @@ void exit_rcu(void)
 #else /* #ifdef CONFIG_PREEMPT_RCU */
 
 static struct rcu_state *const rcu_state_p = &rcu_sched_state;
+#ifdef PER_CPU_DATA_ARRAY
 static struct rcu_data __percpu *const rcu_data_p = rcu_sched_data;
+#else
+static struct rcu_data __percpu *const rcu_data_p = &rcu_sched_data;
+#endif
 
 /*
  * Tell them what RCU they are running.
