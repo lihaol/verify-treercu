@@ -563,9 +563,6 @@ EXPORT_SYMBOL_GPL(rcu_sched_force_quiescent_state);
  */
 void show_rcu_gp_kthreads(void)
 {
-	if (IS_ENABLED(CBMC))
-		return;
-
 	struct rcu_state *rsp;
 
 	for_each_rcu_flavor(rsp) {
@@ -1730,7 +1727,11 @@ static void rcu_gp_kthread_wake(struct rcu_state *rsp)
 	    !READ_ONCE(rsp->gp_flags) ||
 	    !rsp->gp_kthread)
 		return;
-	wake_up(&rsp->gp_wq);
+
+	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN))
+		rcu_gp_kthread(rsp);		
+	else
+		wake_up(&rsp->gp_wq);
 }
 
 /*
@@ -2231,6 +2232,7 @@ static int __noreturn rcu_gp_kthread(void *arg)
 					       TPS("reqwaitsig"));
 		}
 
+#ifdef VERIFY_RCU_QS_FORCING
 		/* Handle quiescent-state forcing. */
 		fqs_state = RCU_SAVE_DYNTICK;
 		j = jiffies_till_first_fqs;
@@ -2284,6 +2286,7 @@ static int __noreturn rcu_gp_kthread(void *arg)
 				jiffies_till_next_fqs = 1;
 			}
 		}
+#endif // #ifdef VERIFY_RCU_QS_FORCING 
 
 		/* Handle grace-period end. */
 		rsp->gp_state = RCU_GP_CLEANUP;
@@ -4279,7 +4282,11 @@ static int __init rcu_spawn_gp_kthread(void)
 
 	rcu_scheduler_fully_active = 1;
 	for_each_rcu_flavor(rsp) {
-		t = kthread_create(rcu_gp_kthread, rsp, "%s", rsp->name);
+		if (IS_ENABLED(CBMC) || IS_ENABLED(RUN))
+			t = malloc(sizeof(*t));
+		else 
+			t = kthread_create(rcu_gp_kthread, rsp, "%s", rsp->name);
+
 		BUG_ON(IS_ERR(t));
 		rnp = rcu_get_root(rsp);
 		raw_spin_lock_irqsave(&rnp->lock, flags);
