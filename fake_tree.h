@@ -123,6 +123,13 @@ int wake_up_process(struct task_struct *p) { return 0; }
 int sched_setscheduler_nocheck(struct task_struct *p, int policy,
   const struct sched_param *param) { return 0; }
 
+#define kthread_create(threadfn, data, namefmt, arg...) \
+({                                                      \
+	struct task_struct *___t;                       \
+	___t = malloc(sizeof(*___t));                   \
+	___t;	                                        \
+})
+
 /* CBMC thread id used to refer per-cpu structures modelled by shared arrays
  * CONFIG_PREEMPT=n
  * */
