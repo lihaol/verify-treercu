@@ -151,17 +151,17 @@ unsigned long __thread __CPROVER_thread_id;
 #define smp_mb__after_atomic() smp_mb()
 #define smp_wmb() barrier()
 
-#define smp_store_release(p, v)                                         \
-do {                                                                    \
-        smp_mb();                                                       \
-        WRITE_ONCE(*p, v);                                              \
+#define smp_store_release(p, v)           \
+do {                                      \
+        smp_mb();                         \
+        WRITE_ONCE(*p, v);                \
 } while (0)
 
-#define smp_load_acquire(p)                                             \
-({                                                                      \
-        typeof(*p) ___p1 = READ_ONCE(*p);                               \
-        smp_mb();                                                       \
-        ___p1;                                                          \
+#define smp_load_acquire(p)               \
+({                                        \
+        typeof(*p) ___p1 = READ_ONCE(*p); \
+        smp_mb();                         \
+        ___p1;                            \
 })
 
 
@@ -199,7 +199,7 @@ static inline bool __must_check IS_ERR(__force const void *ptr)
 #define BUILD_BUG_ON_ZERO(e) (sizeof(struct { int:-!!(e); }))
 #define __must_be_array(a)      BUILD_BUG_ON_ZERO(__same_type((a), &(a)[0]))
 
-
+/*
 #ifdef CBMC_ORDERING_BUG
 #define SET_NOASSERT() do { noassert = 1; } while (0)
 #define CK_NOASSERT() noassert
@@ -207,6 +207,7 @@ static inline bool __must_check IS_ERR(__force const void *ptr)
 #define SET_NOASSERT() do { noassert = 1; smp_mb(); } while (0)
 #define CK_NOASSERT() ({ smp_mb(); noassert; })
 #endif
+*/
 
 #define WARN_ON(condition) assert(!(condition))
 #define WARN_ON_ONCE(condition)	({ assert(!(condition)); condition; }) 
