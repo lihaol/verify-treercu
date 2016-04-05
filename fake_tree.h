@@ -119,6 +119,9 @@ typedef void (*smp_call_func_t)(void *info);
 int smp_call_function_single(int cpu, smp_call_func_t func, void *info, int wait) { return 0; }
 
 static int __noreturn rcu_gp_kthread(void *arg);
+int wake_up_process(struct task_struct *p) { return 0; }
+int sched_setscheduler_nocheck(struct task_struct *p, int policy,
+  const struct sched_param *param) { return 0; }
 
 /* CBMC thread id used to refer per-cpu structures modelled by shared arrays
  * CONFIG_PREEMPT=n
