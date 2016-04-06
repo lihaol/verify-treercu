@@ -48,9 +48,9 @@ void wait_rcu_gp(call_rcu_func_t crf)
 #endif
 }
 
-void pass_rcu_gp(raw_spinlock_t *lock) {
+void pass_rcu_gp(void) 
+{
   WRITE_ONCE(wait_rcu_gp_flag, 0);
-  *lock = 0;
 }
 
 /*

@@ -2378,7 +2378,7 @@ static void rcu_report_qs_rsp(struct rcu_state *rsp, unsigned long flags)
 	raw_spin_unlock_irqrestore(&rcu_get_root(rsp)->lock, flags);
 	rcu_gp_kthread_wake(rsp);
 	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN)) {
-		pass_rcu_gp(&rcu_get_root(rsp)->lock);
+		pass_rcu_gp();
 		_releases(rcu_get_root(rsp)->lock);
 	}
 }
