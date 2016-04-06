@@ -80,6 +80,8 @@ void rcu_idle_enter(void);
 void rcu_idle_exit(void);
 static void rcu_process_callbacks(struct softirq_action *unused);
 
+#define  _releases(x) { (x) = 0; }
+
 void fake_acquire_cpu(void)
 {
 #ifdef CBMC

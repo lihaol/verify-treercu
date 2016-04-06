@@ -2377,9 +2377,10 @@ static void rcu_report_qs_rsp(struct rcu_state *rsp, unsigned long flags)
 	WRITE_ONCE(rsp->gp_flags, READ_ONCE(rsp->gp_flags) | RCU_GP_FLAG_FQS);
 	raw_spin_unlock_irqrestore(&rcu_get_root(rsp)->lock, flags);
 	rcu_gp_kthread_wake(rsp);
-	if (IS_ENABLED(CBMC))
-		return;
-        pass_rcu_gp(&rcu_get_root(rsp)->lock);
+	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN)) {
+		pass_rcu_gp(&rcu_get_root(rsp)->lock);
+		_releases(rcu_get_root(rsp)->lock);
+	}
 }
 
 /*
@@ -2445,10 +2446,8 @@ rcu_report_qs_rnp(unsigned long mask, struct rcu_state *rsp,
 	 */
 	rcu_report_qs_rsp(rsp, flags); /* releases rnp->lock. */
 
-	if (IS_ENABLED(CBMC))
-		return;
-
-	rnp->lock = 0;
+	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN)) 
+		_releases(rnp->lock);
 }
 
 /*
@@ -2489,6 +2488,8 @@ static void rcu_report_unblock_qs_rnp(struct rcu_state *rsp,
 	raw_spin_lock(&rnp_p->lock);	/* irqs already disabled. */
 	smp_mb__after_unlock_lock();
 	rcu_report_qs_rnp(mask, rsp, rnp_p, gps, flags);
+	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN)) 
+		_releases(rnp->lock);
 }
 
 /*
