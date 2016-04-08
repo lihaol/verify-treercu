@@ -4298,12 +4298,11 @@ static int __init rcu_spawn_gp_kthread(void)
 			sp.sched_priority = kthread_prio;
 			sched_setscheduler_nocheck(t, SCHED_FIFO, &sp);
 		}
-#if defined(CBMC) || defined(RUN)
-		bool ret = rcu_gp_init(rsp);
-		//assert(ret);
-#else
-		wake_up_process(t);
-#endif
+		if (IS_ENABLED(CBMC) || IS_ENABLED(RUN)) {
+			bool ret = rcu_gp_init(rsp);
+			//assert(ret);
+		} else 
+			wake_up_process(t);
 		raw_spin_unlock_irqrestore(&rnp->lock, flags);
 	}
 	rcu_spawn_nocb_kthreads();
