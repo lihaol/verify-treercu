@@ -333,6 +333,9 @@ void init_waitqueue_head(wait_queue_head_t *q)
 static inline bool tick_nohz_full_enabled(void) { return false; }
 static inline void housekeeping_affine(struct task_struct *t) {}
 
+struct rcu_state;
+bool _rcu_gp_init(struct rcu_state *rsp);
+
 #include <linux/rcupdate.h>
 #ifdef TINY
 #include "tiny.c"
@@ -340,4 +343,26 @@ static inline void housekeeping_affine(struct task_struct *t) {}
 #include "update.c"
 #include "tree.c"
 #endif
+
+bool _rcu_gp_init(struct rcu_state *rsp) 
+{
+	trace_rcu_grace_period(rsp->name,
+			       READ_ONCE(rsp->gpnum),
+			       TPS("reqwait"));
+	rsp->gp_state = RCU_GP_WAIT_GPS;
+	wait_event_interruptible(rsp->gp_wq,
+				 READ_ONCE(rsp->gp_flags) &
+				 RCU_GP_FLAG_INIT);
+	rsp->gp_state = RCU_GP_DONE_GPS;
+	/* Locking provides needed memory barrier. */
+	bool ret = rcu_gp_init(rsp);
+	cond_resched_rcu_qs();
+	WRITE_ONCE(rsp->gp_activity, jiffies);
+	WARN_ON(signal_pending(current));
+	trace_rcu_grace_period(rsp->name,
+			       READ_ONCE(rsp->gpnum),
+			       TPS("reqwaitsig"));
+	return ret;
+}
+
 

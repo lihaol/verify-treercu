@@ -2376,11 +2376,17 @@ static void rcu_report_qs_rsp(struct rcu_state *rsp, unsigned long flags)
 	WARN_ON_ONCE(!rcu_gp_in_progress(rsp));
 	WRITE_ONCE(rsp->gp_flags, READ_ONCE(rsp->gp_flags) | RCU_GP_FLAG_FQS);
 	raw_spin_unlock_irqrestore(&rcu_get_root(rsp)->lock, flags);
-	rcu_gp_kthread_wake(rsp);
+
 	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN)) {
+		/* Handle grace-period end. */
+		rsp->gp_state = RCU_GP_CLEANUP;
+		rcu_gp_cleanup(rsp);
+		rsp->gp_state = RCU_GP_CLEANED;
 		pass_rcu_gp();
+		_rcu_gp_init(rsp);
 		_releases(rcu_get_root(rsp)->lock);
-	}
+	} else 
+		rcu_gp_kthread_wake(rsp);
 }
 
 /*
@@ -4292,7 +4298,12 @@ static int __init rcu_spawn_gp_kthread(void)
 			sp.sched_priority = kthread_prio;
 			sched_setscheduler_nocheck(t, SCHED_FIFO, &sp);
 		}
+#if defined(CBMC) || defined(RUN)
+		bool ret = rcu_gp_init(rsp);
+		//assert(ret);
+#else
 		wake_up_process(t);
+#endif
 		raw_spin_unlock_irqrestore(&rnp->lock, flags);
 	}
 	rcu_spawn_nocb_kthreads();
