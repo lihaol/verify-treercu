@@ -220,12 +220,10 @@ void synchronize_sched(void);
 /*
  * Structure allowing asynchronous waiting on RCU.
  */
-#ifndef CBMC
 struct rcu_synchronize {
 	struct rcu_head head;
 	struct completion completion;
 };
-#endif // #ifndef CBMC
 
 void wakeme_after_rcu(struct rcu_head *head);
 
