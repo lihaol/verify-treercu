@@ -2384,7 +2384,6 @@ static void rcu_report_qs_rsp(struct rcu_state *rsp, unsigned long flags)
 		rsp->gp_state = RCU_GP_CLEANED;
 		pass_rcu_gp();
 		_rcu_gp_init(rsp);
-		_releases(rcu_get_root(rsp)->lock);
 	} else 
 		rcu_gp_kthread_wake(rsp);
 }
@@ -2451,9 +2450,6 @@ rcu_report_qs_rnp(unsigned long mask, struct rcu_state *rsp,
 	 * to clean up and start the next grace period if one is needed.
 	 */
 	rcu_report_qs_rsp(rsp, flags); /* releases rnp->lock. */
-
-	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN)) 
-		_releases(rnp->lock);
 }
 
 /*
@@ -2494,8 +2490,6 @@ static void rcu_report_unblock_qs_rnp(struct rcu_state *rsp,
 	raw_spin_lock(&rnp_p->lock);	/* irqs already disabled. */
 	smp_mb__after_unlock_lock();
 	rcu_report_qs_rnp(mask, rsp, rnp_p, gps, flags);
-	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN)) 
-		_releases(rnp->lock);
 }
 
 /*
