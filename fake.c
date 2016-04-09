@@ -40,17 +40,17 @@ int wait_rcu_gp_flag;
 // Lihao: works for single grace period
 void wait_rcu_gp(call_rcu_func_t crf)
 {
-  WRITE_ONCE(wait_rcu_gp_flag, 1);
+	WRITE_ONCE(wait_rcu_gp_flag, 1);
 #ifdef CBMC
-  __CPROVER_assume(wait_rcu_gp_flag == 0);
+	__CPROVER_assume(wait_rcu_gp_flag == 0);
 #else
-  while(READ_ONCE(wait_rcu_gp_flag)) {}
+ 	while(READ_ONCE(wait_rcu_gp_flag)) {}
 #endif
 }
 
 void pass_rcu_gp(void) 
 {
-  WRITE_ONCE(wait_rcu_gp_flag, 0);
+	WRITE_ONCE(wait_rcu_gp_flag, 0);
 }
 
 /*
@@ -120,8 +120,14 @@ int cond_resched(void)
         return 1;
 }
 
-bool need_resched(void) { return 0; } 
-void resched_cpu(int cpu) {}
+bool need_resched(void) 
+{ 
+	return 0; 
+} 
+
+void resched_cpu(int cpu) 
+{
+}
 
 /* Interrupts */
 //static int __thread local_irq_depth;
@@ -160,152 +166,170 @@ void local_irq_enable()
 #define local_irq_save(flags) local_irq_disable()
 
 /* Locks */
-inline void mutex_init(struct mutex *m) { m->a = 0; } 
-inline void mutex_lock(struct mutex *m) { m->a = 1; } 
-inline void mutex_unlock(struct mutex *m) { m->a = 0; } 
+inline void mutex_init(struct mutex *m) 
+{ 
+	m->a = 0; 
+} 
 
-inline void raw_spin_lock_init(raw_spinlock_t *lock) { *lock = 0; }
-inline void spin_lock_init(spinlock_t *lock) { *lock = 0; }
+inline void mutex_lock(struct mutex *m) 
+{ 
+	m->a = 1; 
+} 
+
+inline void mutex_unlock(struct mutex *m) 
+{ 
+	m->a = 0; 
+} 
+
+inline void raw_spin_lock_init(raw_spinlock_t *lock) 
+{ 
+	*lock = 0; 
+}
+
+inline void spin_lock_init(spinlock_t *lock) 
+{ 
+	*lock = 0; 
+}
 
 void raw_spin_lock(raw_spinlock_t *lock) 
 {
 #ifndef CBMC
-  preempt_disable();
+	preempt_disable();
 #endif
-  raw_local_irq_save(flags);
+	raw_local_irq_save(flags);
 #ifdef CBMC
-  __CPROVER_atomic_begin(); 
-  __CPROVER_assume(*lock == 0);
-  *lock = 1;
-  __CPROVER_atomic_end();
+	__CPROVER_atomic_begin(); 
+	__CPROVER_assume(*lock == 0);
+	*lock = 1;
+	__CPROVER_atomic_end();
 #else
-  *lock = 1;
+	*lock = 1;
 #endif
-  raw_local_irq_restore(flags);
+	raw_local_irq_restore(flags);
 }
 
 void raw_spin_unlock(raw_spinlock_t *lock) 
 {
-  raw_local_irq_save(flags);
+	raw_local_irq_save(flags);
 #ifdef CBMC
-  __CPROVER_atomic_begin(); 
-  *lock = 0;
-  __CPROVER_atomic_end();
+	__CPROVER_atomic_begin(); 
+	*lock = 0;
+	__CPROVER_atomic_end();
 #else
-  *lock = 0;
+	*lock = 0;
 #endif
-  raw_local_irq_restore(flags);
+	raw_local_irq_restore(flags);
 #ifndef CBMC
-  preempt_enable();
+	preempt_enable();
 #endif
 }
 
 int raw_spin_trylock(raw_spinlock_t *lock) 
 {
 #ifdef CBMC
-  __CPROVER_atomic_begin();
+	__CPROVER_atomic_begin();
 #else
-  preempt_disable();
+	preempt_disable();
 #endif
-  if (*lock == 0) {
-     *lock = 1;
-     return 1;
-  }
-  return 0;
+	if (*lock == 0) {
+		*lock = 1;
+		return 1;
+	}
+	return 0;
 #ifdef CBMC
-  __CPROVER_atomic_end();
+	__CPROVER_atomic_end();
 #else
-  preempt_enable();
+	preempt_enable();
 #endif
 }
 
 void raw_spin_lock_irqsave(raw_spinlock_t *lock, unsigned long flags) 
 {
-  local_irq_save(flags);
+	local_irq_save(flags);
 #ifdef CBMC
-  __CPROVER_atomic_begin();
-  __CPROVER_assume(*lock == 0); 
+	__CPROVER_atomic_begin();
+	__CPROVER_assume(*lock == 0); 
 #else
-  preempt_disable();
+	preempt_disable();
 #endif
-  *lock = 1;
+	*lock = 1;
 #ifdef CBMC
-  __CPROVER_atomic_end();
+	__CPROVER_atomic_end();
 #endif
 }
 
 void raw_spin_unlock_irqrestore(raw_spinlock_t *lock, unsigned long flags) 
 {
 #ifdef CBMC
-  __CPROVER_atomic_begin();
-  *lock = 0; 
-  __CPROVER_atomic_end();
+	__CPROVER_atomic_begin();
+	*lock = 0; 
+	__CPROVER_atomic_end();
 #else
-  *lock = 0;
+	*lock = 0;
 #endif
-  local_irq_restore(flags);
+	local_irq_restore(flags);
 #ifndef CBMC
-  preempt_enable();
+	preempt_enable();
 #endif
 }
 
 void raw_spin_lock_irq(raw_spinlock_t *lock) 
 {
-  local_irq_disable();
+	local_irq_disable();
 #ifdef CBMC
-  __CPROVER_atomic_begin();
-  __CPROVER_assume(*lock == 0); 
+	__CPROVER_atomic_begin();
+	__CPROVER_assume(*lock == 0); 
 #else
-  preempt_disable();
+	preempt_disable();
 #endif
-  *lock = 1;
+	*lock = 1;
 #ifdef CBMC
-  __CPROVER_atomic_end();
+	__CPROVER_atomic_end();
 #endif
 }
 
 void raw_spin_unlock_irq(raw_spinlock_t *lock) 
 {
 #ifdef CBMC
-  __CPROVER_atomic_begin();
-  *lock = 0; 
-  __CPROVER_atomic_end();
+	__CPROVER_atomic_begin();
+	*lock = 0; 
+	__CPROVER_atomic_end();
 #else
-  *lock = 0; 
+ 	*lock = 0; 
 #endif
-  local_irq_enable();
+	local_irq_enable();
 #ifndef CBMC
-  preempt_enable();
+	preempt_enable();
 #endif
 }
 
 int irqs_disabled_flags(unsigned long flags)
 {
-  return local_irq_depth[smp_processor_id()];
+	return local_irq_depth[smp_processor_id()];
 }
 
 /* Completion */
 static inline void init_completion(struct completion *x)
 {
-  x->a = 0;  
+	x->a = 0;  
 }
 
 void complete(struct completion *x)
 {
-  x->a = 1;
+	x->a = 1;
 }
 
 /*
 struct wait_queue_head_t {
-  spinlock_t lock;
-  struct list_head task_list;
+	spinlock_t lock;
+	struct list_head task_list;
 };
 */
 
 void init_waitqueue_head(wait_queue_head_t *q)
 {
-  //spin_lock_init(&q->lock);
-  //INIT_LIST_HEAD(&q->task_list);
+	//spin_lock_init(&q->lock);
+	//INIT_LIST_HEAD(&q->task_list);
 }
 
 
@@ -316,22 +340,28 @@ void init_waitqueue_head(wait_queue_head_t *q)
 #ifdef CBMC
 #define wait_event_interruptible(wq, condition) \
 ({                                              \
-  __CPROVER_assume(condition);                  \
-  1;                                            \
+	__CPROVER_assume(condition);            \
+	1;                                      \
 })
 #else
 #define wait_event_interruptible(wq, condition) \
 ({                                              \
-  while(!condition) {}                  	\
-  1;                                            \
+	while(!condition) {}                  	\
+	1;                                      \
 })
 #endif
 
 #define wait_event_interruptible_timeout(wq, condition, timeout) wait_event_interruptible(wq, condition)
 
 // #undef CONFIG_NO_HZ_FULL
-static inline bool tick_nohz_full_enabled(void) { return false; }
-static inline void housekeeping_affine(struct task_struct *t) {}
+static inline bool tick_nohz_full_enabled(void) 
+{ 
+	return false; 
+}
+
+static inline void housekeeping_affine(struct task_struct *t) 
+{
+}
 
 struct rcu_state;
 bool _rcu_gp_init(struct rcu_state *rsp);

@@ -104,7 +104,6 @@ int rcu_cpu_stall_suppress = 1; /* 1 = suppress stall warnings. */
 #define online_cpu(c) 1
 #define cpu_online(c) 1
 #define put_online_cpus() do { } while (0)
-void get_online_cpus(void) {}
 #define num_online_cpus() NR_CPUS
 
 #define for_each_possible_cpu(cpu) for ((cpu) = 0; (cpu) < NR_CPUS; (cpu)++)
@@ -113,15 +112,38 @@ void get_online_cpus(void) {}
 #define per_cpu_ptr(p, cpu) (&(p)[cpu])
 #define per_cpu(x, cpu) ((x)[cpu])
 
-void dump_cpu_task(int cpu) {}
-static inline unsigned int kstat_softirqs_cpu(unsigned int irq, int cpu) { return 0; }
+void get_online_cpus(void) 
+{
+}
+
+void dump_cpu_task(int cpu) 
+{
+}
+
+static inline unsigned int kstat_softirqs_cpu(unsigned int irq, int cpu) 
+{ 
+	return 0; 
+}
+
 typedef void (*smp_call_func_t)(void *info);
-int smp_call_function_single(int cpu, smp_call_func_t func, void *info, int wait) { return 0; }
+
+int smp_call_function_single(int cpu, smp_call_func_t func, void *info, int wait) 
+{ 
+	return 0; 
+}
 
 static int __noreturn rcu_gp_kthread(void *arg);
-int wake_up_process(struct task_struct *p) { return 0; }
+
+int wake_up_process(struct task_struct *p) 
+{ 
+	return 0; 
+}
+
 int sched_setscheduler_nocheck(struct task_struct *p, int policy,
-  const struct sched_param *param) { return 0; }
+                               const struct sched_param *param) 
+{ 
+	return 0; 
+}
 
 #define kthread_create(threadfn, data, namefmt, arg...) \
 ({                                                      \
@@ -262,5 +284,7 @@ static inline bool __must_check IS_ERR(__force const void *ptr)
 #define early_initcall(x)
 #define __stringify(x) #x
 #define nr_context_switches() 1
-void panic(const char *fmt, ...) {}
+void panic(const char *fmt, ...) 
+{
+}
 
