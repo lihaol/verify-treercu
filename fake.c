@@ -103,6 +103,7 @@ void fake_release_cpu(void)
 	if (pthread_mutex_unlock(&cpu_lock))
 		exit(-1);
 #endif
+	rcu_note_context_switch();
 	if (need_softirq) {
 		need_softirq = 0;
 		rcu_process_callbacks(NULL); /* cbmc recurses. */
