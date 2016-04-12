@@ -192,33 +192,25 @@ inline void spin_lock_init(spinlock_t *lock)
 
 void raw_spin_lock(raw_spinlock_t *lock) 
 {
-#ifndef CBMC
-	preempt_disable();
-#endif
-	raw_local_irq_save(flags);
 #ifdef CBMC
 	__CPROVER_atomic_begin(); 
 	__CPROVER_assume(*lock == 0);
 	*lock = 1;
 	__CPROVER_atomic_end();
 #else
+	preempt_disable();
 	*lock = 1;
 #endif
-	raw_local_irq_restore(flags);
 }
 
 void raw_spin_unlock(raw_spinlock_t *lock) 
 {
-	raw_local_irq_save(flags);
 #ifdef CBMC
 	__CPROVER_atomic_begin(); 
 	*lock = 0;
 	__CPROVER_atomic_end();
 #else
 	*lock = 0;
-#endif
-	raw_local_irq_restore(flags);
-#ifndef CBMC
 	preempt_enable();
 #endif
 }
