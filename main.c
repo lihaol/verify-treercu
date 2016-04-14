@@ -158,8 +158,8 @@ int main(int argc, char *argv[])
 	// timer interrupts
 	//__CPROVER_ASYNC_0: timer_interrupt_loop();
 	
+	__CPROVER_ASYNC_0: thread_process_reader(0);
 	__CPROVER_ASYNC_1: thread_update(0);
-	__CPROVER_ASYNC_2: thread_process_reader(0);
 	
 	__CPROVER_assume(__unbuffered_cnt == NUM_THREADS);
 	assert(__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1);
