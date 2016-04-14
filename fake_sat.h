@@ -41,7 +41,8 @@ typedef _Bool bool;
 
 #include "atomic_sat.h"
 
-typedef int spinlock_t;
+typedef volatile int spinlock_t;
+typedef volatile int raw_spinlock_t;
 
 /*
  * Note: no "lock" prefix even on SMP: xchg always implies lock anyway.
@@ -206,7 +207,6 @@ static inline void cpu_init(int cpu)
 
 volatile unsigned long jiffies = 0;
 
-typedef int raw_spinlock_t;
 #define ____cacheline_internodealigned_in_smp
 
 struct list_head {
