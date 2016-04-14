@@ -159,11 +159,10 @@ int sched_setscheduler_nocheck(struct task_struct *p, int policy,
  * CONFIG_PREEMPT=n
  * */
 #ifdef CBMC
-extern  __CPROVER_thread_local unsigned long __CPROVER_thread_id;
+extern  __CPROVER_thread_local unsigned long my_smp_processor_id;
 #else // #elif defined RUN
-unsigned long __thread __CPROVER_thread_id;
+unsigned long __thread my_smp_processor_id;
 #endif
-#define my_smp_processor_id __CPROVER_thread_id
 #define raw_smp_processor_id() my_smp_processor_id
 #define smp_processor_id() my_smp_processor_id
 

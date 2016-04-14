@@ -47,7 +47,7 @@ int __unbuffered_tpr_y;
 
 #ifdef RUN
 struct thread_info {
-	unsigned long __CPROVER_thread_id;
+	unsigned long my_cpu_id;
 };
 #endif
 
@@ -68,7 +68,7 @@ void *thread_update(void *arg)
 {
 #ifdef RUN
 	struct thread_info *tinfo = arg;
-	__CPROVER_thread_id = tinfo->__CPROVER_thread_id;
+	my_smp_processor_id = tinfo->my_cpu_id;
 #endif
 
 	fake_acquire_cpu();
@@ -91,7 +91,7 @@ void *thread_process_reader(void *arg)
 {
 #ifdef RUN
 	struct thread_info *tinfo = arg;
-	__CPROVER_thread_id = tinfo->__CPROVER_thread_id;
+	my_smp_processor_id = tinfo->my_cpu_id;
 #endif
 
 	fake_acquire_cpu();
