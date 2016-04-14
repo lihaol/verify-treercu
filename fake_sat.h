@@ -181,12 +181,12 @@ struct rcu_head {
 	struct callback_head *next;
 	void (*func)(struct callback_head *head);
 };
-*/
 
 static inline void call_rcu(struct rcu_head *head, void (*func)(struct rcu_head *rcu))
 {
-	func(head);  /* Don't try this at home!!!  It will normally break. */
+	func(head);  // Don't try this at home!!!  It will normally break. 
 }
+*/
 
 struct irq_work {
 	int a;
