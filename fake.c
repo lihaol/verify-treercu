@@ -83,8 +83,10 @@ static void rcu_process_callbacks(struct softirq_action *unused);
 void fake_acquire_cpu(void)
 {
 #ifdef CBMC
+	__CPROVER_atomic_begin();
 	__CPROVER_assume(cpu_lock[smp_processor_id()] == 0);
-	__sync_fetch_and_add(&cpu_lock[smp_processor_id()], 1);
+	cpu_lock[smp_processor_id()] = 1;
+	__CPROVER_atomic_end();
 	//if (__sync_fetch_and_add(&cpu_lock[smp_processor_id()], 1))
 	//	SET_NOASSERT();
 #else
@@ -98,7 +100,10 @@ void fake_release_cpu(void)
 {
 	//rcu_idle_enter();
 #ifdef CBMC
-	(void)__sync_fetch_and_sub(&cpu_lock[smp_processor_id()], 1);
+	__CPROVER_atomic_begin();
+	cpu_lock[smp_processor_id()] = 0;
+	__CPROVER_atomic_end();
+	//(void)__sync_fetch_and_sub(&cpu_lock[smp_processor_id()], 1);
 #else
 	if (pthread_mutex_unlock(&cpu_lock))
 		exit(-1);
