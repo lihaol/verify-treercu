@@ -224,12 +224,14 @@ int raw_spin_trylock(raw_spinlock_t *lock)
 {
 #ifdef CBMC
 	__CPROVER_atomic_begin();
-	if (*lock == 0) {
+	raw_spinlock_t __lock = *lock;
+	int ret = 0;
+	if (__lock == 0) {
 		*lock = 1;
-		return 1;
+		ret = 1;
 	}
-	return 0;
 	__CPROVER_atomic_end();
+	return ret;
 #else
 	preempt_disable();
 	int ret = __sync_bool_compare_and_swap(lock, 0, 1);
