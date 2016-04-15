@@ -109,11 +109,7 @@ void fake_release_cpu(void)
 		exit(-1);
 #endif
 	rcu_note_context_switch();
-	if (need_softirq) {
-		need_softirq = 0;
-		rcu_process_callbacks(NULL); /* cbmc recurses. */
-	}
-	rcu_note_context_switch();
+	rcu_process_callbacks(NULL); /* cbmc recurses. */
 }
 
 // Lihao
