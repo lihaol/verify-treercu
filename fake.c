@@ -44,7 +44,7 @@ void wait_rcu_gp(call_rcu_func_t crf)
 #ifdef CBMC
 	__CPROVER_assume(wait_rcu_gp_flag == 0);
 #else
- 	while(READ_ONCE(wait_rcu_gp_flag)) {}
+ 	while(__sync_val_compare_and_swap(&wait_rcu_gp_flag, 0, 0));
 #endif
 }
 
