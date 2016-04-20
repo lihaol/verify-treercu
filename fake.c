@@ -25,6 +25,8 @@
 #include "fake_sat.h"
 #include "fake_tree.h"
 
+#define RCU_TREE_HEIGHT 2
+
 int nr_cpu_ids = NR_CPUS;
 
 void rcu_note_context_switch(void);
