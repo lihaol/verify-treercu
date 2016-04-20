@@ -1729,7 +1729,7 @@ static void rcu_gp_kthread_wake(struct rcu_state *rsp)
 		return;
 
 	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN))
-		rcu_gp_kthread(rsp);		
+		rcu_gp_kthread(rsp);
 	else
 		wake_up(&rsp->gp_wq);
 }
@@ -3092,7 +3092,9 @@ __rcu_process_callbacks(struct rcu_state *rsp)
 	/* Update RCU state based on any recent quiescent states. */
 	rcu_check_quiescent_state(rsp, rdp);
 
-#ifndef CBMC
+	if (IS_ENABLED(CBMC))
+		return;
+
 	/* Does this CPU require a not-yet-started grace period? */
 	local_irq_save(flags);
 	if (cpu_needs_another_gp(rsp, rdp)) {
@@ -3111,7 +3113,6 @@ __rcu_process_callbacks(struct rcu_state *rsp)
 
 	/* Do any needed deferred wakeups of rcuo kthreads. */
 	do_nocb_deferred_wakeup(rdp);
-#endif
 }
 
 /*
