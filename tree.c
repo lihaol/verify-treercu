@@ -1749,6 +1749,9 @@ static void rcu_gp_kthread_wake(struct rcu_state *rsp)
 static bool rcu_accelerate_cbs(struct rcu_state *rsp, struct rcu_node *rnp,
 			       struct rcu_data *rdp)
 {
+	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN))
+		return false;
+
 	unsigned long c;
 	int i;
 	bool ret;
@@ -1819,6 +1822,9 @@ static bool rcu_accelerate_cbs(struct rcu_state *rsp, struct rcu_node *rnp,
 static bool rcu_advance_cbs(struct rcu_state *rsp, struct rcu_node *rnp,
 			    struct rcu_data *rdp)
 {
+	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN))
+		return false;
+
 	int i, j;
 
 	/* If the CPU has no callbacks, nothing to do. */
