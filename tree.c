@@ -1729,7 +1729,8 @@ static void rcu_gp_kthread_wake(struct rcu_state *rsp)
 		return;
 
 	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN))
-		rcu_gp_kthread(rsp);
+		//rcu_gp_kthread(rsp);
+		return;
 	else
 		wake_up(&rsp->gp_wq);
 }
