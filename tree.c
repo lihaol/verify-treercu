@@ -2209,10 +2209,18 @@ static int __noreturn rcu_gp_kthread(void *arg)
 	struct rcu_node *rnp = rcu_get_root(rsp);
 
 	rcu_bind_gp_kthread();
+#if defined(CBMC) || defined(RUN)
+	do {
+#else
 	for (;;) {
+#endif
 
 		/* Handle grace-period start. */
+#if defined(CBMC) || defined(RUN)
+		do {
+#else
 		for (;;) {
+#endif
 			trace_rcu_grace_period(rsp->name,
 					       READ_ONCE(rsp->gpnum),
 					       TPS("reqwait"));
@@ -2231,6 +2239,9 @@ static int __noreturn rcu_gp_kthread(void *arg)
 					       READ_ONCE(rsp->gpnum),
 					       TPS("reqwaitsig"));
 		}
+#if defined(CBMC) || defined(RUN)
+		while(0);
+#endif
 
 #ifdef VERIFY_RCU_QS_FORCING
 		/* Handle quiescent-state forcing. */
@@ -2241,7 +2252,12 @@ static int __noreturn rcu_gp_kthread(void *arg)
 			jiffies_till_first_fqs = HZ;
 		}
 		ret = 0;
+
+#if defined(CBMC) || defined(RUN)
+		do {
+#else
 		for (;;) {
+#endif
 			if (!ret)
 				rsp->jiffies_force_qs = jiffies + j;
 			trace_rcu_grace_period(rsp->name,
@@ -2286,6 +2302,9 @@ static int __noreturn rcu_gp_kthread(void *arg)
 				jiffies_till_next_fqs = 1;
 			}
 		}
+#if defined(CBMC) || defined(RUN)
+		while(0);
+#endif
 #endif // #ifdef VERIFY_RCU_QS_FORCING 
 
 		/* Handle grace-period end. */
@@ -2293,6 +2312,9 @@ static int __noreturn rcu_gp_kthread(void *arg)
 		rcu_gp_cleanup(rsp);
 		rsp->gp_state = RCU_GP_CLEANED;
 	}
+#if defined(CBMC) || defined(RUN)
+	while(0);
+#endif
 }
 
 /*
