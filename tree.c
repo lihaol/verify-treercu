@@ -2383,7 +2383,7 @@ static void rcu_report_qs_rsp(struct rcu_state *rsp, unsigned long flags)
 		rcu_gp_cleanup(rsp);
 		rsp->gp_state = RCU_GP_CLEANED;
 		pass_rcu_gp();
-		_rcu_gp_init(rsp);
+		rcu_gp_init(rsp);
 	} else 
 		rcu_gp_kthread_wake(rsp);
 }
