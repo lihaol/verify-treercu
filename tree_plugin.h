@@ -1825,6 +1825,9 @@ early_param("rcu_nocb_poll", parse_rcu_nocb_poll);
  */
 static void rcu_nocb_gp_cleanup(struct rcu_state *rsp, struct rcu_node *rnp)
 {
+	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN))
+		return;
+
 	wake_up_all(&rnp->nocb_gp_wq[rnp->completed & 0x1]);
 }
 
