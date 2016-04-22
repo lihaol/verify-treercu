@@ -1400,11 +1400,13 @@ static bool __maybe_unused rcu_try_advance_all_cbs(void)
 {
 	bool cbs_ready = false;
 	struct rcu_data *rdp;
+#ifdef VERIFY_RCU_DYNTICKS
 #ifdef PER_CPU_DATA_ARRAY
 	struct rcu_dynticks *rdtp = &rcu_dynticks[smp_processor_id()];
 #else
 	struct rcu_dynticks *rdtp = this_cpu_ptr(&rcu_dynticks);
 #endif
+#endif // #ifdef VERIFY_RCU_DYNTICKS
 	struct rcu_node *rnp;
 	struct rcu_state *rsp;
 
@@ -1437,6 +1439,7 @@ static bool __maybe_unused rcu_try_advance_all_cbs(void)
 	return cbs_ready;
 }
 
+#ifdef VERIFY_RCU_DYNTICKS
 /*
  * Allow the CPU to enter dyntick-idle mode unless it has callbacks ready
  * to invoke.  If the CPU has callbacks, try to advance them.  Tell the
@@ -1596,6 +1599,7 @@ static void rcu_idle_count_callbacks_posted(void)
 	__this_cpu_add(rcu_dynticks.nonlazy_posted, 1);
 #endif
 }
+#endif // #ifdef VERIFY_RCU_DYNTICKS
 
 /*
  * Data for flushing lazy RCU callbacks at OOM time.

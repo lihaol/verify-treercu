@@ -321,6 +321,7 @@ void rcu_bh_qs(void)
 
 static DEFINE_PER_CPU(int, rcu_sched_qs_mask);
 
+#ifdef VERIFY_RCU_DYNTICKS
 #ifdef PER_CPU_DATA_ARRAY
 static DEFINE_PER_CPU(struct rcu_dynticks, rcu_dynticks);
 #else // !#ifdef PER_CPU_DATA_ARRAY
@@ -333,6 +334,7 @@ static DEFINE_PER_CPU(struct rcu_dynticks, rcu_dynticks) = {
 #endif /* #ifdef CONFIG_NO_HZ_FULL_SYSIDLE */
 };
 #endif // #ifdef PER_CPU_DATA_ARRAY
+#endif // #ifdef VERIFY_RCU_DYNTICKS
 
 DEFINE_PER_CPU_SHARED_ALIGNED(unsigned long, rcu_qs_ctr);
 EXPORT_PER_CPU_SYMBOL_GPL(rcu_qs_ctr);
@@ -390,6 +392,7 @@ static void rcu_momentary_dyntick_idle(void)
 		 * quiescent state, with no need for this CPU to do anything
 		 * further.
 		 */
+#ifdef VERIFY_RCU_DYNTICKS
 #ifdef PER_CPU_DATA_ARRAY
 		rdtp = &rcu_dynticks[smp_processor_id()];
 #else
@@ -398,6 +401,7 @@ static void rcu_momentary_dyntick_idle(void)
 		smp_mb__before_atomic(); /* Earlier stuff before QS. */
 		atomic_add(2, &rdtp->dynticks);  /* QS. */
 		smp_mb__after_atomic(); /* Later stuff after QS. */
+#endif // #ifdef VERIFY_RCU_DYNTICKS
 		break;
 	}
 	local_irq_restore(flags);
@@ -689,6 +693,7 @@ cpu_needs_another_gp(struct rcu_state *rsp, struct rcu_data *rdp)
 	return 0; /* No grace period needed. */
 }
 
+#ifdef VERIFY_RCU_DYNTICKS
 /*
  * rcu_eqs_enter_common - current CPU is moving towards extended quiescent state
  *
@@ -793,6 +798,7 @@ void rcu_idle_enter(void)
 	local_irq_restore(flags);
 }
 EXPORT_SYMBOL_GPL(rcu_idle_enter);
+#endif // #ifdef VERIFY_RCU_DYNTICKS
 
 #ifdef CONFIG_NO_HZ_FULL
 /**
@@ -809,6 +815,7 @@ void rcu_user_enter(void)
 }
 #endif /* CONFIG_NO_HZ_FULL */
 
+#ifdef VERIFY_RCU_DYNTICKS
 /**
  * rcu_irq_exit - inform RCU that current CPU is exiting irq towards idle
  *
@@ -931,6 +938,7 @@ void rcu_idle_exit(void)
 	local_irq_restore(flags);
 }
 EXPORT_SYMBOL_GPL(rcu_idle_exit);
+#endif // #ifdef VERIFY_RCU_DYNTICKS
 
 #ifdef CONFIG_NO_HZ_FULL
 /**
@@ -945,6 +953,7 @@ void rcu_user_exit(void)
 }
 #endif /* CONFIG_NO_HZ_FULL */
 
+#ifdef VERIFY_RCU_DYNTICKS
 /**
  * rcu_irq_enter - inform RCU that current CPU is entering irq away from idle
  *
@@ -1105,6 +1114,7 @@ bool notrace rcu_is_watching(void)
 	return ret;
 }
 EXPORT_SYMBOL_GPL(rcu_is_watching);
+#endif // #ifdef VERIFY_RCU_DYNTICKS
 
 #if defined(CONFIG_PROVE_RCU) && defined(CONFIG_HOTPLUG_CPU)
 
@@ -1153,6 +1163,7 @@ EXPORT_SYMBOL_GPL(rcu_lockdep_current_cpu_online);
 
 #endif /* #if defined(CONFIG_PROVE_RCU) && defined(CONFIG_HOTPLUG_CPU) */
 
+#ifdef VERIFY_RCU_DYNTICKS
 /**
  * rcu_is_cpu_rrupt_from_idle - see if idle or immediately interrupted from idle
  *
@@ -1282,6 +1293,7 @@ static int rcu_implicit_dynticks_qs(struct rcu_data *rdp,
 
 	return 0;
 }
+#endif // #ifdef VERIFY_RCU_DYNTICKS
 
 #ifdef VERIFY_RCU_CPU_STALL
 static void record_gp_stall_check_time(struct rcu_state *rsp)
@@ -2063,6 +2075,7 @@ static int rcu_gp_init(struct rcu_state *rsp)
 	return 1;
 }
 
+#ifdef VERIFY_RCU_QS_FORCING
 /*
  * Helper function for wait_event_interruptible_timeout() wakeup
  * at force-quiescent-state time.
@@ -2120,6 +2133,7 @@ static int rcu_gp_fqs(struct rcu_state *rsp, int fqs_state_in)
 	}
 	return fqs_state;
 }
+#endif // #ifdef VERIFY_RCU_QS_FORCING
 
 /*
  * Clean up after the old grace period.
@@ -3832,7 +3846,7 @@ void synchronize_sched_expedited(void)
 EXPORT_SYMBOL_GPL(synchronize_sched_expedited);
 #else
 void synchronize_sched_expedited(void) {}
-#endif
+#endif // #ifdef VERIFY_RCU_EXPEDITED_GP
 
 /*
  * Check to see if there is any immediate RCU-related work to be done
@@ -4153,9 +4167,11 @@ rcu_boot_init_percpu_data(int cpu, struct rcu_state *rsp)
 	/* Set up local state, ensuring consistent view of global state. */
 	raw_spin_lock_irqsave(&rnp->lock, flags);
 	rdp->grpmask = 1UL << (cpu - rdp->mynode->grplo);
+#ifdef VERIFY_RCU_DYNTICKS
 	rdp->dynticks = &per_cpu(rcu_dynticks, cpu);
 	WARN_ON_ONCE(rdp->dynticks->dynticks_nesting != DYNTICK_TASK_EXIT_IDLE);
 	WARN_ON_ONCE(atomic_read(&rdp->dynticks->dynticks) != 1);
+#endif // #ifdef VERIFY_RCU_DYNTICKS
 	rdp->cpu = cpu;
 	rdp->rsp = rsp;
 	mutex_init(&rdp->exp_funnel_mutex);
@@ -4584,6 +4600,7 @@ void __init rcu_init(void)
 	rcu_early_boot_tests();
 	rcu_bootup_announce();
 
+#ifdef VERIFY_RCU_DYNTICKS
 #ifdef PER_CPU_DATA_ARRAY
         int i;
         for (i=0; i<NR_CPUS; i++) {
@@ -4595,6 +4612,7 @@ void __init rcu_init(void)
         #endif /* #ifdef CONFIG_NO_HZ_FULL_SYSIDLE */
         }
 #endif // #ifdef PER_CPU_DATA_ARRAY
+#endif // #ifdef VERIFY_RCU_DYNTICKS
 
 	rcu_init_geometry();
 
