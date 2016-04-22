@@ -2978,10 +2978,12 @@ bool rcu_sys_is_idle(void)
 /*
  * Initialize dynticks sysidle state for CPUs coming online.
  */
+#ifdef VERIFY_RCU_DYNTICKS
 static void rcu_sysidle_init_percpu_data(struct rcu_dynticks *rdtp)
 {
 	rdtp->dynticks_idle_nesting = DYNTICK_TASK_NEST_VALUE;
 }
+#endif
 
 #else /* #ifdef CONFIG_NO_HZ_FULL_SYSIDLE */
 
@@ -3008,9 +3010,11 @@ static void rcu_sysidle_report_gp(struct rcu_state *rsp, int isidle,
 {
 }
 
+#ifdef VERIFY_RCU_DYNTICKS
 static void rcu_sysidle_init_percpu_data(struct rcu_dynticks *rdtp)
 {
 }
+#endif
 
 #endif /* #else #ifdef CONFIG_NO_HZ_FULL_SYSIDLE */
 

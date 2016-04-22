@@ -118,6 +118,7 @@ extern int rcu_num_nodes;
 /*
  * Dynticks per-CPU state.
  */
+#ifdef VERIFY_RCU_DYNTICKS
 struct rcu_dynticks {
 	long long dynticks_nesting; /* Track irq/process nesting level. */
 				    /* Process level is worth LLONG_MAX/2. */
@@ -144,6 +145,7 @@ struct rcu_dynticks {
 	int tick_nohz_enabled_snap; /* Previously seen value from sysfs. */
 #endif /* #ifdef CONFIG_RCU_FAST_NO_HZ */
 };
+#endif // #ifdef VERIFY_RCU_DYNTICKS
 
 /* RCU's kthread states for tracing. */
 #define RCU_KTHREAD_STOPPED  0
@@ -354,9 +356,11 @@ struct rcu_data {
 					/* did other CPU force QS recently? */
 	long		blimit;		/* Upper limit on a processed batch */
 
+#ifdef VERIFY_RCU_DYNTICKS
 	/* 3) dynticks interface. */
 	struct rcu_dynticks *dynticks;	/* Shared per-CPU dynticks state. */
 	int dynticks_snap;		/* Per-GP tracking for dynticks. */
+#endif
 
 	/* 4) reasons this CPU needed to be kicked by force_quiescent_state */
 	unsigned long dynticks_fqs;	/* Kicked due to dynticks idle. */
@@ -641,7 +645,9 @@ static bool is_sysidle_rcu_state(struct rcu_state *rsp);
 static void rcu_sysidle_report_gp(struct rcu_state *rsp, int isidle,
 				  unsigned long maxj);
 static void rcu_bind_gp_kthread(void);
+#ifdef VERIFY_RCU_DYNTICKS
 static void rcu_sysidle_init_percpu_data(struct rcu_dynticks *rdtp);
+#endif
 static bool rcu_nohz_full_cpu(struct rcu_state *rsp);
 static void rcu_dynticks_task_enter(void);
 static void rcu_dynticks_task_exit(void);

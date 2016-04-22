@@ -4236,10 +4236,12 @@ rcu_init_percpu_data(int cpu, struct rcu_state *rsp)
 	rdp->blimit = blimit;
 	if (!rdp->nxtlist)
 		init_callback_list(rdp);  /* Re-enable callbacks on this CPU. */
+#ifdef VERIFY_RCU_DYNTICKS
 	rdp->dynticks->dynticks_nesting = DYNTICK_TASK_EXIT_IDLE;
 	rcu_sysidle_init_percpu_data(rdp->dynticks);
 	atomic_set(&rdp->dynticks->dynticks,
 		   (atomic_read(&rdp->dynticks->dynticks) & ~0x1) + 1);
+#endif
 	raw_spin_unlock(&rnp->lock);		/* irqs remain disabled. */
 
 	/*
