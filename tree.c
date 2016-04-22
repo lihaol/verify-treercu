@@ -440,7 +440,7 @@ void rcu_all_qs(void)
 #endif
 		rcu_momentary_dyntick_idle();
 #ifdef PER_CPU_DATA_ARRAY
-        rcu_qs_ctr[smp_processor_id()]++;
+        //rcu_qs_ctr[smp_processor_id()]++;
 #else
 	this_cpu_inc(rcu_qs_ctr);
 #endif
@@ -1895,7 +1895,7 @@ static bool __note_gp_changes(struct rcu_state *rsp, struct rcu_node *rnp,
 		trace_rcu_grace_period(rsp->name, rdp->gpnum, TPS("cpustart"));
 		rdp->passed_quiesce = 0;
 #ifdef PER_CPU_DATA_ARRAY
-		rdp->rcu_qs_ctr_snap = rcu_qs_ctr[smp_processor_id()];
+		//rdp->rcu_qs_ctr_snap = rcu_qs_ctr[smp_processor_id()];
 #else
 		rdp->rcu_qs_ctr_snap = __this_cpu_read(rcu_qs_ctr);
 #endif
@@ -2543,7 +2543,8 @@ rcu_report_qs_rdp(int cpu, struct rcu_state *rsp, struct rcu_data *rdp)
 	smp_mb__after_unlock_lock();
 	if ((rdp->passed_quiesce == 0 &&
 #ifdef PER_CPU_DATA_ARRAY
-	     rdp->rcu_qs_ctr_snap == rcu_qs_ctr[smp_processor_id()]) ||
+	     true) ||
+	     //rdp->rcu_qs_ctr_snap == rcu_qs_ctr[smp_processor_id()]) ||
 #else
 	     rdp->rcu_qs_ctr_snap == __this_cpu_read(rcu_qs_ctr)) ||
 #endif
@@ -2558,7 +2559,7 @@ rcu_report_qs_rdp(int cpu, struct rcu_state *rsp, struct rcu_data *rdp)
 		 */
 		rdp->passed_quiesce = 0;	/* need qs for new gp. */
 #ifdef PER_CPU_DATA_ARRAY
-		rdp->rcu_qs_ctr_snap = rcu_qs_ctr[smp_processor_id()];
+		//rdp->rcu_qs_ctr_snap = rcu_qs_ctr[smp_processor_id()];
 #else
 		rdp->rcu_qs_ctr_snap = __this_cpu_read(rcu_qs_ctr);
 #endif
@@ -2609,7 +2610,8 @@ rcu_check_quiescent_state(struct rcu_state *rsp, struct rcu_data *rdp)
 	 */
 	if (!rdp->passed_quiesce &&
 #ifdef PER_CPU_DATA_ARRAY
-	    rdp->rcu_qs_ctr_snap == rcu_qs_ctr[smp_processor_id()])
+	    true)
+	    //rdp->rcu_qs_ctr_snap == rcu_qs_ctr[smp_processor_id()])
 #else
 	    rdp->rcu_qs_ctr_snap == __this_cpu_read(rcu_qs_ctr))
 #endif
@@ -3858,7 +3860,8 @@ static int __rcu_pending(struct rcu_state *rsp, struct rcu_data *rdp)
 	if (rcu_scheduler_fully_active &&
 	    rdp->qs_pending && !rdp->passed_quiesce &&
 #ifdef PER_CPU_DATA_ARRAY
-	    rdp->rcu_qs_ctr_snap == rcu_qs_ctr[smp_processor_id()]) {
+	    true) { 
+	    //rdp->rcu_qs_ctr_snap == rcu_qs_ctr[smp_processor_id()]) {
 #else
 	    rdp->rcu_qs_ctr_snap == __this_cpu_read(rcu_qs_ctr)) {
 #endif
@@ -3866,7 +3869,8 @@ static int __rcu_pending(struct rcu_state *rsp, struct rcu_data *rdp)
 	} else if (rdp->qs_pending &&
 		   (rdp->passed_quiesce ||
 #ifdef PER_CPU_DATA_ARRAY
-		    rdp->rcu_qs_ctr_snap != rcu_qs_ctr[smp_processor_id()])) {
+		   false)) {
+		    //rdp->rcu_qs_ctr_snap != rcu_qs_ctr[smp_processor_id()])) {
 #else
 		    rdp->rcu_qs_ctr_snap != __this_cpu_read(rcu_qs_ctr))) {
 #endif
