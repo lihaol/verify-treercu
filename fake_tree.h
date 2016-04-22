@@ -110,10 +110,12 @@ int rcu_cpu_stall_suppress = 1; /* 1 = suppress stall warnings. */
 #define num_online_cpus() NR_CPUS
 
 #define for_each_possible_cpu(cpu) for ((cpu) = 0; (cpu) < NR_CPUS; (cpu)++)
-#define for_each_online_cpu(cpu) for ((cpu) = 0; (cpu) < NR_CPUS; (cpu)++)
+#define for_each_online_cpu(cpu)   for ((cpu) = 0; (cpu) < NR_CPUS; (cpu)++)
 
 #define per_cpu_ptr(p, cpu) (&(p)[cpu])
 #define per_cpu(x, cpu) ((x)[cpu])
+#define cpu_notifier(fn, pri) do { (void)(fn); } while (0)
+#define pm_notifier(fn, pri)  do { (void)(fn); } while (0)
 
 void get_online_cpus(void) 
 {
@@ -122,6 +124,18 @@ void get_online_cpus(void)
 void dump_cpu_task(int cpu) 
 {
 }
+
+#ifndef VERIFY_RCU_DYNTICKS
+int rcu_is_cpu_rrupt_from_idle(void)
+{
+	return 0;
+}
+
+bool rcu_is_watching(void)
+{
+	return true;
+}
+#endif
 
 static inline unsigned int kstat_softirqs_cpu(unsigned int irq, int cpu) 
 { 
@@ -133,6 +147,10 @@ typedef void (*smp_call_func_t)(void *info);
 int smp_call_function_single(int cpu, smp_call_func_t func, void *info, int wait) 
 { 
 	return 0; 
+}
+
+void wait_for_completion(struct completion *x)
+{
 }
 
 static int __noreturn rcu_gp_kthread(void *arg);
