@@ -1688,7 +1688,7 @@ early_initcall(rcu_register_oom_notifier);
 
 #endif /* #else #if !defined(CONFIG_RCU_FAST_NO_HZ) */
 
-#ifndef CBMC
+#ifdef VERIFY_RCU_RCU_STALL
 
 #ifdef CONFIG_RCU_FAST_NO_HZ
 
@@ -1761,7 +1761,6 @@ static void print_cpu_stall_info_end(void)
 {
 	pr_err("\t");
 }
-#endif // #ifndef CBMC
 
 /* Zero ->ticks_this_gp for all flavors of RCU. */
 static void zero_cpu_stall_ticks(struct rcu_data *rdp)
@@ -1782,6 +1781,7 @@ static void increment_cpu_stall_ticks(void)
 		raw_cpu_inc(rsp->rda->ticks_this_gp);
 #endif
 }
+#endif // #ifdef VERIFY_RCU_RCU_STALL
 
 #ifdef CONFIG_RCU_NOCB_CPU
 
@@ -2064,7 +2064,7 @@ static bool __maybe_unused rcu_nocb_adopt_orphan_cbs(struct rcu_state *rsp,
 	}
 	return true;
 }
-#endif
+#endif // #ifdef VERIFY_RCU_ORPHAN_CB
 
 /*
  * If necessary, kick off a new grace period, and either way wait
