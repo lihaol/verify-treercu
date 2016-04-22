@@ -563,8 +563,10 @@ extern struct list_head rcu_struct_flavors;
 extern struct rcu_state rcu_sched_state;
 DEFINE_PER_CPU(struct rcu_data, rcu_sched_data); // Lihao
 
+#ifdef VERIFY_RCU_BH
 extern struct rcu_state rcu_bh_state;
 DEFINE_PER_CPU(struct rcu_data, rcu_bh_data); // Lihao
+#endif
 
 #ifdef CONFIG_PREEMPT_RCU
 extern struct rcu_state rcu_preempt_state;

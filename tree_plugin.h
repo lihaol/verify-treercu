@@ -529,7 +529,11 @@ EXPORT_SYMBOL_GPL(call_rcu);
  */
 void synchronize_rcu(void)
 {
+#ifdef VERIFY_RCU_BH
 	RCU_LOCKDEP_WARN(lock_is_held(&rcu_bh_lock_map) ||
+#else
+	RCU_LOCKDEP_WARN(
+#endif
 			 lock_is_held(&rcu_lock_map) ||
 			 lock_is_held(&rcu_sched_lock_map),
 			 "Illegal synchronize_rcu() in RCU read-side critical section");
@@ -1159,7 +1163,9 @@ static int rcu_spawn_one_boost_kthread(struct rcu_state *rsp,
 static void rcu_kthread_do_work(void)
 {
 	rcu_do_batch(&rcu_sched_state, this_cpu_ptr(&rcu_sched_data));
+#ifdef VERIFY_RCU_BH
 	rcu_do_batch(&rcu_bh_state, this_cpu_ptr(&rcu_bh_data));
+#endif
 	rcu_preempt_do_callbacks();
 }
 

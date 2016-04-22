@@ -108,7 +108,7 @@ struct rcu_state rcu_sched_state = {
 	.name = RCU_STATE_NAME(rcu_sched), 
 	.abbr = 's', 
 };
-
+#ifdef VERIFY_RCU_BH
 struct rcu_state rcu_bh_state = { 
 	.level = { &rcu_bh_state.node[0] }, 
 	.rda = rcu_bh_data, 
@@ -125,6 +125,7 @@ struct rcu_state rcu_bh_state = {
 	.name = RCU_STATE_NAME(rcu_bh), 
 	.abbr = 'b', 
 };
+#endif // #ifdef VERIFY_RCU_BH
 #else // #ifdef PER_CPU_DATA_ARRAY
 #define RCU_STATE_INITIALIZER(sname, sabbr, cr) \
 DEFINE_RCU_TPS(sname) \
@@ -145,7 +146,9 @@ struct rcu_state sname##_state = { \
 }
 
 RCU_STATE_INITIALIZER(rcu_sched, 's', call_rcu_sched);
+#ifdef VERIFY_RCU_BH
 RCU_STATE_INITIALIZER(rcu_bh, 'b', call_rcu_bh);
+#endif
 #endif // #ifdef PER_CPU_DATA_ARRAY
 
 static struct rcu_state *const rcu_state_p;
@@ -301,6 +304,7 @@ void rcu_sched_qs(void)
 
 void rcu_bh_qs(void)
 {
+#ifdef VERIFY_RCU_BH
 #ifdef PER_CPU_DATA_ARRAY
 	if (!rcu_bh_data[smp_processor_id()].passed_quiesce) {
 		trace_rcu_grace_period(TPS("rcu_bh"),
@@ -317,6 +321,7 @@ void rcu_bh_qs(void)
 		__this_cpu_write(rcu_bh_data.passed_quiesce, 1);
 	}
 #endif // #ifdef PER_CPU_DATA_ARRAY
+#endif // #ifdef VERIFY_RCU_BH
 }
 
 static DEFINE_PER_CPU(int, rcu_sched_qs_mask);
@@ -504,7 +509,11 @@ EXPORT_SYMBOL_GPL(rcu_batches_started_sched);
  */
 unsigned long rcu_batches_started_bh(void)
 {
+#ifndef VERIFY_RCU_BH
+	return 0;
+#else
 	return rcu_bh_state.gpnum;
+#endif
 }
 EXPORT_SYMBOL_GPL(rcu_batches_started_bh);
 
@@ -531,7 +540,11 @@ EXPORT_SYMBOL_GPL(rcu_batches_completed_sched);
  */
 unsigned long rcu_batches_completed_bh(void)
 {
+#ifndef VERIFY_RCU_BH
+	return 0;
+#else
 	return rcu_bh_state.completed;
+#endif
 }
 EXPORT_SYMBOL_GPL(rcu_batches_completed_bh);
 
@@ -549,7 +562,9 @@ EXPORT_SYMBOL_GPL(rcu_force_quiescent_state);
  */
 void rcu_bh_force_quiescent_state(void)
 {
+#ifdef VERIFY_RCU_BH
 	force_quiescent_state(&rcu_bh_state);
+#endif
 }
 EXPORT_SYMBOL_GPL(rcu_bh_force_quiescent_state);
 
@@ -603,9 +618,11 @@ void rcutorture_get_gp_data(enum rcutorture_type test_type, int *flags,
 	case RCU_FLAVOR:
 		rsp = rcu_state_p;
 		break;
+#ifdef VERIFY_RCU_BH
 	case RCU_BH_FLAVOR:
 		rsp = &rcu_bh_state;
 		break;
+#endif
 	case RCU_SCHED_FLAVOR:
 		rsp = &rcu_sched_state;
 		break;
@@ -746,8 +763,10 @@ static void rcu_eqs_enter_common(long long oldval, bool user)
 	 */
 	RCU_LOCKDEP_WARN(lock_is_held(&rcu_lock_map),
 			 "Illegal idle entry in RCU read-side critical section.");
+#ifdef VERIFY_RCU_BH
 	RCU_LOCKDEP_WARN(lock_is_held(&rcu_bh_lock_map),
 			 "Illegal idle entry in RCU-bh read-side critical section.");
+#endif
 	RCU_LOCKDEP_WARN(lock_is_held(&rcu_sched_lock_map),
 			 "Illegal idle entry in RCU-sched read-side critical section.");
 }
@@ -3358,7 +3377,9 @@ EXPORT_SYMBOL_GPL(call_rcu_sched);
  */
 void call_rcu_bh(struct rcu_head *head, void (*func)(struct rcu_head *rcu))
 {
+#ifdef VERIFY_RCU_BH
 	__call_rcu(head, func, &rcu_bh_state, -1, 0);
+#endif
 }
 EXPORT_SYMBOL_GPL(call_rcu_bh);
 
@@ -3442,7 +3463,11 @@ static inline int rcu_blocking_is_gp(void)
  */
 void synchronize_sched(void)
 {
+#ifdef VERIFY_RCU_BH
 	RCU_LOCKDEP_WARN(lock_is_held(&rcu_bh_lock_map) ||
+#else
+	RCU_LOCKDEP_WARN(
+#endif
 			 lock_is_held(&rcu_lock_map) ||
 			 lock_is_held(&rcu_sched_lock_map),
 			 "Illegal synchronize_sched() in RCU-sched read-side critical section");
@@ -3469,6 +3494,7 @@ EXPORT_SYMBOL_GPL(synchronize_sched);
  */
 void synchronize_rcu_bh(void)
 {
+#ifdef VERIFY_RCU_BH
 	RCU_LOCKDEP_WARN(lock_is_held(&rcu_bh_lock_map) ||
 			 lock_is_held(&rcu_lock_map) ||
 			 lock_is_held(&rcu_sched_lock_map),
@@ -3479,6 +3505,7 @@ void synchronize_rcu_bh(void)
 		synchronize_rcu_bh_expedited();
 	else
 		wait_rcu_gp(call_rcu_bh);
+#endif
 }
 EXPORT_SYMBOL_GPL(synchronize_rcu_bh);
 
@@ -4120,7 +4147,9 @@ static void _rcu_barrier(struct rcu_state *rsp)
  */
 void rcu_barrier_bh(void)
 {
+#ifdef VERIFY_RCU_BH
 	_rcu_barrier(&rcu_bh_state);
+#endif
 }
 EXPORT_SYMBOL_GPL(rcu_barrier_bh);
 
@@ -4619,10 +4648,14 @@ void __init rcu_init(void)
 	rcu_init_geometry();
 
 #ifdef PER_CPU_DATA_ARRAY
-	//rcu_init_one(&rcu_bh_state, rcu_bh_data);
+#ifdef VERIFY_RCU_BH
+	rcu_init_one(&rcu_bh_state, rcu_bh_data);
+#endif
 	rcu_init_one(&rcu_sched_state, rcu_sched_data);
 #else
+#ifdef VERIFY_RCU_BH
 	rcu_init_one(&rcu_bh_state, &rcu_bh_data);
+#endif
 	rcu_init_one(&rcu_sched_state, &rcu_sched_data);
 #endif	
 	if (dump_tree)
