@@ -1761,6 +1761,7 @@ static void print_cpu_stall_info_end(void)
 {
 	pr_err("\t");
 }
+#endif // #ifdef VERIFY_RCU_RCU_STALL
 
 /* Zero ->ticks_this_gp for all flavors of RCU. */
 static void zero_cpu_stall_ticks(struct rcu_data *rdp)
@@ -1781,7 +1782,6 @@ static void increment_cpu_stall_ticks(void)
 		raw_cpu_inc(rsp->rda->ticks_this_gp);
 #endif
 }
-#endif // #ifdef VERIFY_RCU_RCU_STALL
 
 #ifdef CONFIG_RCU_NOCB_CPU
 

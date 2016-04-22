@@ -2859,10 +2859,12 @@ static void rcu_cleanup_dead_cpu(int cpu, struct rcu_state *rsp)
 	rcu_boost_kthread_setaffinity(rnp, -1);
 
 	/* Orphan the dead CPU's callbacks, and adopt them if appropriate. */
+#ifdef VERIFY_RCU_ORPHAN_CB 
 	raw_spin_lock_irqsave(&rsp->orphan_lock, flags);
 	rcu_send_cbs_to_orphanage(cpu, rsp, rnp, rdp);
 	rcu_adopt_orphan_cbs(rsp, flags);
 	raw_spin_unlock_irqrestore(&rsp->orphan_lock, flags);
+#endif
 
 	WARN_ONCE(rdp->qlen != 0 || rdp->nxtlist != NULL,
 		  "rcu_cleanup_dead_cpu: Callbacks on offline CPU %d: qlen=%lu, nxtlist=%p\n",
