@@ -1179,7 +1179,11 @@ static void rcu_cpu_kthread_setup(unsigned int cpu)
 
 static void rcu_cpu_kthread_park(unsigned int cpu)
 {
+#ifdef PER_CPU_DATA_ARRAY
+	rcu_cpu_kthread_status[cpu] = RCU_KTHREAD_OFFCPU;
+#else
 	per_cpu(rcu_cpu_kthread_status, cpu) = RCU_KTHREAD_OFFCPU;
+#endif
 }
 
 static int rcu_cpu_kthread_should_run(unsigned int cpu)
@@ -1270,7 +1274,11 @@ static void __init rcu_spawn_boost_kthreads(void)
 	int cpu;
 
 	for_each_possible_cpu(cpu)
+#ifdef PER_CPU_DATA_ARRAY
+		rcu_cpu_has_work[cpu] = 0;
+#else
 		per_cpu(rcu_cpu_has_work, cpu) = 0;
+#endif
 	BUG_ON(smpboot_register_percpu_thread(&rcu_cpu_thread_spec));
 	rcu_for_each_leaf_node(rcu_state_p, rnp)
 		(void)rcu_spawn_one_boost_kthread(rcu_state_p, rnp);
@@ -1700,7 +1708,11 @@ early_initcall(rcu_register_oom_notifier);
 
 static void print_cpu_stall_fast_no_hz(char *cp, int cpu)
 {
+#ifdef PER_CPU_DATA_ARRAY
+	struct rcu_dynticks *rdtp = &rcu_dynticks[cpu];
+#else
 	struct rcu_dynticks *rdtp = &per_cpu(rcu_dynticks, cpu);
+#endif
 	unsigned long nlpd = rdtp->nonlazy_posted - rdtp->nonlazy_posted_snap;
 
 	sprintf(cp, "last_accelerate: %04lx/%04lx, nonlazy_posted: %ld, %c%c",
