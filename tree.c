@@ -4317,7 +4317,7 @@ rcu_init_percpu_data(int cpu, struct rcu_state *rsp)
 	rdp->completed = rnp->completed;
 	rdp->passed_quiesce = false;
 #ifdef PER_CPU_DATA_ARRAY
-	rdp->rcu_qs_ctr_snap = rcu_qs_ctr[cpu];
+	//rdp->rcu_qs_ctr_snap = rcu_qs_ctr[cpu];
 #else
 	rdp->rcu_qs_ctr_snap = per_cpu(rcu_qs_ctr, cpu);
 #endif
