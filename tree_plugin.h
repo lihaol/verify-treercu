@@ -1286,7 +1286,11 @@ static void __init rcu_spawn_boost_kthreads(void)
 
 static void rcu_prepare_kthreads(int cpu)
 {
+#ifdef PER_CPU_DATA_ARRAY
+	struct rcu_data *rdp = &rcu_state_p->rda[cpu];
+#else
 	struct rcu_data *rdp = per_cpu_ptr(rcu_state_p->rda, cpu);
+#endif
 	struct rcu_node *rnp = rdp->mynode;
 
 	/* Fire up the incoming CPU's kthread and leaf rcu_node kthread. */
@@ -1752,7 +1756,11 @@ static void print_cpu_stall_info_begin(void)
 static void print_cpu_stall_info(struct rcu_state *rsp, int cpu)
 {
 	char fast_no_hz[72];
+#ifdef PER_CPU_DATA_ARRAY
+	struct rcu_data *rdp = &rsp->rda[cpu];
+#else
 	struct rcu_data *rdp = per_cpu_ptr(rsp->rda, cpu);
+#endif
 	struct rcu_dynticks *rdtp = rdp->dynticks;
 	char *ticks_title;
 	unsigned long ticks_value;
@@ -1904,7 +1912,11 @@ static void wake_nocb_leader(struct rcu_data *rdp, bool force)
  */
 static bool rcu_nocb_cpu_needs_barrier(struct rcu_state *rsp, int cpu)
 {
+#ifdef PER_CPU_DATA_ARRAY
+	struct rcu_data *rdp = &rsp->rda[cpu];
+#else
 	struct rcu_data *rdp = per_cpu_ptr(rsp->rda, cpu);
+#endif
 	unsigned long ret;
 #ifdef CONFIG_PROVE_RCU
 	struct rcu_head *rhp;
@@ -2382,7 +2394,11 @@ void __init rcu_init_nohz(void)
 
 	for_each_rcu_flavor(rsp) {
 		for_each_cpu(cpu, rcu_nocb_mask)
+#ifdef PER_CPU_DATA_ARRAY
+			init_nocb_callback_list(&rsp->rda[cpu]);
+#else
 			init_nocb_callback_list(per_cpu_ptr(rsp->rda, cpu));
+#endif
 		rcu_organize_nocb_kthreads(rsp);
 	}
 }
@@ -2406,7 +2422,11 @@ static void rcu_spawn_one_nocb_kthread(struct rcu_state *rsp, int cpu)
 	struct rcu_data *rdp;
 	struct rcu_data *rdp_last;
 	struct rcu_data *rdp_old_leader;
+#ifdef PER_CPU_DATA_ARRAY
+	struct rcu_data *rdp_spawn = &rsp->rda[cpu];
+#else
 	struct rcu_data *rdp_spawn = per_cpu_ptr(rsp->rda, cpu);
+#endif
 	struct task_struct *t;
 
 	/*
@@ -2498,7 +2518,11 @@ static void __init rcu_organize_nocb_kthreads(struct rcu_state *rsp)
 	 * spawns one rcu_nocb_kthread().
 	 */
 	for_each_cpu(cpu, rcu_nocb_mask) {
+#ifdef PER_CPU_DATA_ARRAY
+		rdp = &rsp->rda[cpu];
+#else
 		rdp = per_cpu_ptr(rsp->rda, cpu);
+#endif
 		if (rdp->cpu >= nl) {
 			/* New leader, set up for followers & next leader. */
 			nl = DIV_ROUND_UP(rdp->cpu + 1, ls) * ls;
@@ -2949,7 +2973,11 @@ bool rcu_sys_is_idle(void)
 
 			/* Scan all the CPUs looking for nonidle CPUs. */
 			for_each_possible_cpu(cpu) {
+#ifdef PER_CPU_DATA_ARRAY
+				rdp = &rcu_state_p->rda[cpu];
+#else
 				rdp = per_cpu_ptr(rcu_state_p->rda, cpu);
+#endif
 				rcu_sysidle_check_cpu(rdp, &isidle, &maxj);
 				if (!isidle)
 					break;
