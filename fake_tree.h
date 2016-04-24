@@ -251,8 +251,14 @@ static inline bool __must_check IS_ERR(__force const void *ptr)
 #endif
 */
 
+#ifdef CBMC
+#define WARN_ON(condition) 
+#define WARN_ON_ONCE(condition)	({ condition; }) 
+#else
 #define WARN_ON(condition) assert(!(condition))
 #define WARN_ON_ONCE(condition)	({ assert(!(condition)); condition; }) 
+#endif
+
 #define WARN_ONCE(condition, format...) WARN_ON_ONCE(condition) 
 #define BUG_ON(c) WARN_ON(c)
 
