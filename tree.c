@@ -4740,9 +4740,6 @@ void __init rcu_init(void)
 	//__rcu_init_preempt();
 	open_softirq(RCU_SOFTIRQ, rcu_process_callbacks);
 
-	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN))  
-		return;
-
 	/*
 	 * We don't need protection against CPU-hotplug here because
 	 * this is called early in boot, before either interrupts
