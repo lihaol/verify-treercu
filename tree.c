@@ -4737,7 +4737,7 @@ void __init rcu_init(void)
 #endif	
 	if (dump_tree)
 		rcu_dump_rcu_node_tree(&rcu_sched_state);
-	//__rcu_init_preempt();
+	__rcu_init_preempt();
 	open_softirq(RCU_SOFTIRQ, rcu_process_callbacks);
 
 	/*
