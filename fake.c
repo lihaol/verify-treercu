@@ -118,8 +118,9 @@ void fake_release_cpu(void)
 // Lihao
 int cond_resched(void)
 {
-	fake_release_cpu();
-	fake_acquire_cpu();
+	//fake_release_cpu();
+	//fake_acquire_cpu();
+	rcu_note_context_switch();
         return 1;
 }
 
