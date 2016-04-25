@@ -357,7 +357,7 @@ static inline void housekeeping_affine(struct task_struct *t)
 }
 
 struct rcu_state;
-bool _rcu_gp_init(struct rcu_state *rsp);
+bool rcu_gp_init_no_kthread(struct rcu_state *rsp);
 
 #include <linux/rcupdate.h>
 #ifdef TINY
@@ -367,7 +367,7 @@ bool _rcu_gp_init(struct rcu_state *rsp);
 #include "tree.c"
 #endif
 
-bool _rcu_gp_init(struct rcu_state *rsp) 
+bool rcu_gp_init_no_kthread(struct rcu_state *rsp) 
 {
 	trace_rcu_grace_period(rsp->name,
 			       READ_ONCE(rsp->gpnum),
