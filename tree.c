@@ -3186,7 +3186,7 @@ __rcu_process_callbacks(struct rcu_state *rsp)
 	/* Update RCU state based on any recent quiescent states. */
 	rcu_check_quiescent_state(rsp, rdp);
 
-	if (IS_ENABLED(CBMC))
+	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN))
 		return;
 
 	/* Does this CPU require a not-yet-started grace period? */
