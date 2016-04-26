@@ -113,8 +113,8 @@ int main(int argc, char *argv[])
 {
 	pthread_t tu;
 	pthread_t tpr;
-	struct thread_info tinfo_tu = {(0)};
-	struct thread_info tinfo_tpr = {(1)};
+	struct thread_info tinfo_tu = {(1)};
+	struct thread_info tinfo_tpr = {(2)};
 
 	// initialisation
 	rcu_init();
