@@ -30,6 +30,9 @@
 int nr_cpu_ids = NR_CPUS;
 
 void rcu_note_context_switch(void);
+static void rcu_process_callbacks(struct softirq_action *unused);
+void rcu_idle_enter(void);
+void rcu_idle_exit(void);
 
 /* Just say "no" to memory allocation. */
 void kfree(const void *p)
@@ -44,6 +47,7 @@ void wait_rcu_gp(call_rcu_func_t crf)
 {
 	WRITE_ONCE(wait_rcu_gp_flag, 1);
 	cond_resched();
+	rcu_process_callbacks(NULL);
 #ifdef CBMC
 	__CPROVER_assume(wait_rcu_gp_flag == 0);
 #else
@@ -79,10 +83,6 @@ pthread_mutex_t irq_lock = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t nmi_lock = PTHREAD_MUTEX_INITIALIZER;
 #endif
 
-void rcu_idle_enter(void);
-void rcu_idle_exit(void);
-static void rcu_process_callbacks(struct softirq_action *unused);
-
 void fake_acquire_cpu(void)
 {
 #ifdef CBMC
@@ -112,7 +112,7 @@ void fake_release_cpu(void)
 		exit(-1);
 #endif
 	rcu_note_context_switch();
-	rcu_process_callbacks(NULL); /* cbmc recurses. */
+	rcu_process_callbacks(NULL);
 }
 
 // Lihao
