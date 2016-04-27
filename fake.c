@@ -121,7 +121,7 @@ int cond_resched(void)
 	//fake_release_cpu();
 	//fake_acquire_cpu();
 	rcu_note_context_switch();
-        return 1;
+	return 1;
 }
 
 bool need_resched(void) 
@@ -197,13 +197,13 @@ inline void spin_lock_init(spinlock_t *lock)
 
 void raw_spin_lock(raw_spinlock_t *lock) 
 {
+	preempt_disable();
 #ifdef CBMC
 	__CPROVER_atomic_begin(); 
 	__CPROVER_assume(*lock == 0);
 	*lock = 1;
 	__CPROVER_atomic_end();
 #else
-	preempt_disable();
 	while (__sync_lock_test_and_set(lock, 1));
 #endif
 }
@@ -216,40 +216,40 @@ void raw_spin_unlock(raw_spinlock_t *lock)
 	__CPROVER_atomic_end();
 #else
 	__sync_lock_release(lock);
-	preempt_enable();
 #endif
+	preempt_enable();
 }
 
 int raw_spin_trylock(raw_spinlock_t *lock) 
 {
+	int ret;
+	preempt_disable();
 #ifdef CBMC
 	__CPROVER_atomic_begin();
 	raw_spinlock_t __lock = *lock;
-	int ret = 0;
+	ret = 0;
 	if (__lock == 0) {
 		*lock = 1;
 		ret = 1;
 	}
 	__CPROVER_atomic_end();
-	return ret;
 #else
-	preempt_disable();
-	int ret = __sync_bool_compare_and_swap(lock, 0, 1);
+	ret = __sync_bool_compare_and_swap(lock, 0, 1);
+#endif
 	preempt_enable();
 	return ret;
-#endif
 }
 
 void raw_spin_lock_irqsave(raw_spinlock_t *lock, unsigned long flags) 
 {
 	local_irq_save(flags);
+	preempt_disable();
 #ifdef CBMC
 	__CPROVER_atomic_begin();
 	__CPROVER_assume(*lock == 0); 
 	*lock = 1;
 	__CPROVER_atomic_end();
 #else
-	preempt_disable();
 	while (__sync_lock_test_and_set(lock, 1));
 #endif
 }
@@ -263,21 +263,21 @@ void raw_spin_unlock_irqrestore(raw_spinlock_t *lock, unsigned long flags)
 	local_irq_restore(flags);
 #else
 	__sync_lock_release(lock);
+#endif
 	local_irq_restore(flags);
 	preempt_enable();
-#endif
 }
 
 void raw_spin_lock_irq(raw_spinlock_t *lock) 
 {
 	local_irq_disable();
+	preempt_disable();
 #ifdef CBMC
 	__CPROVER_atomic_begin();
-	__CPROVER_assume(*lock == 0); 
+	__CPROVER_assume(*lock == 0);
 	*lock = 1;
 	__CPROVER_atomic_end();
 #else
-	preempt_disable();
 	while (__sync_lock_test_and_set(lock, 1));
 #endif
 }
@@ -291,9 +291,9 @@ void raw_spin_unlock_irq(raw_spinlock_t *lock)
 	local_irq_enable();
 #else
 	__sync_lock_release(lock);
+#endif
 	local_irq_enable();
 	preempt_enable();
-#endif
 }
 
 int irqs_disabled_flags(unsigned long flags)
