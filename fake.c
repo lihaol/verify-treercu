@@ -76,11 +76,11 @@ void pass_rcu_gp(void)
 #ifdef CBMC
 int cpu_lock[NR_CPUS];
 int irq_lock[NR_CPUS];
-int nmi_lock[NR_CPUS];
+//int nmi_lock[NR_CPUS];
 #else
-pthread_mutex_t cpu_lock = PTHREAD_MUTEX_INITIALIZER;
-pthread_mutex_t irq_lock = PTHREAD_MUTEX_INITIALIZER;
-pthread_mutex_t nmi_lock = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t cpu_lock[NR_CPUS];
+pthread_mutex_t irq_lock[NR_CPUS];
+//pthread_mutex_t nmi_lock[NR_CPUS];
 #endif
 
 void fake_acquire_cpu(void)
@@ -93,7 +93,7 @@ void fake_acquire_cpu(void)
 	//if (__sync_fetch_and_add(&cpu_lock[smp_processor_id()], 1))
 	//	SET_NOASSERT();
 #else
-	if (pthread_mutex_lock(&cpu_lock))
+	if (pthread_mutex_lock(&cpu_lock[smp_processor_id()]))
 		exit(-1);
 #endif
 	//rcu_idle_exit();
@@ -108,7 +108,7 @@ void fake_release_cpu(void)
 	__CPROVER_atomic_end();
 	//(void)__sync_fetch_and_sub(&cpu_lock[smp_processor_id()], 1);
 #else
-	if (pthread_mutex_unlock(&cpu_lock))
+	if (pthread_mutex_unlock(&cpu_lock[smp_processor_id()]))
 		exit(-1);
 #endif
 	rcu_note_context_switch();
@@ -146,7 +146,7 @@ void local_irq_disable()
 		//if (__sync_fetch_and_add(&irq_lock[smp_processor_id()], 1))
 		//	SET_NOASSERT();
 #else
-		if (pthread_mutex_lock(&irq_lock))
+		if (pthread_mutex_lock(&irq_lock[smp_processor_id()]))
 			exit(-1);
 #endif
 	}
@@ -158,7 +158,7 @@ void local_irq_enable()
 #ifdef CBMC
 		(void)__sync_fetch_and_sub(&irq_lock[smp_processor_id()], 1);
 #else
-		if (pthread_mutex_unlock(&irq_lock))
+		if (pthread_mutex_unlock(&irq_lock[smp_processor_id()]))
 			exit(-1);
 #endif
 	}
