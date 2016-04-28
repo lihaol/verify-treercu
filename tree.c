@@ -1771,10 +1771,11 @@ static void rcu_gp_kthread_wake(struct rcu_state *rsp)
 	    !rsp->gp_kthread)
 		return;
 
-	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN))
-		//rcu_gp_kthread(rsp);
+	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN)) {
+		if (IS_ENABLED(VERIFY_RCU_GP_KTHREAD))
+			rcu_gp_kthread(rsp);
 		return;
-	else
+	} else
 		wake_up(&rsp->gp_wq);
 }
 
@@ -2452,12 +2453,14 @@ static void rcu_report_qs_rsp(struct rcu_state *rsp, unsigned long flags)
 	raw_spin_unlock_irqrestore(&rcu_get_root(rsp)->lock, flags);
 
 	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN)) {
-		/* Handle grace-period end. */
-		rsp->gp_state = RCU_GP_CLEANUP;
-		rcu_gp_cleanup(rsp);
-		rsp->gp_state = RCU_GP_CLEANED;
+		if (IS_ENABLED(VERIFY_RCU_GP_KTHREAD)) {
+			/* Handle grace-period end. */
+			rsp->gp_state = RCU_GP_CLEANUP;
+			rcu_gp_cleanup(rsp);
+			rsp->gp_state = RCU_GP_CLEANED;
+			rcu_gp_init_no_kthread(rsp);
+		}
 		pass_rcu_gp();
-		rcu_gp_init_no_kthread(rsp);
 	} else 
 		rcu_gp_kthread_wake(rsp);
 }
