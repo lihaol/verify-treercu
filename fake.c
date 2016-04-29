@@ -115,13 +115,19 @@ void fake_release_cpu(void)
 	rcu_process_callbacks(NULL);
 }
 
-// Lihao
 int cond_resched(void)
 {
-	//fake_release_cpu();
+	return 0;
+
+	// CBMC recurses because
+	// fake_release_cpu() calls
+	// rcu_process_callbacks() that
+	// in turn calls cond_resched()
+	//fake_release_cpu(); 
 	//fake_acquire_cpu();
-	rcu_note_context_switch();
-	return 1;
+	// or
+	//rcu_note_context_switch();
+	//return 1;
 }
 
 bool need_resched(void) 
