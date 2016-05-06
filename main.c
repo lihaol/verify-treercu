@@ -3,11 +3,9 @@
 #define NUM_THREADS 2
 #define NUM_INTS    2
 
-//int nr_cpu_ids = NR_CPUS;
-int __unbuffered_cnt = 0;
-int nondet_int (void);
+#if 0
+int nondet_int(void);
 
-/*
 void timer_interrupt(int cpu)
 {
   // schedule work to different CPUs
@@ -30,7 +28,7 @@ void timer_interrupt_loop() {
     //rcu_check_callbacks(NULL);
   }
 }
-*/
+#endif
 
 
 /*
@@ -80,7 +78,7 @@ void *thread_update(void *arg)
 	y = 1;
 
 	fake_release_cpu();
-#ifndef RUN
+#ifdef CBMC
 	// Instrumentation for CPROVER
 	asm("sync ");
 	__unbuffered_cnt++;
@@ -99,7 +97,7 @@ void *thread_process_reader(void *arg)
 	rcu_reader();
 
 	fake_release_cpu();
-#ifndef RUN
+#ifdef CBMC
 	// Instrumentation for CPROVER
 	asm("sync ");
 	__unbuffered_cnt++;
