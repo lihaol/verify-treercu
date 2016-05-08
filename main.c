@@ -64,7 +64,9 @@ void rcu_reader(void)
 
 void *thread_update(void *arg)
 {
-#ifdef RUN
+#ifdef CBMC
+        my_smp_processor_id = *((unsigned int*)arg);
+#else
 	struct thread_info *tinfo = arg;
 	my_smp_processor_id = tinfo->my_cpu_id;
 #endif
@@ -87,7 +89,9 @@ void *thread_update(void *arg)
 
 void *thread_process_reader(void *arg)
 {
-#ifdef RUN
+#ifdef CBMC
+        my_smp_processor_id = *((unsigned int*)arg);
+#else
 	struct thread_info *tinfo = arg;
 	my_smp_processor_id = tinfo->my_cpu_id;
 #endif
@@ -111,8 +115,8 @@ int main(int argc, char *argv[])
 {
 	pthread_t tu;
 	pthread_t tpr;
-	struct thread_info tinfo_tu = {(1)};
-	struct thread_info tinfo_tpr = {(2)};
+	struct thread_info tinfo_tu = {(0)};
+	struct thread_info tinfo_tpr = {(1)};
 
 	// initialisation
 	rcu_init();
@@ -162,8 +166,10 @@ int main(int argc, char *argv[])
 	// timer interrupts
 	//__CPROVER_ASYNC_0: timer_interrupt_loop();
 	
-	__CPROVER_ASYNC_0: thread_process_reader(0);
-	__CPROVER_ASYNC_1: thread_update(0);
+        unsigned int my_cpu_id0 = 0;
+        unsigned int my_cpu_id1 = 1;
+	__CPROVER_ASYNC_0: thread_process_reader(&my_cpu_id0);
+	__CPROVER_ASYNC_1: thread_update(&my_cpu_id1);
 	
 	__CPROVER_assume(__unbuffered_cnt == NUM_THREADS);
 	assert(__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1);

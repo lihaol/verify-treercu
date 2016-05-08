@@ -176,13 +176,9 @@ int sched_setscheduler_nocheck(struct task_struct *p, int policy,
 /* CBMC thread id used to refer per-cpu structures modelled by shared arrays
  * CONFIG_PREEMPT=n
  * */
-#ifdef CBMC
-extern  __CPROVER_thread_local unsigned long my_smp_processor_id;
-#else // #elif defined RUN
-unsigned long __thread my_smp_processor_id;
-#endif
-#define raw_smp_processor_id() my_smp_processor_id-1
-#define smp_processor_id() my_smp_processor_id-1
+unsigned int __thread my_smp_processor_id;
+#define raw_smp_processor_id() my_smp_processor_id
+#define smp_processor_id() my_smp_processor_id
 
 
 /* barriers */
