@@ -268,7 +268,6 @@ void raw_spin_unlock_irqrestore(raw_spinlock_t *lock, unsigned long flags)
 	__CPROVER_atomic_begin();
 	*lock = 0; 
 	__CPROVER_atomic_end();
-	local_irq_restore(flags);
 #else
 	__sync_lock_release(lock);
 #endif
@@ -296,7 +295,6 @@ void raw_spin_unlock_irq(raw_spinlock_t *lock)
 	__CPROVER_atomic_begin();
 	*lock = 0; 
 	__CPROVER_atomic_end();
-	local_irq_enable();
 #else
 	__sync_lock_release(lock);
 #endif
