@@ -4,7 +4,7 @@
 #define CONFIG_HZ_PERIODIC
 #define CONFIG_RCU_FANOUT_EXACT 
 #undef CONFIG_RCU_BOOST
-
+#undef CONFIG_PREEMPT_RCU
 #undef VERIFY_RCU_EXPEDITED_GP
 #undef VERIFY_RCU_ORPHAN_CB
 
@@ -247,12 +247,12 @@ static inline bool __must_check IS_ERR(__force const void *ptr)
 #endif
 */
 
-#ifdef CBMC
-#define WARN_ON(condition) 
-#define WARN_ON_ONCE(condition)	({ condition; }) 
-#else
+#ifdef VERIFY_WARN_ON
 #define WARN_ON(condition) assert(!(condition))
-#define WARN_ON_ONCE(condition)	({ assert(!(condition)); condition; }) 
+#define WARN_ON_ONCE(condition)	({ assert(!(condition)); condition; })
+#else
+#define WARN_ON(condition) 
+#define WARN_ON_ONCE(condition)	({ condition; })
 #endif
 
 #define WARN_ONCE(condition, format...) WARN_ON_ONCE(condition) 
