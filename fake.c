@@ -145,6 +145,7 @@ static int local_irq_depth[NR_CPUS];
 
 void local_irq_disable()
 {
+#if 0
 	if (!local_irq_depth[smp_processor_id()]++) {
 #ifdef CBMC
 		__CPROVER_assume(irq_lock[smp_processor_id()] == 0);	
@@ -156,10 +157,12 @@ void local_irq_disable()
 			exit(-1);
 #endif
 	}
+#endif
 }
 
 void local_irq_enable()
 {
+#if 0
 	if (!--local_irq_depth[smp_processor_id()]) {
 #ifdef CBMC
 		(void)__sync_fetch_and_sub(&irq_lock[smp_processor_id()], 1);
@@ -168,12 +171,13 @@ void local_irq_enable()
 			exit(-1);
 #endif
 	}
+#endif
 }
 
 #define raw_local_irq_save(flags) local_irq_save(flags)
 #define raw_local_irq_restore(flags) local_irq_restore(flags)
-#define local_irq_restore(flags) local_irq_enable()
 #define local_irq_save(flags) local_irq_disable()
+#define local_irq_restore(flags) local_irq_enable()
 
 /* Locks */
 inline void mutex_init(struct mutex *m) 
