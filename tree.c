@@ -2829,11 +2829,7 @@ static void rcu_cleanup_dead_rnp(struct rcu_node *rnp_leaf)
 	if (!IS_ENABLED(CONFIG_HOTPLUG_CPU) ||
 	    rnp->qsmaskinit || rcu_preempt_has_tasks(rnp))
 		return;
-#ifdef CBMC
-	for (int i=0; i<RCU_TREE_HEIGHT; ++i) {
-#else
 	for (;;) {
-#endif
 		mask = rnp->grpmask;
 		rnp = rnp->parent;
 		if (!rnp)
