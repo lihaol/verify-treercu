@@ -141,8 +141,9 @@ enum {
 #define smp_mb() __sync_synchronize()
 #endif
 
-int noassert;
 /*
+int noassert;
+
 #ifdef CBMC_ORDERING_BUG
 #define SET_NOASSERT() do { noassert = 1; } while (0)
 #define CK_NOASSERT() noassert
@@ -158,9 +159,9 @@ int noassert;
 #endif
 
 #define BUG_ON(c) WARN_ON(c)
-*/
 
 #define SET_NOASSERT() do { noassert = 1; smp_mb(); } while (0)
+*/
 
 #ifdef TINY
 #define smp_processor_id() 0
