@@ -4390,9 +4390,6 @@ int rcu_cpu_notify(struct notifier_block *self,
 static int rcu_pm_notify(struct notifier_block *self,
 			 unsigned long action, void *hcpu)
 {
-	if (IS_ENABLED(CBMC))
-		return NOTIFY_OK;
-
 	switch (action) {
 	case PM_HIBERNATION_PREPARE:
 	case PM_SUSPEND_PREPARE:
