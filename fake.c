@@ -73,7 +73,7 @@ void pass_rcu_gp(void)
 
 #ifdef CBMC
 int cpu_lock[NR_CPUS];
-int irq_lock[NR_CPUS];
+//int irq_lock[NR_CPUS];
 //int nmi_lock[NR_CPUS];
 #else
 pthread_mutex_t cpu_lock[NR_CPUS];
@@ -143,6 +143,7 @@ static int local_irq_depth[NR_CPUS];
 
 void local_irq_disable()
 {
+	local_irq_depth[smp_processor_id()]++;
 #if 0
 	if (!local_irq_depth[smp_processor_id()]++) {
 #ifdef CBMC
@@ -160,6 +161,7 @@ void local_irq_disable()
 
 void local_irq_enable()
 {
+	--local_irq_depth[smp_processor_id()];
 #if 0
 	if (!--local_irq_depth[smp_processor_id()]) {
 #ifdef CBMC
