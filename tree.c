@@ -4335,9 +4335,6 @@ static void rcu_prepare_cpu(int cpu)
 int rcu_cpu_notify(struct notifier_block *self,
 		   unsigned long action, void *hcpu)
 {
-	if (IS_ENABLED(CBMC))
-		return NOTIFY_OK;
-
 	long cpu = (long)hcpu;
 #ifdef PER_CPU_DATA_ARRAY
 	struct rcu_data *rdp = &rcu_state_p->rda[cpu];
