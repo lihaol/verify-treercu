@@ -380,7 +380,7 @@ static void rcu_momentary_dyntick_idle(void)
 	/* Find the flavor that needs a quiescent state. */
 	for_each_rcu_flavor(rsp) {
 #ifdef PER_CPU_DATA_ARRAY
-		rdp = &rsp->rda[smp_processor_id()];
+		rdp = rsp->rda + smp_processor_id();
 #else
 		rdp = raw_cpu_ptr(rsp->rda);
 #endif
@@ -742,7 +742,7 @@ static void rcu_eqs_enter_common(long long oldval, bool user)
 	}
 	for_each_rcu_flavor(rsp) {
 #ifdef PER_CPU_DATA_ARRAY
-		rdp = &rsp->rda[smp_processor_id()];
+		rdp = rsp->rda + smp_processor_id();
 #else
 		rdp = this_cpu_ptr(rsp->rda);
 #endif
@@ -1418,7 +1418,7 @@ static void print_other_cpu_stall(struct rcu_state *rsp, unsigned long gpnum)
 	print_cpu_stall_info_end();
 	for_each_possible_cpu(cpu)
 #ifdef PER_CPU_DATA_ARRAY
-		totqlen += rsp->rda[cpu].qlen;
+		totqlen += (rsp->rda + cpu)->qlen;
 #else
 		totqlen += per_cpu_ptr(rsp->rda, cpu)->qlen;
 #endif
@@ -1469,7 +1469,7 @@ static void print_cpu_stall(struct rcu_state *rsp)
 	print_cpu_stall_info_end();
 	for_each_possible_cpu(cpu)
 #ifdef PER_CPU_DATA_ARRAY
-		totqlen += rsp->rda[cpu].qlen;
+		totqlen += (rsp->rda + cpu)->qlen;
 #else
 		totqlen += per_cpu_ptr(rsp->rda, cpu)->qlen;
 #endif
@@ -1744,7 +1744,7 @@ static int rcu_future_gp_cleanup(struct rcu_state *rsp, struct rcu_node *rnp)
 	int c = rnp->completed;
 	int needmore;
 #ifdef PER_CPU_DATA_ARRAY
-	struct rcu_data *rdp = &rsp->rda[smp_processor_id()];
+	struct rcu_data *rdp = rsp->rda + smp_processor_id();
 #else
 	struct rcu_data *rdp = this_cpu_ptr(rsp->rda);
 #endif
@@ -2084,7 +2084,7 @@ static int rcu_gp_init(struct rcu_state *rsp)
 		raw_spin_lock_irq(&rnp->lock);
 		smp_mb__after_unlock_lock();
 #ifdef PER_CPU_DATA_ARRAY
-		rdp = &rsp->rda[smp_processor_id()];
+		rdp = rsp->rda + smp_processor_id();
 #else
 		rdp = this_cpu_ptr(rsp->rda);
 #endif
@@ -2211,7 +2211,7 @@ static void rcu_gp_cleanup(struct rcu_state *rsp)
 		WARN_ON_ONCE(rnp->qsmask);
 		WRITE_ONCE(rnp->completed, rsp->gpnum);
 #ifdef PER_CPU_DATA_ARRAY
-		rdp = &rsp->rda[smp_processor_id()];
+		rdp = rsp->rda + smp_processor_id();
 #else
 		rdp = this_cpu_ptr(rsp->rda);
 #endif
@@ -2234,7 +2234,7 @@ static void rcu_gp_cleanup(struct rcu_state *rsp)
 	trace_rcu_grace_period(rsp->name, rsp->completed, TPS("end"));
 	rsp->fqs_state = RCU_GP_IDLE;
 #ifdef PER_CPU_DATA_ARRAY
-	rdp = &rsp->rda[smp_processor_id()];
+	rdp = rsp->rda + smp_processor_id();
 #else
 	rdp = this_cpu_ptr(rsp->rda);
 #endif
@@ -2418,7 +2418,7 @@ rcu_start_gp_advanced(struct rcu_state *rsp, struct rcu_node *rnp,
 static bool rcu_start_gp(struct rcu_state *rsp)
 {
 #ifdef PER_CPU_DATA_ARRAY
-	struct rcu_data *rdp = &rsp->rda[smp_processor_id()];
+	struct rcu_data *rdp = rsp->rda + smp_processor_id();
 #else
 	struct rcu_data *rdp = this_cpu_ptr(rsp->rda);
 #endif
@@ -2738,7 +2738,7 @@ static void rcu_adopt_orphan_cbs(struct rcu_state *rsp, unsigned long flags)
 {
 	int i;
 #ifdef PER_CPU_DATA_ARRAY
-	struct rcu_data *rdp = &rsp->rda[smp_processor_id()];
+	struct rcu_data *rdp = rsp->rda + smp_processor_id();
 #else
 	struct rcu_data *rdp = raw_cpu_ptr(rsp->rda);
 #endif
@@ -2854,7 +2854,7 @@ static void rcu_cleanup_dying_idle_cpu(int cpu, struct rcu_state *rsp)
 	unsigned long flags;
 	unsigned long mask;
 #ifdef PER_CPU_DATA_ARRAY
-	struct rcu_data *rdp = &rsp->rda[cpu];
+	struct rcu_data *rdp = rsp->rda + cpu;
 #else
 	struct rcu_data *rdp = per_cpu_ptr(rsp->rda, cpu);
 #endif
@@ -2882,7 +2882,7 @@ static void rcu_cleanup_dead_cpu(int cpu, struct rcu_state *rsp)
 {
 	unsigned long flags;
 #ifdef PER_CPU_DATA_ARRAY
-	struct rcu_data *rdp = &rsp->rda[cpu];
+	struct rcu_data *rdp = rsp->rda + cpu;
 #else
 	struct rcu_data *rdp = per_cpu_ptr(rsp->rda, cpu);
 #endif
@@ -3101,7 +3101,7 @@ static void force_qs_rnp(struct rcu_state *rsp,
 		for (; cpu <= rnp->grphi; cpu++, bit <<= 1) {
 			if ((rnp->qsmask & bit) != 0) {
 #ifdef PER_CPU_DATA_ARRAY
-				if (f(&rsp->rda[cpu], isidle, maxj))
+				if (f(rsp->rda + cpu, isidle, maxj))
 #else
 				if (f(per_cpu_ptr(rsp->rda, cpu), isidle, maxj))
 #endif
@@ -3131,7 +3131,7 @@ static void force_quiescent_state(struct rcu_state *rsp)
 
 	/* Funnel through hierarchy to reduce memory contention. */
 #ifdef PER_CPU_DATA_ARRAY
-	rnp = rsp->rda[smp_processor_id()].mynode;
+	rnp = (rsp->rda + smp_processor_id())->mynode;
 #else
 	rnp = __this_cpu_read(rsp->rda->mynode);
 #endif
@@ -3173,7 +3173,7 @@ __rcu_process_callbacks(struct rcu_state *rsp)
 	unsigned long flags;
 	bool needwake;
 #ifdef PER_CPU_DATA_ARRAY
-	struct rcu_data *rdp = &rsp->rda[smp_processor_id()];
+	struct rcu_data *rdp = rsp->rda + smp_processor_id();
 #else
 	struct rcu_data *rdp = raw_cpu_ptr(rsp->rda);
 #endif
@@ -3336,7 +3336,7 @@ __call_rcu(struct rcu_head *head, void (*func)(struct rcu_head *rcu),
 	 */
 	local_irq_save(flags);
 #ifdef PER_CPU_DATA_ARRAY
-	rdp = &rsp->rda[smp_processor_id()];
+	rdp = rsp->rda + smp_processor_id();
 #else
 	rdp = this_cpu_ptr(rsp->rda);
 #endif
@@ -3347,7 +3347,7 @@ __call_rcu(struct rcu_head *head, void (*func)(struct rcu_head *rcu),
 
 		if (cpu != -1)
 #ifdef PER_CPU_DATA_ARRAY
-			rdp = &rsp->rda[cpu];
+			rdp = rsp->rda + cpu;
 #else
 			rdp = per_cpu_ptr(rsp->rda, cpu);
 #endif
@@ -3748,7 +3748,7 @@ static struct rcu_node *exp_funnel_lock(struct rcu_state *rsp, unsigned long s)
 	 * strictly needed for correctness.
 	 */
 #ifdef PER_CPU_DATA_ARRAY
-	rdp = &rsp->rda[raw_smp_processor_id()];
+	rdp = rsp->rda + raw_smp_processor_id();
 #else
 	rdp = per_cpu_ptr(rsp->rda, raw_smp_processor_id());
 #endif
@@ -3814,7 +3814,7 @@ static void synchronize_sched_expedited_wait(struct rcu_state *rsp)
 		       rsp->name);
 		for_each_online_cpu(cpu) {
 #ifdef PER_CPU_DATA_ARRAY
-			rdp = &rsp->rda[cpu];
+			rdp = rsp->rda + cpu;
 #else
 			rdp = per_cpu_ptr(rsp->rda, cpu);
 #endif
@@ -3826,7 +3826,7 @@ static void synchronize_sched_expedited_wait(struct rcu_state *rsp)
 			jiffies - jiffies_start, rsp->expedited_sequence);
 		for_each_online_cpu(cpu) {
 #ifdef PER_CPU_DATA_ARRAY
-			rdp = &rsp->rda[cpu];
+			rdp = rsp->rda + cpu;
 #else
 			rdp = per_cpu_ptr(rsp->rda, cpu);
 #endif
@@ -3885,7 +3885,7 @@ void synchronize_sched_expedited(void)
 	atomic_set(&rsp->expedited_need_qs, 1); /* Extra count avoids race. */
 	for_each_online_cpu(cpu) {
 #ifdef PER_CPU_DATA_ARRAY
-		struct rcu_data *rdp = &rsp->rda[cpu];
+		struct rcu_data *rdp = rsp->rda + cpu;
 		struct rcu_dynticks *rdtp = &rcu_dynticks[cpu];
 #else
 		struct rcu_data *rdp = per_cpu_ptr(rsp->rda, cpu);
@@ -4006,7 +4006,7 @@ static int rcu_pending(void)
 
 	for_each_rcu_flavor(rsp)
 #ifdef PER_CPU_DATA_ARRAY
-		if (__rcu_pending(rsp, &rsp->rda[smp_processor_id()]))
+		if (__rcu_pending(rsp, rsp->rda + smp_processor_id()))
 #else
 		if (__rcu_pending(rsp, this_cpu_ptr(rsp->rda)))
 #endif
@@ -4028,7 +4028,7 @@ static bool __maybe_unused rcu_cpu_has_callbacks(bool *all_lazy)
 
 	for_each_rcu_flavor(rsp) {
 #ifdef PER_CPU_DATA_ARRAY
-		rdp = &rsp->rda[smp_processor_id()];
+		rdp = rsp->rda + smp_processor_id();
 #else
 		rdp = this_cpu_ptr(rsp->rda);
 #endif
@@ -4080,7 +4080,7 @@ static void rcu_barrier_func(void *type)
 {
 	struct rcu_state *rsp = type;
 #ifdef PER_CPU_DATA_ARRAY
-	struct rcu_data *rdp = &rsp->rda[smp_processor_id()];
+	struct rcu_data *rdp = rsp->rda + smp_processor_id();
 #else
 	struct rcu_data *rdp = raw_cpu_ptr(rsp->rda);
 #endif
@@ -4139,7 +4139,7 @@ static void _rcu_barrier(struct rcu_state *rsp)
 		if (!cpu_online(cpu) && !rcu_is_nocb_cpu(cpu))
 			continue;
 #ifdef PER_CPU_DATA_ARRAY
-		rdp = &rsp->rda[cpu];
+		rdp = rsp->rda + cpu;
 #else
 		rdp = per_cpu_ptr(rsp->rda, cpu);
 #endif
@@ -4235,7 +4235,7 @@ rcu_boot_init_percpu_data(int cpu, struct rcu_state *rsp)
 	static struct lock_class_key rcu_exp_sched_rdp_class;
 	unsigned long flags;
 #ifdef PER_CPU_DATA_ARRAY
-	struct rcu_data *rdp = &rsp->rda[cpu];
+	struct rcu_data *rdp = rsp->rda + cpu;
 #else
 	struct rcu_data *rdp = per_cpu_ptr(rsp->rda, cpu);
 #endif
@@ -4276,7 +4276,7 @@ rcu_init_percpu_data(int cpu, struct rcu_state *rsp)
 	unsigned long flags;
 	unsigned long mask;
 #ifdef PER_CPU_DATA_ARRAY
-	struct rcu_data *rdp = &rsp->rda[cpu];
+	struct rcu_data *rdp = rsp->rda + cpu;
 #else
 	struct rcu_data *rdp = per_cpu_ptr(rsp->rda, cpu);
 #endif
@@ -4337,7 +4337,7 @@ int rcu_cpu_notify(struct notifier_block *self,
 {
 	long cpu = (long)hcpu;
 #ifdef PER_CPU_DATA_ARRAY
-	struct rcu_data *rdp = &rcu_state_p->rda[cpu];
+	struct rcu_data *rdp = rcu_state_p->rda + cpu;
 #else
 	struct rcu_data *rdp = per_cpu_ptr(rcu_state_p->rda, cpu);
 #endif
@@ -4375,7 +4375,7 @@ int rcu_cpu_notify(struct notifier_block *self,
 		for_each_rcu_flavor(rsp) {
 			rcu_cleanup_dead_cpu(cpu, rsp);
 #ifdef PER_CPU_DATA_ARRAY
-			do_nocb_deferred_wakeup(&rsp->rda[cpu]);
+			do_nocb_deferred_wakeup(rsp->rda + cpu);
 #else
 			do_nocb_deferred_wakeup(per_cpu_ptr(rsp->rda, cpu));
 #endif
@@ -4580,7 +4580,7 @@ static void __init rcu_init_one(struct rcu_state *rsp,
 		while (i > rnp->grphi)
 			rnp++;
 #ifdef PER_CPU_DATA_ARRAY
-		rsp->rda[i].mynode = rnp;
+		(rsp->rda + i)->mynode = rnp;
 #else
 		per_cpu_ptr(rsp->rda, i)->mynode = rnp;
 #endif

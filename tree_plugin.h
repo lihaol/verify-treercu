@@ -1287,7 +1287,7 @@ static void __init rcu_spawn_boost_kthreads(void)
 static void rcu_prepare_kthreads(int cpu)
 {
 #ifdef PER_CPU_DATA_ARRAY
-	struct rcu_data *rdp = &rcu_state_p->rda[cpu];
+	struct rcu_data *rdp = rcu_state_p->rda + cpu;
 #else
 	struct rcu_data *rdp = per_cpu_ptr(rcu_state_p->rda, cpu);
 #endif
@@ -1435,7 +1435,7 @@ static bool __maybe_unused rcu_try_advance_all_cbs(void)
 
 	for_each_rcu_flavor(rsp) {
 #ifdef PER_CPU_DATA_ARRAY
-		rdp = &rsp->rda[smp_processor_id()];
+		rdp = rsp->rda + smp_processor_id();
 #else
 		rdp = this_cpu_ptr(rsp->rda);
 #endif
@@ -1571,7 +1571,7 @@ static void rcu_prepare_for_idle(void)
 	rdtp->last_accelerate = jiffies;
 	for_each_rcu_flavor(rsp) {
 #ifdef PER_CPU_DATA_ARRAY
-		rdp = &rsp->rda[smp_processor_id()];
+		rdp = rsp->rda + smp_processor_id();
 #else
 		rdp = this_cpu_ptr(rsp->rda);
 #endif
@@ -1649,7 +1649,7 @@ static void rcu_oom_notify_cpu(void *unused)
 
 	for_each_rcu_flavor(rsp) {
 #ifdef PER_CPU_DATA_ARRAY
-		rdp = &rsp->rda[smp_processor_id()];
+		rdp = rsp->rda + smp_processor_id();
 #else
 		rdp = raw_cpu_ptr(rsp->rda);
 #endif
@@ -1757,7 +1757,7 @@ static void print_cpu_stall_info(struct rcu_state *rsp, int cpu)
 {
 	char fast_no_hz[72];
 #ifdef PER_CPU_DATA_ARRAY
-	struct rcu_data *rdp = &rsp->rda[cpu];
+	struct rcu_data *rdp = rsp->rda + cpu;
 #else
 	struct rcu_data *rdp = per_cpu_ptr(rsp->rda, cpu);
 #endif
@@ -1803,7 +1803,7 @@ static void increment_cpu_stall_ticks(void)
 
 	for_each_rcu_flavor(rsp)
 #ifdef PER_CPU_DATA_ARRAY
-		rsp->rda[smp_processor_id()].ticks_this_gp++;
+		(rsp->rda + smp_processor_id())->ticks_this_gp++;
 #else
 		raw_cpu_inc(rsp->rda->ticks_this_gp);
 #endif
@@ -1913,7 +1913,7 @@ static void wake_nocb_leader(struct rcu_data *rdp, bool force)
 static bool rcu_nocb_cpu_needs_barrier(struct rcu_state *rsp, int cpu)
 {
 #ifdef PER_CPU_DATA_ARRAY
-	struct rcu_data *rdp = &rsp->rda[cpu];
+	struct rcu_data *rdp = rsp->rda + cpu;
 #else
 	struct rcu_data *rdp = per_cpu_ptr(rsp->rda, cpu);
 #endif
@@ -2395,7 +2395,7 @@ void __init rcu_init_nohz(void)
 	for_each_rcu_flavor(rsp) {
 		for_each_cpu(cpu, rcu_nocb_mask)
 #ifdef PER_CPU_DATA_ARRAY
-			init_nocb_callback_list(&rsp->rda[cpu]);
+			init_nocb_callback_list(rsp->rda + cpu);
 #else
 			init_nocb_callback_list(per_cpu_ptr(rsp->rda, cpu));
 #endif
@@ -2423,7 +2423,7 @@ static void rcu_spawn_one_nocb_kthread(struct rcu_state *rsp, int cpu)
 	struct rcu_data *rdp_last;
 	struct rcu_data *rdp_old_leader;
 #ifdef PER_CPU_DATA_ARRAY
-	struct rcu_data *rdp_spawn = &rsp->rda[cpu];
+	struct rcu_data *rdp_spawn = rsp->rda + cpu;
 #else
 	struct rcu_data *rdp_spawn = per_cpu_ptr(rsp->rda, cpu);
 #endif
@@ -2519,7 +2519,7 @@ static void __init rcu_organize_nocb_kthreads(struct rcu_state *rsp)
 	 */
 	for_each_cpu(cpu, rcu_nocb_mask) {
 #ifdef PER_CPU_DATA_ARRAY
-		rdp = &rsp->rda[cpu];
+		rdp = rsp->rda + cpu;
 #else
 		rdp = per_cpu_ptr(rsp->rda, cpu);
 #endif
@@ -2974,7 +2974,7 @@ bool rcu_sys_is_idle(void)
 			/* Scan all the CPUs looking for nonidle CPUs. */
 			for_each_possible_cpu(cpu) {
 #ifdef PER_CPU_DATA_ARRAY
-				rdp = &rcu_state_p->rda[cpu];
+				rdp = rcu_state_p->rda + cpu;
 #else
 				rdp = per_cpu_ptr(rcu_state_p->rda, cpu);
 #endif
