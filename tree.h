@@ -582,10 +582,12 @@ extern struct list_head rcu_struct_flavors;
 /* Sequence through rcu_state structures for each RCU flavor. */
 #ifdef CBMC
 #define RCU_FLAVOR_NUM 1
+
 struct rcu_state *rcu_flavors[] = {&rcu_sched_state};
+int rcu_flavor_i;
 
 #define for_each_rcu_flavor(rsp)                      \
-        int rcu_flavor_i = 0;                         \
+        rcu_flavor_i = 0;                             \
         for ((rsp) = rcu_flavors[rcu_flavor_i];       \
              rcu_flavor_i < RCU_FLAVOR_NUM;           \
              (rsp) = rcu_flavors[++rcu_flavor_i])
