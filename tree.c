@@ -4288,8 +4288,10 @@ rcu_init_percpu_data(int cpu, struct rcu_state *rsp)
 	rdp->qlen_last_fqs_check = 0;
 	rdp->n_force_qs_snap = rsp->n_force_qs;
 	rdp->blimit = blimit;
+#ifndef CBMC
 	if (!rdp->nxtlist)
 		init_callback_list(rdp);  /* Re-enable callbacks on this CPU. */
+#endif
 #ifdef VERIFY_RCU_DYNTICKS
 	rdp->dynticks->dynticks_nesting = DYNTICK_TASK_EXIT_IDLE;
 	rcu_sysidle_init_percpu_data(rdp->dynticks);

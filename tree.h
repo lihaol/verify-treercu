@@ -555,12 +555,6 @@ struct rcu_state {
 #define RCU_GP_CLEANUP   5	/* Grace-period cleanup started. */
 #define RCU_GP_CLEANED   6	/* Grace-period cleanup complete. */
 
-extern struct list_head rcu_struct_flavors;
-
-/* Sequence through rcu_state structures for each RCU flavor. */
-#define for_each_rcu_flavor(rsp) \
-	list_for_each_entry((rsp), &rcu_struct_flavors, flavors)
-
 /*
  * RCU implementation internal declarations:
  */
@@ -582,6 +576,23 @@ DECLARE_PER_CPU(int, rcu_cpu_kthread_cpu);
 DECLARE_PER_CPU(unsigned int, rcu_cpu_kthread_loops);
 DECLARE_PER_CPU(char, rcu_cpu_has_work);
 #endif /* #ifdef CONFIG_RCU_BOOST */
+
+extern struct list_head rcu_struct_flavors;
+
+/* Sequence through rcu_state structures for each RCU flavor. */
+#ifdef CBMC
+#define RCU_FLAVOR_NUM 1
+struct rcu_state *rcu_flavors[] = {&rcu_sched_state};
+
+#define for_each_rcu_flavor(rsp)                      \
+        int rcu_flavor_i = 0;                         \
+        for ((rsp) = rcu_flavors[rcu_flavor_i];       \
+             rcu_flavor_i < RCU_FLAVOR_NUM;           \
+             (rsp) = rcu_flavors[++rcu_flavor_i])
+#else
+#define for_each_rcu_flavor(rsp) \
+	list_for_each_entry((rsp), &rcu_struct_flavors, flavors)
+#endif
 
 #ifndef RCU_TREE_NONCORE
 
