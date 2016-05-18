@@ -580,6 +580,10 @@ DECLARE_PER_CPU(char, rcu_cpu_has_work);
 extern struct list_head rcu_struct_flavors;
 
 /* Sequence through rcu_state structures for each RCU flavor. */
+#define for_each_rcu_flavor(rsp) \
+        for ((rsp) = &rcu_sched_state; 0; (rsp) = NULL)
+
+#if 0
 #ifdef CBMC
 #define RCU_FLAVOR_NUM 1
 
@@ -594,6 +598,7 @@ int rcu_flavor_i;
 #else
 #define for_each_rcu_flavor(rsp) \
 	list_for_each_entry((rsp), &rcu_struct_flavors, flavors)
+#endif
 #endif
 
 #ifndef RCU_TREE_NONCORE
