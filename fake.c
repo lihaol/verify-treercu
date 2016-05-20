@@ -44,7 +44,7 @@ int wait_rcu_gp_flag;
 void wait_rcu_gp(call_rcu_func_t crf)
 {
 	WRITE_ONCE(wait_rcu_gp_flag, 1);
-	cond_resched();
+	rcu_note_context_switch();
 	rcu_process_callbacks(NULL);
 #ifdef CBMC
 	__CPROVER_assume(wait_rcu_gp_flag == 0);
