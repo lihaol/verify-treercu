@@ -227,7 +227,7 @@ struct rcu_synchronize {
 
 void wakeme_after_rcu(struct rcu_head *head);
 
-#ifdef CBMC
+#if defined(CBMC) || defined(RUN) 
 void wait_rcu_gp(call_rcu_func_t crf);
 #else // #ifdef CBMC
 void __wait_rcu_gp(bool checktiny, int n, call_rcu_func_t *crcu_array,
