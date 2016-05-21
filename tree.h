@@ -194,6 +194,7 @@ struct rcu_node {
 				/*  before propagating offline up the */
 				/*  rcu_node tree? */
 	struct rcu_node *parent;
+#ifdef VERIFY_RCU_LIST
 	struct list_head blkd_tasks;
 				/* Tasks blocked in RCU read-side critical */
 				/*  section.  Tasks are placed at the head */
@@ -216,6 +217,7 @@ struct rcu_node {
 				/*  queued on this rcu_node structure that */
 				/*  are blocking the current grace period, */
 				/*  there can be no such task. */
+#endif
 #ifdef CONFIG_RCU_BOOST
 	struct rt_mutex boost_mtx;
 				/* Used only for the priority-boosting */
@@ -317,6 +319,7 @@ struct rcu_data {
 					/*  for CPU stopping. */
 #endif
 
+#ifdef VERIFY_RCU_LIST
 	/* 2) batch handling */
 	/*
 	 * If nxtlist is not NULL, it is partitioned as follows.
@@ -355,6 +358,7 @@ struct rcu_data {
 	unsigned long	n_force_qs_snap;
 					/* did other CPU force QS recently? */
 	long		blimit;		/* Upper limit on a processed batch */
+#endif
 
 #ifdef VERIFY_RCU_DYNTICKS
 	/* 3) dynticks interface. */
@@ -483,12 +487,15 @@ struct rcu_state {
 	unsigned long gpnum;			/* Current gp number. */
 	unsigned long completed;		/* # of last completed gp. */
 	struct task_struct *gp_kthread;		/* Task for grace periods. */
+#ifdef VERIFY_RCU_LIST
 	wait_queue_head_t gp_wq;		/* Where GP task waits. */
+#endif
 	short gp_flags;				/* Commands for GP task. */
 	short gp_state;				/* GP kthread sleep state. */
 
 	/* End of fields guarded by root rcu_node's lock. */
 
+#ifdef VERIFY_RCU_LIST
 	raw_spinlock_t orphan_lock ____cacheline_internodealigned_in_smp;
 						/* Protect following fields. */
 	struct rcu_head *orphan_nxtlist;	/* Orphaned callbacks that */
@@ -500,6 +507,7 @@ struct rcu_state {
 	long qlen_lazy;				/* Number of lazy callbacks. */
 	long qlen;				/* Total number of callbacks. */
 	/* End of fields guarded by orphan_lock. */
+#endif
 
 	struct mutex barrier_mutex;		/* Guards barrier fields. */
 	atomic_t barrier_cpu_count;		/* # CPUs waiting on. */
@@ -508,6 +516,7 @@ struct rcu_state {
 						/*  _rcu_barrier(). */
 	/* End of fields guarded by barrier_mutex. */
 
+#ifdef VERIFY_RCU_EXPEDITED_GP
 	unsigned long expedited_sequence;	/* Take a ticket. */
 	atomic_long_t expedited_workdone0;	/* # done by others #0. */
 	atomic_long_t expedited_workdone1;	/* # done by others #1. */
@@ -525,6 +534,7 @@ struct rcu_state {
 						/*  due to lock unavailable. */
 	unsigned long n_force_qs_ngp;		/* Number of calls leaving */
 						/*  due to no GP active. */
+#endif
 	unsigned long gp_start;			/* Time at which GP started, */
 						/*  but in jiffies. */
 	unsigned long gp_activity;		/* Time of last GP kthread */
@@ -539,7 +549,9 @@ struct rcu_state {
 						/*  jiffies. */
 	const char *name;			/* Name of structure. */
 	char abbr;				/* Abbreviated name. */
+#ifdef VERIFY_RCU_LIST
 	struct list_head flavors;		/* List of RCU flavors. */
+#endif
 };
 
 /* Values for rcu_state structure's gp_flags field. */

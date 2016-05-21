@@ -658,8 +658,12 @@ EXPORT_SYMBOL_GPL(rcutorture_record_progress);
 static int
 cpu_has_callbacks_ready_to_invoke(struct rcu_data *rdp)
 {
+#ifdef VERIFY_RCU_LIST
 	return &rdp->nxtlist != rdp->nxttail[RCU_DONE_TAIL] &&
 	       rdp->nxttail[RCU_DONE_TAIL] != NULL;
+#else
+	return 0;
+#endif
 }
 
 /*
@@ -698,6 +702,7 @@ cpu_needs_another_gp(struct rcu_state *rsp, struct rcu_data *rdp)
 		return 0;  /* No, a grace period is already in progress. */
 	if (rcu_future_needs_gp(rsp))
 		return 1;  /* Yes, a no-CBs CPU needs one. */
+#ifdef VERIFY_RCU_LIST
 	if (!rdp->nxttail[RCU_NEXT_TAIL])
 		return 0;  /* No, this is a no-CBs (or offline) CPU. */
 	if (*rdp->nxttail[RCU_NEXT_READY_TAIL])
@@ -707,6 +712,7 @@ cpu_needs_another_gp(struct rcu_state *rsp, struct rcu_data *rdp)
 		    ULONG_CMP_LT(READ_ONCE(rsp->completed),
 				 rdp->nxtcompleted[i]))
 			return 1;  /* Yes, CBs for future grace period. */
+#endif
 	return 0; /* No grace period needed. */
 }
 
@@ -1578,11 +1584,13 @@ void rcu_cpu_stall_reset(void)
  */
 static void init_default_callback_list(struct rcu_data *rdp)
 {
+#ifdef VERIFY_RCU_LIST
 	int i;
 
 	rdp->nxtlist = NULL;
 	for (i = 0; i < RCU_NEXT_SIZE; i++)
 		rdp->nxttail[i] = &rdp->nxtlist;
+#endif
 }
 
 /*
@@ -1700,10 +1708,12 @@ rcu_start_future_gp(struct rcu_node *rnp, struct rcu_data *rdp,
 	 * earlier.  Adjust callbacks as needed.  Note that even no-CBs
 	 * CPUs have a ->nxtcompleted[] array, so no no-CBs checks needed.
 	 */
+#ifdef VERIFY_RCU_LIST
 	c = rcu_cbs_completed(rdp->rsp, rnp_root);
 	for (i = RCU_DONE_TAIL; i < RCU_NEXT_TAIL; i++)
 		if (ULONG_CMP_LT(c, rdp->nxtcompleted[i]))
 			rdp->nxtcompleted[i] = c;
+#endif
 
 	/*
 	 * If the needed for the required grace period is already
@@ -1794,9 +1804,9 @@ static void rcu_gp_kthread_wake(struct rcu_state *rsp)
 static bool rcu_accelerate_cbs(struct rcu_state *rsp, struct rcu_node *rnp,
 			       struct rcu_data *rdp)
 {
-	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN))
-		return false;
-
+#ifndef VERIFY_RCU_LIST
+	return false;
+#else
 	unsigned long c;
 	int i;
 	bool ret;
@@ -1852,6 +1862,7 @@ static bool rcu_accelerate_cbs(struct rcu_state *rsp, struct rcu_node *rnp,
 	else
 		trace_rcu_grace_period(rsp->name, rdp->gpnum, TPS("AccReadyCB"));
 	return ret;
+#endif
 }
 
 /*
@@ -1867,9 +1878,9 @@ static bool rcu_accelerate_cbs(struct rcu_state *rsp, struct rcu_node *rnp,
 static bool rcu_advance_cbs(struct rcu_state *rsp, struct rcu_node *rnp,
 			    struct rcu_data *rdp)
 {
-	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN))
-		return false;
-
+#ifndef VERIFY_RCU_LIST
+	return false;
+#else
 	int i, j;
 
 	/* If the CPU has no callbacks, nothing to do. */
@@ -1899,6 +1910,7 @@ static bool rcu_advance_cbs(struct rcu_state *rsp, struct rcu_node *rnp,
 
 	/* Classify any remaining callbacks. */
 	return rcu_accelerate_cbs(rsp, rnp, rdp);
+#endif
 }
 
 /*
@@ -2902,9 +2914,11 @@ static void rcu_cleanup_dead_cpu(int cpu, struct rcu_state *rsp)
 	raw_spin_unlock_irqrestore(&rsp->orphan_lock, flags);
 #endif
 
+#ifdef VERIFY_RCU_LIST
 	WARN_ONCE(rdp->qlen != 0 || rdp->nxtlist != NULL,
 		  "rcu_cleanup_dead_cpu: Callbacks on offline CPU %d: qlen=%lu, nxtlist=%p\n",
 		  cpu, rdp->qlen, rdp->nxtlist);
+#endif
 }
 
 /*
@@ -2913,6 +2927,9 @@ static void rcu_cleanup_dead_cpu(int cpu, struct rcu_state *rsp)
  */
 static void rcu_do_batch(struct rcu_state *rsp, struct rcu_data *rdp)
 {
+#ifndef VERIFY_RCU_LIST
+	return;
+#else
 	unsigned long flags;
 	struct rcu_head *next, *list, **tail;
 	long bl, count, count_lazy;
@@ -2997,6 +3014,7 @@ static void rcu_do_batch(struct rcu_state *rsp, struct rcu_data *rdp)
 	/* Re-invoke RCU core processing if there are callbacks remaining. */
 	if (cpu_has_callbacks_ready_to_invoke(rdp))
 		invoke_rcu_core();
+#endif
 }
 
 /*
@@ -3060,6 +3078,7 @@ static void force_qs_rnp(struct rcu_state *rsp,
 				  unsigned long *maxj),
 			 bool *isidle, unsigned long *maxj)
 {
+#ifdef VERIFY_RCU_EXPEDITED_GP
 	unsigned long bit;
 	int cpu;
 	unsigned long flags;
@@ -3116,6 +3135,7 @@ static void force_qs_rnp(struct rcu_state *rsp,
 			raw_spin_unlock_irqrestore(&rnp->lock, flags);
 		}
 	}
+#endif
 }
 
 /*
@@ -3124,6 +3144,7 @@ static void force_qs_rnp(struct rcu_state *rsp,
  */
 static void force_quiescent_state(struct rcu_state *rsp)
 {
+#ifdef VERIFY_RCU_EXPEDITED_GP
 	unsigned long flags;
 	bool ret;
 	struct rcu_node *rnp;
@@ -3160,6 +3181,7 @@ static void force_quiescent_state(struct rcu_state *rsp)
 	WRITE_ONCE(rsp->gp_flags, READ_ONCE(rsp->gp_flags) | RCU_GP_FLAG_FQS);
 	raw_spin_unlock_irqrestore(&rnp_old->lock, flags);
 	rcu_gp_kthread_wake(rsp);
+#endif
 }
 
 /*
@@ -3264,6 +3286,7 @@ static void __call_rcu_core(struct rcu_state *rsp, struct rcu_data *rdp,
 	if (irqs_disabled_flags(flags) || cpu_is_offline(smp_processor_id()))
 		return;
 
+#ifdef VERIFY_RCU_LIST
 	/*
 	 * Force the grace period if too many callbacks or too long waiting.
 	 * Enforce hysteresis, and don't invoke force_quiescent_state()
@@ -3296,6 +3319,7 @@ static void __call_rcu_core(struct rcu_state *rsp, struct rcu_data *rdp,
 			rdp->qlen_last_fqs_check = rdp->qlen;
 		}
 	}
+#endif
 }
 
 /*
@@ -3315,6 +3339,7 @@ static void
 __call_rcu(struct rcu_head *head, void (*func)(struct rcu_head *rcu),
 	   struct rcu_state *rsp, int cpu, bool lazy)
 {
+#ifdef VERIFY_RCU_LIST
 	unsigned long flags;
 	struct rcu_data *rdp;
 
@@ -3386,6 +3411,7 @@ __call_rcu(struct rcu_head *head, void (*func)(struct rcu_head *rcu),
 	/* Go handle any RCU core processing required. */
 	__call_rcu_core(rsp, rdp, head, flags);
 	local_irq_restore(flags);
+#endif
 }
 
 /*
@@ -4021,6 +4047,9 @@ static int rcu_pending(void)
  */
 static bool __maybe_unused rcu_cpu_has_callbacks(bool *all_lazy)
 {
+#ifndef VERIFY_RCU_LIST
+	return false;
+#else
 	bool al = true;
 	bool hc = false;
 	struct rcu_data *rdp;
@@ -4043,6 +4072,7 @@ static bool __maybe_unused rcu_cpu_has_callbacks(bool *all_lazy)
 	if (all_lazy)
 		*all_lazy = al;
 	return hc;
+#endif
 }
 
 /*
@@ -4096,9 +4126,9 @@ static void rcu_barrier_func(void *type)
  */
 static void _rcu_barrier(struct rcu_state *rsp)
 {
-	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN))
-		return;
-
+#ifndef VERIFY_RCU_LIST
+	return;
+#else
 	int cpu;
 	struct rcu_data *rdp;
 	unsigned long s = rcu_seq_snap(&rsp->barrier_sequence);
@@ -4182,6 +4212,7 @@ static void _rcu_barrier(struct rcu_state *rsp)
 
 	/* Other rcu_barrier() invocations can now safely proceed. */
 	mutex_unlock(&rsp->barrier_mutex);
+#endif
 }
 
 /**
@@ -4285,10 +4316,12 @@ rcu_init_percpu_data(int cpu, struct rcu_state *rsp)
 	/* Set up local state, ensuring consistent view of global state. */
 	raw_spin_lock_irqsave(&rnp->lock, flags);
 	rdp->beenonline = 1;	 /* We have now been online. */
-	rdp->qlen_last_fqs_check = 0;
+#ifdef VERIFY_RCU_EXPEDITED_GP
 	rdp->n_force_qs_snap = rsp->n_force_qs;
+#endif
+#ifdef VERIFY_RCU_LIST
+	rdp->qlen_last_fqs_check = 0;
 	rdp->blimit = blimit;
-#ifndef CBMC
 	if (!rdp->nxtlist)
 		init_callback_list(rdp);  /* Re-enable callbacks on this CPU. */
 #endif
@@ -4562,8 +4595,10 @@ static void __init rcu_init_one(struct rcu_state *rsp,
 					      j / levelspread[i - 1];
 			}
 			rnp->level = i;
+#ifdef VERIFY_RCU_LIST
 			INIT_LIST_HEAD(&rnp->blkd_tasks);
 			rcu_init_one_nocb(rnp);
+#endif
 			mutex_init(&rnp->exp_funnel_mutex);
 			if (rsp == &rcu_sched_state)
 				lockdep_set_class_and_name(
@@ -4576,7 +4611,9 @@ static void __init rcu_init_one(struct rcu_state *rsp,
 		}
 	}
 
+#ifdef VERIFY_RCU_LIST
 	init_waitqueue_head(&rsp->gp_wq);
+#endif
 	rnp = rsp->level[rcu_num_lvls - 1];
 	for_each_possible_cpu(i) {
 		while (i > rnp->grphi)
@@ -4588,7 +4625,9 @@ static void __init rcu_init_one(struct rcu_state *rsp,
 #endif
 		rcu_boot_init_percpu_data(i, rsp);
 	}
+#ifdef VERIFY_RCU_LIST
 	list_add(&rsp->flavors, &rcu_struct_flavors);
+#endif
 }
 
 /*
