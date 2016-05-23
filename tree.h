@@ -173,10 +173,12 @@ struct rcu_node {
 				/*  an rcu_data structure, otherwise, each */
 				/*  bit corresponds to a child rcu_node */
 				/*  structure. */
+#ifdef VERIFY_RCU_LIST
 	unsigned long expmask;	/* Groups that have ->blkd_tasks */
 				/*  elements that need to drain to allow the */
 				/*  current expedited grace period to */
 				/*  complete (only for PREEMPT_RCU). */
+#endif
 	unsigned long qsmaskinit;
 				/* Per-GP initial value for qsmask & expmask. */
 				/*  Initialized from ->qsmaskinitnext at the */
@@ -189,12 +191,12 @@ struct rcu_node {
 	int	grphi;		/* highest-numbered CPU or group here. */
 	u8	grpnum;		/* CPU/group number for next level up. */
 	u8	level;		/* root is at level 0. */
+	struct rcu_node *parent;
+#ifdef VERIFY_RCU_LIST
 	bool	wait_blkd_tasks;/* Necessary to wait for blocked tasks to */
 				/*  exit RCU read-side critical sections */
 				/*  before propagating offline up the */
 				/*  rcu_node tree? */
-	struct rcu_node *parent;
-#ifdef VERIFY_RCU_LIST
 	struct list_head blkd_tasks;
 				/* Tasks blocked in RCU read-side critical */
 				/*  section.  Tasks are placed at the head */
@@ -253,11 +255,13 @@ struct rcu_node {
 	wait_queue_head_t nocb_gp_wq[2];
 				/* Place for rcu_nocb_kthread() to wait GP. */
 #endif /* #ifdef CONFIG_RCU_NOCB_CPU */
+#ifdef VERIFY_RCU_FULL_STRUCT
 	int need_future_gp[2];
 				/* Counts of upcoming no-CB GP requests. */
 	raw_spinlock_t fqslock ____cacheline_internodealigned_in_smp;
 
 	struct mutex exp_funnel_mutex ____cacheline_internodealigned_in_smp;
+#endif
 } ____cacheline_internodealigned_in_smp;
 
 /*
@@ -305,14 +309,18 @@ struct rcu_data {
 					/*  for rcu_all_qs() invocations. */
 	bool		passed_quiesce;	/* User-mode/idle loop etc. */
 	bool		qs_pending;	/* Core waits for quiesc state. */
+#ifdef VERIFY_RCU_OFFLINE_CPU
 	bool		beenonline;	/* CPU online at least once. */
+#endif
 	bool		gpwrap;		/* Possible gpnum/completed wrap. */
 	struct rcu_node *mynode;	/* This CPU's leaf of hierarchy */
 	unsigned long grpmask;		/* Mask to apply to leaf qsmask. */
+#ifdef VERIFY_RCU_FULL_STRUCT
 	unsigned long	ticks_this_gp;	/* The number of scheduling-clock */
 					/*  ticks this CPU has handled */
 					/*  during and after the last grace */
 					/* period it is aware of. */
+#endif
 #ifdef VERIFY_RCU_EXPEDITED_GP
 	struct cpu_stop_work exp_stop_work;
 					/* Expedited grace-period control */
@@ -366,13 +374,16 @@ struct rcu_data {
 	int dynticks_snap;		/* Per-GP tracking for dynticks. */
 #endif
 
+#ifdef VERIFY_RCU_QS_FORCING
 	/* 4) reasons this CPU needed to be kicked by force_quiescent_state */
 	unsigned long dynticks_fqs;	/* Kicked due to dynticks idle. */
 	unsigned long offline_fqs;	/* Kicked due to being offline. */
 	unsigned long cond_resched_completed;
 					/* Grace period that needs help */
 					/*  from cond_resched(). */
+#endif
 
+#ifdef VERIFY_RCU_FULL_STRUCT
 	/* 5) __rcu_pending() statistics. */
 	unsigned long n_rcu_pending;	/* rcu_pending() calls since boot. */
 	unsigned long n_rp_qs_pending;
@@ -383,14 +394,19 @@ struct rcu_data {
 	unsigned long n_rp_gp_started;
 	unsigned long n_rp_nocb_defer_wakeup;
 	unsigned long n_rp_need_nothing;
+#endif
 
 	/* 6) _rcu_barrier(), OOM callbacks, and expediting. */
+#ifdef VERIFY_RCU_LIST
 	struct rcu_head barrier_head;
+#endif
 #ifdef CONFIG_RCU_FAST_NO_HZ
 	struct rcu_head oom_head;
 #endif /* #ifdef CONFIG_RCU_FAST_NO_HZ */
+#ifdef VERIFY_RCU_EXPEDITED_GP
 	struct mutex exp_funnel_mutex;
 	bool exp_done;			/* Expedited QS for this CPU? */
+#endif
 
 	/* 7) Callback offloading. */
 #ifdef CONFIG_RCU_NOCB_CPU
@@ -417,8 +433,10 @@ struct rcu_data {
 					/* Leader CPU takes GP-end wakeups. */
 #endif /* #ifdef CONFIG_RCU_NOCB_CPU */
 
+#ifdef VERIFY_RCU_CPU_STALL
 	/* 8) RCU CPU stall data. */
 	unsigned int softirq_snap;	/* Snapshot of softirq activity. */
+#endif
 
 	int cpu;
 	struct rcu_state *rsp;
@@ -474,19 +492,24 @@ struct rcu_state {
 	struct rcu_node *level[RCU_NUM_LVLS + 1];
 						/* Hierarchy levels (+1 to */
 						/*  shut bogus gcc warning) */
-	u8 flavor_mask;				/* bit in flavor mask. */
 	struct rcu_data __percpu *rda;		/* pointer of percu rcu_data. */
+#ifdef VERIFY_RCU_FULL_STRUCT
+	u8 flavor_mask;				/* bit in flavor mask. */
 	void (*call)(struct rcu_head *head,	/* call_rcu() flavor. */
 		     void (*func)(struct rcu_head *head));
+#endif
 
 	/* The following fields are guarded by the root rcu_node's lock. */
-
+#ifdef VERIFY_RCU_QS_FORCING
 	u8	fqs_state ____cacheline_internodealigned_in_smp;
 						/* Force QS state. */
 	u8	boost;				/* Subject to priority boost. */
+#endif
 	unsigned long gpnum;			/* Current gp number. */
 	unsigned long completed;		/* # of last completed gp. */
+#ifdef VERIFY_RCU_FULL_STRUCT
 	struct task_struct *gp_kthread;		/* Task for grace periods. */
+#endif
 #ifdef VERIFY_RCU_LIST
 	wait_queue_head_t gp_wq;		/* Where GP task waits. */
 #endif
@@ -509,12 +532,14 @@ struct rcu_state {
 	/* End of fields guarded by orphan_lock. */
 #endif
 
+#ifdef VERIFY_RCU_FULL_STRUCT
 	struct mutex barrier_mutex;		/* Guards barrier fields. */
 	atomic_t barrier_cpu_count;		/* # CPUs waiting on. */
 	struct completion barrier_completion;	/* Wake at barrier end. */
 	unsigned long barrier_sequence;		/* ++ at start and end of */
 						/*  _rcu_barrier(). */
 	/* End of fields guarded by barrier_mutex. */
+#endif
 
 #ifdef VERIFY_RCU_EXPEDITED_GP
 	unsigned long expedited_sequence;	/* Take a ticket. */
@@ -534,7 +559,6 @@ struct rcu_state {
 						/*  due to lock unavailable. */
 	unsigned long n_force_qs_ngp;		/* Number of calls leaving */
 						/*  due to no GP active. */
-#endif
 	unsigned long gp_start;			/* Time at which GP started, */
 						/*  but in jiffies. */
 	unsigned long gp_activity;		/* Time of last GP kthread */
@@ -547,8 +571,11 @@ struct rcu_state {
 						/*  GP start. */
 	unsigned long gp_max;			/* Maximum GP duration in */
 						/*  jiffies. */
+#endif
+#ifdef VERIFY_RCU_FULL_STRUCT
 	const char *name;			/* Name of structure. */
 	char abbr;				/* Abbreviated name. */
+#endif
 #ifdef VERIFY_RCU_LIST
 	struct list_head flavors;		/* List of RCU flavors. */
 #endif
