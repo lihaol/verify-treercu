@@ -374,7 +374,9 @@ bool rcu_gp_init_no_kthread(struct rcu_state *rsp)
 	/* Locking provides needed memory barrier. */
 	bool ret = rcu_gp_init(rsp);
 	cond_resched_rcu_qs();
+#ifdef VERIFY_RCU_EXPEDITED_GP
 	WRITE_ONCE(rsp->gp_activity, jiffies);
+#endif
 	WARN_ON(signal_pending(current));
 	trace_rcu_grace_period(rsp->name,
 			       READ_ONCE(rsp->gpnum),
