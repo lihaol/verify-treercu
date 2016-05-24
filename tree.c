@@ -1978,7 +1978,9 @@ static bool __note_gp_changes(struct rcu_state *rsp, struct rcu_node *rnp,
 		rdp->rcu_qs_ctr_snap = __this_cpu_read(rcu_qs_ctr);
 #endif
 		rdp->qs_pending = !!(rnp->qsmask & rdp->grpmask);
+#ifdef VERIFY_RCU_CPU_STALL
 		zero_cpu_stall_ticks(rdp);
+#endif
 		WRITE_ONCE(rdp->gpwrap, false);
 	}
 	return ret;
@@ -3081,7 +3083,9 @@ static void rcu_do_batch(struct rcu_state *rsp, struct rcu_data *rdp)
 void rcu_check_callbacks(int user)
 {
 	trace_rcu_utilization(TPS("Start scheduler-tick"));
+#ifdef VERIFY_RCU_CPU_STALL
 	increment_cpu_stall_ticks();
+#endif
 	if (user || rcu_is_cpu_rrupt_from_idle()) {
 
 		/*
