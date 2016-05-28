@@ -1229,9 +1229,11 @@ static int dyntick_save_progress_counter(struct rcu_data *rdp,
 		trace_rcu_fqs(rdp->rsp->name, rdp->gpnum, rdp->cpu, TPS("dti"));
 		return 1;
 	} else {
+#ifdef VERIFY_RCU_FULL_STRUCT
 		if (ULONG_CMP_LT(READ_ONCE(rdp->gpnum) + ULONG_MAX / 4,
 				 rdp->mynode->gpnum))
 			WRITE_ONCE(rdp->gpwrap, true);
+#endif
 		return 0;
 	}
 }
@@ -1947,9 +1949,12 @@ static bool __note_gp_changes(struct rcu_state *rsp, struct rcu_node *rnp,
 	bool ret;
 
 	/* Handle the ends of any preceding grace periods first. */
+#ifdef VERIFY_RCU_FULL_STRUCT
 	if (rdp->completed == rnp->completed &&
 	    !unlikely(READ_ONCE(rdp->gpwrap))) {
-
+#else
+	if (rdp->completed == rnp->completed) {
+#endif
 		/* No grace period end, so just accelerate recent callbacks. */
 		ret = rcu_accelerate_cbs(rsp, rnp, rdp);
 
@@ -1963,7 +1968,11 @@ static bool __note_gp_changes(struct rcu_state *rsp, struct rcu_node *rnp,
 		trace_rcu_grace_period(rsp->name, rdp->gpnum, TPS("cpuend"));
 	}
 
+#ifdef VERIFY_RCU_FULL_STRUCT
 	if (rdp->gpnum != rnp->gpnum || unlikely(READ_ONCE(rdp->gpwrap))) {
+#else
+	if (rdp->gpnum != rnp->gpnum) {
+#endif
 		/*
 		 * If the current grace period is waiting for this CPU,
 		 * set up to detect a quiescent state, otherwise don't
@@ -1981,7 +1990,9 @@ static bool __note_gp_changes(struct rcu_state *rsp, struct rcu_node *rnp,
 #ifdef VERIFY_RCU_CPU_STALL
 		zero_cpu_stall_ticks(rdp);
 #endif
+#ifdef VERIFY_RCU_FULL_STRUCT
 		WRITE_ONCE(rdp->gpwrap, false);
+#endif
 	}
 	return ret;
 }
@@ -1996,7 +2007,11 @@ static void note_gp_changes(struct rcu_state *rsp, struct rcu_data *rdp)
 	rnp = rdp->mynode;
 	if ((rdp->gpnum == READ_ONCE(rnp->gpnum) &&
 	     rdp->completed == READ_ONCE(rnp->completed) &&
+#ifdef VERIFY_RCU_FULL_STRUCT
 	     !unlikely(READ_ONCE(rdp->gpwrap))) || /* w/out lock. */
+#else
+	     true) ||
+#endif
 	    !raw_spin_trylock(&rnp->lock)) { /* irqs already off, so later. */
 		local_irq_restore(flags);
 		return;
@@ -2661,9 +2676,12 @@ rcu_report_qs_rdp(int cpu, struct rcu_state *rsp, struct rcu_data *rdp)
 #else
 	     rdp->rcu_qs_ctr_snap == __this_cpu_read(rcu_qs_ctr)) ||
 #endif
+#ifdef VERIFY_RCU_FULL_STRUCT
 	    rdp->gpnum != rnp->gpnum || rnp->completed == rnp->gpnum ||
 	    rdp->gpwrap) {
-
+#else
+	    rdp->gpnum != rnp->gpnum || rnp->completed == rnp->gpnum) {
+#endif
 		/*
 		 * The grace period in which this quiescent state was
 		 * recorded has ended, so don't report it upwards.
@@ -4076,10 +4094,12 @@ static int __rcu_pending(struct rcu_state *rsp, struct rcu_data *rdp)
 	}
 
 	/* Has a new RCU grace period started? */
+#ifdef VERIFY_RCU_FULL_STRUCT
 	if (READ_ONCE(rnp->gpnum) != rdp->gpnum ||
 	    unlikely(READ_ONCE(rdp->gpwrap))) { /* outside lock */
-#ifdef VERIFY_RCU_FULL_STRUCT
 		rdp->n_rp_gp_started++;
+#else
+	if (READ_ONCE(rnp->gpnum) != rdp->gpnum) {
 #endif
 		return 1;
 	}

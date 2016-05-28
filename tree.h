@@ -312,10 +312,10 @@ struct rcu_data {
 #ifdef VERIFY_RCU_OFFLINE_CPU
 	bool		beenonline;	/* CPU online at least once. */
 #endif
-	bool		gpwrap;		/* Possible gpnum/completed wrap. */
 	struct rcu_node *mynode;	/* This CPU's leaf of hierarchy */
 	unsigned long grpmask;		/* Mask to apply to leaf qsmask. */
 #ifdef VERIFY_RCU_FULL_STRUCT
+	bool		gpwrap;		/* Possible gpnum/completed wrap. */
 	unsigned long	ticks_this_gp;	/* The number of scheduling-clock */
 					/*  ticks this CPU has handled */
 					/*  during and after the last grace */

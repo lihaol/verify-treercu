@@ -1447,7 +1447,11 @@ static bool __maybe_unused rcu_try_advance_all_cbs(void)
 		 * callbacks not yet ready to invoke.
 		 */
 		if ((rdp->completed != rnp->completed ||
+#ifdef VERIFY_RCU_FULL_STRUCT
 		     unlikely(READ_ONCE(rdp->gpwrap))) &&
+#else
+		     false) &&
+#endif
 		    rdp->nxttail[RCU_DONE_TAIL] != rdp->nxttail[RCU_NEXT_TAIL])
 			note_gp_changes(rsp, rdp);
 
