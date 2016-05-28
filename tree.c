@@ -1959,6 +1959,7 @@ static bool __note_gp_changes(struct rcu_state *rsp, struct rcu_node *rnp,
 #else
 	if (rdp->completed == rnp->completed) {
 #endif
+
 		/* No grace period end, so just accelerate recent callbacks. */
 		ret = rcu_accelerate_cbs(rsp, rnp, rdp);
 
@@ -2689,6 +2690,7 @@ rcu_report_qs_rdp(int cpu, struct rcu_state *rsp, struct rcu_data *rdp)
 	if (rdp->passed_quiesce == 0 ||
 	    rdp->gpnum != rnp->gpnum || rnp->completed == rnp->gpnum) {
 #endif
+
 		/*
 		 * The grace period in which this quiescent state was
 		 * recorded has ended, so don't report it upwards.
