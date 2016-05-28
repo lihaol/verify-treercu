@@ -4613,7 +4613,7 @@ static int __init rcu_spawn_gp_kthread(void)
 #endif
 		if (IS_ENABLED(CBMC) || IS_ENABLED(RUN)) {
 			bool ret = rcu_gp_init(rsp);
-			WARN_ON(!ret);
+			WARN_ON(ret);
 		}
 	}
 	rcu_spawn_nocb_kthreads();
