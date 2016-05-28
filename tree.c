@@ -345,8 +345,10 @@ static DEFINE_PER_CPU(struct rcu_dynticks, rcu_dynticks) = {
 #endif // #ifdef PER_CPU_DATA_ARRAY
 #endif // #ifdef VERIFY_RCU_DYNTICKS
 
+#ifdef VERIFY_RCU_FULL_STRUCT
 DEFINE_PER_CPU_SHARED_ALIGNED(unsigned long, rcu_qs_ctr);
 EXPORT_PER_CPU_SYMBOL_GPL(rcu_qs_ctr);
+#endif
 
 /*
  * Let the RCU core know that this CPU has gone through the scheduler,
@@ -452,10 +454,12 @@ void rcu_all_qs(void)
 	if (unlikely(raw_cpu_read(rcu_sched_qs_mask)))
 #endif
 		rcu_momentary_dyntick_idle();
+#ifdef VERIFY_RCU_FULL_STRUCT
 #ifdef PER_CPU_DATA_ARRAY
         rcu_qs_ctr[smp_processor_id()]++;
 #else
 	this_cpu_inc(rcu_qs_ctr);
+#endif
 #endif
 }
 EXPORT_SYMBOL_GPL(rcu_all_qs);
@@ -1981,10 +1985,12 @@ static bool __note_gp_changes(struct rcu_state *rsp, struct rcu_node *rnp,
 		rdp->gpnum = rnp->gpnum;
 		trace_rcu_grace_period(rsp->name, rdp->gpnum, TPS("cpustart"));
 		rdp->passed_quiesce = 0;
+#ifdef VERIFY_RCU_FULL_STRUCT
 #ifdef PER_CPU_DATA_ARRAY
 		rdp->rcu_qs_ctr_snap = rcu_qs_ctr[smp_processor_id()];
 #else
 		rdp->rcu_qs_ctr_snap = __this_cpu_read(rcu_qs_ctr);
+#endif
 #endif
 		rdp->qs_pending = !!(rnp->qsmask & rdp->grpmask);
 #ifdef VERIFY_RCU_CPU_STALL
@@ -2670,16 +2676,17 @@ rcu_report_qs_rdp(int cpu, struct rcu_state *rsp, struct rcu_data *rdp)
 	rnp = rdp->mynode;
 	raw_spin_lock_irqsave(&rnp->lock, flags);
 	smp_mb__after_unlock_lock();
+#ifdef VERIFY_RCU_FULL_STRUCT
 	if ((rdp->passed_quiesce == 0 &&
 #ifdef PER_CPU_DATA_ARRAY
 	     rdp->rcu_qs_ctr_snap == rcu_qs_ctr[smp_processor_id()]) ||
 #else
 	     rdp->rcu_qs_ctr_snap == __this_cpu_read(rcu_qs_ctr)) ||
 #endif
-#ifdef VERIFY_RCU_FULL_STRUCT
 	    rdp->gpnum != rnp->gpnum || rnp->completed == rnp->gpnum ||
 	    rdp->gpwrap) {
 #else
+	if (rdp->passed_quiesce == 0 ||
 	    rdp->gpnum != rnp->gpnum || rnp->completed == rnp->gpnum) {
 #endif
 		/*
@@ -2689,10 +2696,12 @@ rcu_report_qs_rdp(int cpu, struct rcu_state *rsp, struct rcu_data *rdp)
 		 * within the current grace period.
 		 */
 		rdp->passed_quiesce = 0;	/* need qs for new gp. */
+#ifdef VERIFY_RCU_FULL_STRUCT
 #ifdef PER_CPU_DATA_ARRAY
 		rdp->rcu_qs_ctr_snap = rcu_qs_ctr[smp_processor_id()];
 #else
 		rdp->rcu_qs_ctr_snap = __this_cpu_read(rcu_qs_ctr);
+#endif
 #endif
 		raw_spin_unlock_irqrestore(&rnp->lock, flags);
 		return;
@@ -2739,11 +2748,15 @@ rcu_check_quiescent_state(struct rcu_state *rsp, struct rcu_data *rdp)
 	 * Was there a quiescent state since the beginning of the grace
 	 * period? If no, then exit and wait for the next call.
 	 */
+#ifdef VERIFY_RCU_FULL_STRUCT
 	if (!rdp->passed_quiesce &&
 #ifdef PER_CPU_DATA_ARRAY
 	    rdp->rcu_qs_ctr_snap == rcu_qs_ctr[smp_processor_id()])
 #else
 	    rdp->rcu_qs_ctr_snap == __this_cpu_read(rcu_qs_ctr))
+#endif
+#else
+	if (!rdp->passed_quiesce)
 #endif
 		return;
 
@@ -4046,6 +4059,7 @@ static int __rcu_pending(struct rcu_state *rsp, struct rcu_data *rdp)
 		return 0;
 
 	/* Is the RCU core waiting for a quiescent state from this CPU? */
+#ifdef VERIFY_RCU_FULL_STRUCT
 	if (rcu_scheduler_fully_active &&
 	    rdp->qs_pending && !rdp->passed_quiesce &&
 #ifdef PER_CPU_DATA_ARRAY
@@ -4053,9 +4067,7 @@ static int __rcu_pending(struct rcu_state *rsp, struct rcu_data *rdp)
 #else
 	    rdp->rcu_qs_ctr_snap == __this_cpu_read(rcu_qs_ctr)) {
 #endif		
-#ifdef VERIFY_RCU_FULL_STRUCT
 		rdp->n_rp_qs_pending++;
-#endif
 	} else if (rdp->qs_pending &&
 		   (rdp->passed_quiesce ||
 #ifdef PER_CPU_DATA_ARRAY
@@ -4063,11 +4075,18 @@ static int __rcu_pending(struct rcu_state *rsp, struct rcu_data *rdp)
 #else
 		    rdp->rcu_qs_ctr_snap != __this_cpu_read(rcu_qs_ctr))) {
 #endif
-#ifdef VERIFY_RCU_FULL_STRUCT
 		rdp->n_rp_report_qs++;
-#endif
 		return 1;
 	}
+#else
+	if (rcu_scheduler_fully_active &&
+	    rdp->qs_pending && !rdp->passed_quiesce) {
+
+        } else if (rdp->qs_pending &&
+		   rdp->passed_quiesce) {
+		return 1;
+	}
+#endif
 
 	/* Does this CPU have callbacks ready to invoke? */
 	if (cpu_has_callbacks_ready_to_invoke(rdp)) {
@@ -4452,10 +4471,12 @@ rcu_init_percpu_data(int cpu, struct rcu_state *rsp)
 	rdp->gpnum = rnp->completed; /* Make CPU later note any new GP. */
 	rdp->completed = rnp->completed;
 	rdp->passed_quiesce = false;
+#ifdef VERIFY_RCU_FULL_STRUCT
 #ifdef PER_CPU_DATA_ARRAY
 	rdp->rcu_qs_ctr_snap = rcu_qs_ctr[cpu];
 #else
 	rdp->rcu_qs_ctr_snap = per_cpu(rcu_qs_ctr, cpu);
+#endif
 #endif
 	rdp->qs_pending = false;
 	trace_rcu_grace_period(rsp->name, rdp->gpnum, TPS("cpuonl"));
