@@ -385,7 +385,12 @@ static void rcu_momentary_dyntick_idle(void)
 #endif
 
 	/* Find the flavor that needs a quiescent state. */
+
+#ifdef VERIFY_RCU_EACH_FLAVOUR
 	for_each_rcu_flavor(rsp) {
+#else
+	rsp = &rcu_sched_state; do {
+#endif
 #ifdef PER_CPU_DATA_ARRAY
 		rdp = rsp->rda + smp_processor_id();
 #else
@@ -413,7 +418,11 @@ static void rcu_momentary_dyntick_idle(void)
 		atomic_add(2, &rdtp->dynticks);  /* QS. */
 		smp_mb__after_atomic(); /* Later stuff after QS. */
 		break;
+#ifdef VERIFY_RCU_EACH_FLAVOUR
 	}
+#else
+	} while (0);
+#endif
 	local_irq_restore(flags);
 #endif // #ifdef VERIFY_RCU_DYNTICKS
 }
@@ -592,11 +601,17 @@ void show_rcu_gp_kthreads(void)
 {
 	struct rcu_state *rsp;
 
+#ifdef VERIFY_RCU_EACH_FLAVOUR
 	for_each_rcu_flavor(rsp) {
+#else
+	rsp = &rcu_sched_state;
+#endif
 		pr_info("%s: wait state: %d ->state: %#lx\n",
 			rsp->name, rsp->gp_state, rsp->gp_kthread->state);
 		/* sched_show_task(rsp->gp_kthread); */
+#ifdef VERIFY_RCU_EACH_FLAVOUR
 	}
+#endif
 }
 EXPORT_SYMBOL_GPL(show_rcu_gp_kthreads);
 
@@ -760,14 +775,20 @@ static void rcu_eqs_enter_common(long long oldval, bool user)
 			  current->pid, current->comm,
 			  idle->pid, idle->comm); /* must be idle task! */
 	}
+#ifdef VERIFY_RCU_EACH_FLAVOUR
 	for_each_rcu_flavor(rsp) {
+#else
+	rsp = &rcu_sched_state;
+#endif
 #ifdef PER_CPU_DATA_ARRAY
 		rdp = rsp->rda + smp_processor_id();
 #else
 		rdp = this_cpu_ptr(rsp->rda);
 #endif
 		do_nocb_deferred_wakeup(rdp);
+#ifdef VERIFY_RCU_EACH_FLAVOUR
 	}
+#endif
 	rcu_prepare_for_idle();
 	/* CPUs seeing atomic_inc() must see prior RCU read-side crit sects */
 	smp_mb__before_atomic();  /* See above. */
@@ -1588,7 +1609,11 @@ void rcu_cpu_stall_reset(void)
 {
 	struct rcu_state *rsp;
 
+#ifdef VERIFY_RCU_EACH_FLAVOUR
 	for_each_rcu_flavor(rsp)
+#else
+	rsp = &rcu_sched_state;
+#endif
 		WRITE_ONCE(rsp->jiffies_stall, jiffies + ULONG_MAX / 2);
 }
 #endif // #ifdef VERIFY_RCU_CPU_STALL
@@ -3329,7 +3354,11 @@ static void rcu_process_callbacks(struct softirq_action *unused)
 	if (cpu_is_offline(smp_processor_id()))
 		return;
 	trace_rcu_utilization(TPS("Start RCU core"));
+#ifdef VERIFY_RCU_EACH_FLAVOUR
 	for_each_rcu_flavor(rsp)
+#else
+	rsp = &rcu_sched_state;
+#endif
 		__rcu_process_callbacks(rsp);
 	trace_rcu_utilization(TPS("End RCU core"));
 }
@@ -4149,7 +4178,11 @@ static int rcu_pending(void)
 {
 	struct rcu_state *rsp;
 
+#ifdef VERIFY_RCU_EACH_FLAVOUR
 	for_each_rcu_flavor(rsp)
+#else
+	rsp = &rcu_sched_state;
+#endif
 #ifdef PER_CPU_DATA_ARRAY
 		if (__rcu_pending(rsp, rsp->rda + smp_processor_id()))
 #else
@@ -4174,7 +4207,11 @@ static bool __maybe_unused rcu_cpu_has_callbacks(bool *all_lazy)
 	struct rcu_data *rdp;
 	struct rcu_state *rsp;
 
+#ifdef VERIFY_RCU_EACH_FLAVOUR
 	for_each_rcu_flavor(rsp) {
+#else
+	rsp = &rcu_sched_state; do {
+#endif
 #ifdef PER_CPU_DATA_ARRAY
 		rdp = rsp->rda + smp_processor_id();
 #else
@@ -4187,11 +4224,15 @@ static bool __maybe_unused rcu_cpu_has_callbacks(bool *all_lazy)
 			al = false;
 			break;
 		}
+#ifdef VERIFY_RCU_EACH_FLAVOUR
 	}
+#else
+	} while (0);
+#endif
 	if (all_lazy)
 		*all_lazy = al;
 	return hc;
-#endif
+#endif // #ifndef VERIFY_RCU_LIST
 }
 
 /*
@@ -4489,7 +4530,11 @@ static void rcu_prepare_cpu(int cpu)
 {
 	struct rcu_state *rsp;
 
+#ifdef VERIFY_RCU_EACH_FLAVOUR
 	for_each_rcu_flavor(rsp)
+#else
+	rsp = &rcu_sched_state;
+#endif
 		rcu_init_percpu_data(cpu, rsp);
 }
 
@@ -4507,6 +4552,9 @@ int rcu_cpu_notify(struct notifier_block *self,
 #endif
 	struct rcu_node *rnp = rdp->mynode;
 	struct rcu_state *rsp;
+#ifndef VERIFY_RCU_EACH_FLAVOUR
+	rsp = &rcu_sched_state;
+#endif
 
 	switch (action) {
 	case CPU_UP_PREPARE:
@@ -4524,26 +4572,37 @@ int rcu_cpu_notify(struct notifier_block *self,
 		break;
 	case CPU_DYING:
 	case CPU_DYING_FROZEN:
+#ifdef VERIFY_RCU_EACH_FLAVOUR
 		for_each_rcu_flavor(rsp)
+#endif
 			rcu_cleanup_dying_cpu(rsp);
 		break;
 	case CPU_DYING_IDLE:
-		for_each_rcu_flavor(rsp) {
+#ifdef VERIFY_RCU_EACH_FLAVOUR
+		for_each_rcu_flavor(rsp)
+#endif
 			rcu_cleanup_dying_idle_cpu(cpu, rsp);
-		}
 		break;
 	case CPU_DEAD:
 	case CPU_DEAD_FROZEN:
 	case CPU_UP_CANCELED:
 	case CPU_UP_CANCELED_FROZEN:
+#ifdef VERIFY_RCU_EACH_FLAVOUR
 		for_each_rcu_flavor(rsp) {
+#else
+		do {
+#endif
 			rcu_cleanup_dead_cpu(cpu, rsp);
 #ifdef PER_CPU_DATA_ARRAY
 			do_nocb_deferred_wakeup(rsp->rda + cpu);
 #else
 			do_nocb_deferred_wakeup(per_cpu_ptr(rsp->rda, cpu));
 #endif
+#ifdef VERIFY_RCU_EACH_FLAVOUR
 		}
+#else
+		} while (0);
+#endif
 		break;
 	default:
 		break;
@@ -4597,7 +4656,11 @@ static int __init rcu_spawn_gp_kthread(void)
 #endif
 
 	rcu_scheduler_fully_active = 1;
+#ifdef VERIFY_RCU_EACH_FLAVOUR
 	for_each_rcu_flavor(rsp) {
+#else
+	rsp = &rcu_sched_state; do {
+#endif
 #ifdef VERIFY_RCU_FULL_STRUCT
 		t = kthread_create(rcu_gp_kthread, rsp, "%s", rsp->name);
 		BUG_ON(IS_ERR(t));
@@ -4615,7 +4678,11 @@ static int __init rcu_spawn_gp_kthread(void)
 			bool ret = rcu_gp_init(rsp);
 			WARN_ON(ret);
 		}
+#ifdef VERIFY_RCU_EACH_FLAVOUR
 	}
+#else
+	} while (0);
+#endif
 	rcu_spawn_nocb_kthreads();
 	rcu_spawn_boost_kthreads();
 	return 0;
