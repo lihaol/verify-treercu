@@ -2107,7 +2107,11 @@ static int rcu_gp_init(struct rcu_state *rsp)
 	 * for subsequent online CPUs, and that quiescent-state forcing
 	 * will handle subsequent offline CPUs.
 	 */
+#if NUM_RCU_NODES == 1
+	rcu_for_each_leaf_node(rsp, rnp) do {
+#else
 	rcu_for_each_leaf_node(rsp, rnp) {
+#endif
 #ifdef VERIFY_RCU_FULL_STRUCT
 		rcu_gp_slow(rsp, gp_preinit_delay);
 #endif
@@ -2161,7 +2165,11 @@ static int rcu_gp_init(struct rcu_state *rsp)
 #endif
 
 		raw_spin_unlock_irq(&rnp->lock);
+#if NUM_RCU_NODES == 1
+	} while (0);
+#else
 	}
+#endif
 
 	/*
 	 * Set the quiescent-state-needed bits in all the rcu_node

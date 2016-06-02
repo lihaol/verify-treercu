@@ -268,18 +268,28 @@ struct rcu_node {
  * Do a full breadth-first scan of the rcu_node structures for the
  * specified rcu_state structure.
  */
+#if NUM_RCU_NODES == 1
+#define rcu_for_each_node_breadth_first(rsp, rnp) \
+	(rnp) = &(rsp)->node[0];
+#else
 #define rcu_for_each_node_breadth_first(rsp, rnp) \
 	for ((rnp) = &(rsp)->node[0]; \
 	     (rnp) < &(rsp)->node[rcu_num_nodes]; (rnp)++)
+#endif
 
 /*
  * Do a breadth-first scan of the non-leaf rcu_node structures for the
  * specified rcu_state structure.  Note that if there is a singleton
  * rcu_node tree with but one rcu_node structure, this loop is a no-op.
  */
+#if NUM_RCU_NODES == 1
+#define rcu_for_each_nonleaf_node_breadth_first(rsp, rnp) \
+	(rnp) = &(rsp)->node[0];
+#else
 #define rcu_for_each_nonleaf_node_breadth_first(rsp, rnp) \
 	for ((rnp) = &(rsp)->node[0]; \
 	     (rnp) < (rsp)->level[rcu_num_lvls - 1]; (rnp)++)
+#endif
 
 /*
  * Scan the leaves of the rcu_node hierarchy for the specified rcu_state
@@ -287,9 +297,14 @@ struct rcu_node {
  * one rcu_node structure, this loop -will- visit the rcu_node structure.
  * It is still a leaf node, even if it is also the root node.
  */
+#if NUM_RCU_NODES == 1
+#define rcu_for_each_leaf_node(rsp, rnp) \
+	(rnp) = &(rsp)->node[0];
+#else
 #define rcu_for_each_leaf_node(rsp, rnp) \
 	for ((rnp) = (rsp)->level[rcu_num_lvls - 1]; \
 	     (rnp) < &(rsp)->node[rcu_num_nodes]; (rnp)++)
+#endif
 
 /* Index values for nxttail array in struct rcu_data. */
 #define RCU_DONE_TAIL		0	/* Also RCU_WAIT head. */
