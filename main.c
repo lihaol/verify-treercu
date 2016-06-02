@@ -1,7 +1,7 @@
 #include "fake.c"
 
 #define NUM_THREADS 2
-#define NUM_INTS    2
+//#define NUM_INTS 2
 
 #if 0
 int nondet_int(void);
@@ -124,7 +124,13 @@ int main(int argc, char *argv[])
 	//rcu_register_oom_notifier(); // !defined(CONFIG_RCU_FAST_NO_HZ)
 	//check_cpu_stall_init(); //!#ifdef CONFIG_RCU_STALL_COMMON 
 	//rcu_verify_early_boot_tests();
-   
+
+	// sanity check
+        assert(NR_CPUS == 2);
+        assert(RCU_FANOUT_LEAF == 16);
+        assert(RCU_NUM_LVLS == 1);
+        assert(NUM_RCU_NODES == 1);
+
 	int i;
 	for (i=0; i<NR_CPUS; i++) {
 		pthread_mutex_init(&cpu_lock[i], NULL);
@@ -162,6 +168,12 @@ int main(int argc, char *argv[])
 	//check_cpu_stall_init(); //!#ifdef CONFIG_RCU_STALL_COMMON 
 	//rcu_verify_early_boot_tests();
 	
+	// sanity check
+        assert(NR_CPUS == 2);
+        assert(RCU_FANOUT_LEAF == 16);
+        assert(RCU_NUM_LVLS == 1);
+        assert(NUM_RCU_NODES == 1);
+
 	// start to rock
 	// timer interrupts
 	//__CPROVER_ASYNC_0: timer_interrupt_loop();
