@@ -2055,12 +2055,16 @@ static void note_gp_changes(struct rcu_state *rsp, struct rcu_data *rdp)
 		rcu_gp_kthread_wake(rsp);
 }
 
+#if defined(CBMC) || defined(RUN)
+#define rcu_gp_slow(rsp, delay)
+#else
 static void rcu_gp_slow(struct rcu_state *rsp, int delay)
 {
 	if (delay > 0 &&
 	    !(rsp->gpnum % (rcu_num_nodes * PER_RCU_NODE_PERIOD * delay)))
 		schedule_timeout_uninterruptible(delay);
 }
+#endif
 
 /*
  * Initialize a new grace period.  Return 0 if no grace period required.
@@ -2112,9 +2116,7 @@ static int rcu_gp_init(struct rcu_state *rsp)
 #else
 	rcu_for_each_leaf_node(rsp, rnp) {
 #endif
-#ifdef VERIFY_RCU_FULL_STRUCT
 		rcu_gp_slow(rsp, gp_preinit_delay);
-#endif
 		raw_spin_lock_irq(&rnp->lock);
 		smp_mb__after_unlock_lock();
 		if (rnp->qsmaskinit == rnp->qsmaskinitnext &&
@@ -3326,9 +3328,7 @@ __rcu_process_callbacks(struct rcu_state *rsp)
 	/* Update RCU state based on any recent quiescent states. */
 	rcu_check_quiescent_state(rsp, rdp);
 
-	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN))
-		return;
-
+#if !(defined(CBMC) || defined(RUN))
 	/* Does this CPU require a not-yet-started grace period? */
 	local_irq_save(flags);
 	if (cpu_needs_another_gp(rsp, rdp)) {
@@ -3347,6 +3347,7 @@ __rcu_process_callbacks(struct rcu_state *rsp)
 
 	/* Do any needed deferred wakeups of rcuo kthreads. */
 	do_nocb_deferred_wakeup(rdp);
+#endif
 }
 
 /*
