@@ -2574,13 +2574,10 @@ static void rcu_report_qs_rsp(struct rcu_state *rsp, unsigned long flags)
 	raw_spin_unlock_irqrestore(&rcu_get_root(rsp)->lock, flags);
 
 	if (IS_ENABLED(CBMC) || IS_ENABLED(RUN)) {
-		if (IS_ENABLED(VERIFY_RCU_GP_KTHREAD)) {
-			/* Handle grace-period end. */
-			rsp->gp_state = RCU_GP_CLEANUP;
-			rcu_gp_cleanup(rsp);
-			rsp->gp_state = RCU_GP_CLEANED;
-			rcu_gp_init_no_kthread(rsp);
-		}
+		/* Handle grace-period end. */
+		rsp->gp_state = RCU_GP_CLEANUP;
+		rcu_gp_cleanup(rsp);
+		rsp->gp_state = RCU_GP_CLEANED;
 		pass_rcu_gp();
 	} else 
 		rcu_gp_kthread_wake(rsp);

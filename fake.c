@@ -361,6 +361,7 @@ bool rcu_gp_init_no_kthread(struct rcu_state *rsp);
 #include "tree.c"
 #endif
 
+#if 0
 bool rcu_gp_init_no_kthread(struct rcu_state *rsp) 
 {
 	trace_rcu_grace_period(rsp->name,
@@ -383,5 +384,6 @@ bool rcu_gp_init_no_kthread(struct rcu_state *rsp)
 			       TPS("reqwaitsig"));
 	return ret;
 }
+#endif
 
 
