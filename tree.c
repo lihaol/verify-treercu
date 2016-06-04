@@ -2055,16 +2055,14 @@ static void note_gp_changes(struct rcu_state *rsp, struct rcu_data *rdp)
 		rcu_gp_kthread_wake(rsp);
 }
 
-#if defined(CBMC) || defined(RUN)
-#define rcu_gp_slow(rsp, delay)
-#else
 static void rcu_gp_slow(struct rcu_state *rsp, int delay)
 {
+#if !(defined(CBMC) || defined(RUN))
 	if (delay > 0 &&
 	    !(rsp->gpnum % (rcu_num_nodes * PER_RCU_NODE_PERIOD * delay)))
 		schedule_timeout_uninterruptible(delay);
-}
 #endif
+}
 
 /*
  * Initialize a new grace period.  Return 0 if no grace period required.
