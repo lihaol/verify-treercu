@@ -126,10 +126,10 @@ int main(int argc, char *argv[])
 	//rcu_verify_early_boot_tests();
 
 	// sanity check
-        assert(NR_CPUS == 2);
-        assert(RCU_FANOUT_LEAF == 16);
-        assert(RCU_NUM_LVLS == 1);
-        assert(NUM_RCU_NODES == 1);
+        WARN_ON(NR_CPUS != 2);
+        WARN_ON(RCU_FANOUT_LEAF != 16);
+        WARN_ON(RCU_NUM_LVLS != 1);
+        WARN_ON(NUM_RCU_NODES != 1);
 
 	int i;
 	for (i=0; i<NR_CPUS; i++) {
@@ -169,10 +169,10 @@ int main(int argc, char *argv[])
 	//rcu_verify_early_boot_tests();
 	
 	// sanity check
-        assert(NR_CPUS == 2);
-        assert(RCU_FANOUT_LEAF == 16);
-        assert(RCU_NUM_LVLS == 1);
-        assert(NUM_RCU_NODES == 1);
+        WARN_ON(NR_CPUS != 2);
+        WARN_ON(RCU_FANOUT_LEAF != 16);
+        WARN_ON(RCU_NUM_LVLS != 1);
+        WARN_ON(NUM_RCU_NODES != 1);
 
 	// start to rock
 	// timer interrupts
