@@ -4679,8 +4679,9 @@ static int __init rcu_spawn_gp_kthread(void)
 		raw_spin_unlock_irqrestore(&rnp->lock, flags);
 #endif
 		if (IS_ENABLED(CBMC) || IS_ENABLED(RUN)) {
+			WRITE_ONCE(rsp->gp_flags, RCU_GP_FLAG_INIT);
 			bool ret = rcu_gp_init(rsp);
-			WARN_ON(ret);
+			WARN_ON(!ret);
 		}
 #ifdef VERIFY_RCU_EACH_FLAVOUR
 	}
