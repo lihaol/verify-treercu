@@ -184,7 +184,12 @@ int main(int argc, char *argv[])
 	__CPROVER_ASYNC_1: thread_update(&my_cpu_id1);
 	
 	__CPROVER_assume(__unbuffered_cnt == NUM_THREADS);
+#if defined(PROVE_GP)    || defined(FORCE_BUG_2) || defined(FORCE_BUG_3) || \
+    defined(FORCE_BUG_4) || defined(FORCE_BUG_5) || defined(FORCE_BUG_6)
+	assert(0);
+#else
 	assert(__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1);
+#endif
 	
 	// grace period has finished
 	//assert(ACCESS_ONCE(rcu_sched_state->completed) == 

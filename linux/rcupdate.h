@@ -312,7 +312,11 @@ static inline void __rcu_read_unlock(void)
 
 static inline void synchronize_rcu(void)
 {
+#ifdef FORCE_BUG_1
+	return;
+#else
 	synchronize_sched();
+#endif
 }
 
 static inline int rcu_preempt_depth(void)

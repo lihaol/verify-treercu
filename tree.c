@@ -288,6 +288,9 @@ static int rcu_gp_in_progress(struct rcu_state *rsp)
  */
 void rcu_sched_qs(void)
 {
+#ifdef FORCE_BUG_5
+	return;
+#else
 #ifdef PER_CPU_DATA_ARRAY
 	if (!rcu_sched_data[smp_processor_id()].passed_quiesce) {
 		trace_rcu_grace_period(TPS("rcu_sched"),
@@ -304,6 +307,7 @@ void rcu_sched_qs(void)
 		__this_cpu_write(rcu_sched_data.passed_quiesce, 1);
 	}
 #endif // #ifdef PER_CPU_DATA_ARRAY
+#endif // #ifdef FORCE_BUG_5
 }
 
 void rcu_bh_qs(void)
@@ -2018,7 +2022,14 @@ static bool __note_gp_changes(struct rcu_state *rsp, struct rcu_node *rnp,
 		rdp->rcu_qs_ctr_snap = __this_cpu_read(rcu_qs_ctr);
 #endif
 #endif
+#ifdef FORCE_BUG_4
+		rdp->qs_pending = 0;
+#else
 		rdp->qs_pending = !!(rnp->qsmask & rdp->grpmask);
+#endif
+#ifdef FORCE_BUG_3
+		rnp->qsmask &= ~rdp->grpmask;
+#endif
 #ifdef VERIFY_RCU_CPU_STALL
 		zero_cpu_stall_ticks(rdp);
 #endif
@@ -2194,7 +2205,11 @@ static int rcu_gp_init(struct rcu_state *rsp)
 		rdp = this_cpu_ptr(rsp->rda);
 #endif
 		rcu_preempt_check_blocked_tasks(rnp);
+#ifdef FORCE_BUG_2
+		rnp->qsmask = 0;
+#else
 		rnp->qsmask = rnp->qsmaskinit;
+#endif
 		WRITE_ONCE(rnp->gpnum, rsp->gpnum);
 		if (WARN_ON_ONCE(rnp->completed != rsp->completed))
 			WRITE_ONCE(rnp->completed, rsp->completed);
@@ -2598,6 +2613,9 @@ rcu_report_qs_rnp(unsigned long mask, struct rcu_state *rsp,
 		  struct rcu_node *rnp, unsigned long gps, unsigned long flags)
 	__releases(rnp->lock)
 {
+#ifdef FORCE_BUG_6
+	return;
+#else
 	unsigned long oldmask = 0;
 	struct rcu_node *rnp_c;
 
@@ -2645,6 +2663,7 @@ rcu_report_qs_rnp(unsigned long mask, struct rcu_state *rsp,
 	 * to clean up and start the next grace period if one is needed.
 	 */
 	rcu_report_qs_rsp(rsp, flags); /* releases rnp->lock. */
+#endif // #ifdef FORCE_BUG_6
 }
 
 /*
