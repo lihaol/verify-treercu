@@ -2730,15 +2730,15 @@ rcu_report_qs_rdp(int cpu, struct rcu_state *rsp, struct rcu_data *rdp)
 	if ((rdp->passed_quiesce == 0 &&
 #ifdef PER_CPU_DATA_ARRAY
 	     rdp->rcu_qs_ctr_snap == rcu_qs_ctr[smp_processor_id()]) ||
-#else
+#else  // #ifdef PER_CPU_DATA_ARRAY
 	     rdp->rcu_qs_ctr_snap == __this_cpu_read(rcu_qs_ctr)) ||
-#endif
+#endif // #ifdef PER_CPU_DATA_ARRAY
 	    rdp->gpnum != rnp->gpnum || rnp->completed == rnp->gpnum ||
 	    rdp->gpwrap) {
-#else
+#else  // #ifdef VERIFY_RCU_FULL_STRUCT
 	if (rdp->passed_quiesce == 0 ||
 	    rdp->gpnum != rnp->gpnum || rnp->completed == rnp->gpnum) {
-#endif
+#endif // #ifdef VERIFY_RCU_FULL_STRUCT
 
 		/*
 		 * The grace period in which this quiescent state was
