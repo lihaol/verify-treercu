@@ -77,7 +77,7 @@ int cpu_lock[NR_CPUS];
 //int nmi_lock[NR_CPUS];
 #else
 pthread_mutex_t cpu_lock[NR_CPUS];
-pthread_mutex_t irq_lock[NR_CPUS];
+//pthread_mutex_t irq_lock[NR_CPUS];
 //pthread_mutex_t nmi_lock[NR_CPUS];
 #endif
 

@@ -136,7 +136,7 @@ int main(int argc, char *argv[])
 	int i;
 	for (i=0; i<NR_CPUS; i++) {
 		pthread_mutex_init(&cpu_lock[i], NULL);
-		pthread_mutex_init(&irq_lock[i], NULL);
+		//pthread_mutex_init(&irq_lock[i], NULL);
 	}
 
 	// Do not consider dyntick-idle mode
