@@ -1936,7 +1936,8 @@ static bool rcu_advance_cbs(struct rcu_state *rsp, struct rcu_node *rnp,
 			    struct rcu_data *rdp)
 {
 #ifndef VERIFY_RCU_LIST
-	return false;
+	pass_rcu_gp();
+	return true;
 #else
 	int i, j;
 
@@ -2593,7 +2594,6 @@ static void rcu_report_qs_rsp(struct rcu_state *rsp, unsigned long flags)
 		rsp->gp_state = RCU_GP_CLEANUP;
 		rcu_gp_cleanup(rsp);
 		rsp->gp_state = RCU_GP_CLEANED;
-		pass_rcu_gp();
 	} else 
 		rcu_gp_kthread_wake(rsp);
 }
