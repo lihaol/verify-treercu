@@ -2730,12 +2730,12 @@ rcu_report_qs_rdp(int cpu, struct rcu_state *rsp, struct rcu_data *rdp)
 	if ((rdp->passed_quiesce == 0 &&
 #ifdef PER_CPU_DATA_ARRAY
 	     rdp->rcu_qs_ctr_snap == rcu_qs_ctr[smp_processor_id()]) ||
-#else  // #ifdef PER_CPU_DATA_ARRAY
+#else
 	     rdp->rcu_qs_ctr_snap == __this_cpu_read(rcu_qs_ctr)) ||
 #endif // #ifdef PER_CPU_DATA_ARRAY
 	    rdp->gpnum != rnp->gpnum || rnp->completed == rnp->gpnum ||
 	    rdp->gpwrap) {
-#else  // #ifdef VERIFY_RCU_FULL_STRUCT
+#else
 	if (rdp->passed_quiesce == 0 ||
 	    rdp->gpnum != rnp->gpnum || rnp->completed == rnp->gpnum) {
 #endif // #ifdef VERIFY_RCU_FULL_STRUCT
@@ -2752,8 +2752,8 @@ rcu_report_qs_rdp(int cpu, struct rcu_state *rsp, struct rcu_data *rdp)
 		rdp->rcu_qs_ctr_snap = rcu_qs_ctr[smp_processor_id()];
 #else
 		rdp->rcu_qs_ctr_snap = __this_cpu_read(rcu_qs_ctr);
-#endif
-#endif
+#endif // #ifdef PER_CPU_DATA_ARRAY
+#endif // #ifdef VERIFY_RCU_FULL_STRUCT
 		raw_spin_unlock_irqrestore(&rnp->lock, flags);
 		return;
 	}
