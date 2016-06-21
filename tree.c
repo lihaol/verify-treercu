@@ -4701,6 +4701,14 @@ static int __init rcu_spawn_gp_kthread(void)
 			WRITE_ONCE(rsp->gp_flags, RCU_GP_FLAG_INIT);
 			bool ret = rcu_gp_init(rsp);
 			WARN_ON(!ret);
+#ifdef PER_CPU_DATA_ARRAY
+			struct rcu_data *rdp;
+                        int cpu_id;
+                        for (cpu_id = 0; cpu_id < NR_CPUS; cpu_id++) {
+                                rdp = rsp->rda + cpu_id;
+                                (void)__note_gp_changes(rsp, rdp->mynode, rdp);
+                        }
+#endif
 		}
 #ifdef VERIFY_RCU_EACH_FLAVOUR
 	}
