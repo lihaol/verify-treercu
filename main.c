@@ -101,6 +101,8 @@ void *thread_process_reader(void *arg)
 	rcu_reader();
 
 	fake_release_cpu();
+	rcu_process_callbacks(NULL);
+
 #ifdef CBMC
 	// Instrumentation for CPROVER
 	asm("sync ");

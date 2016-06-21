@@ -110,7 +110,7 @@ void fake_release_cpu(void)
 		exit(-1);
 #endif
 	rcu_note_context_switch();
-	rcu_process_callbacks(NULL);
+	//rcu_process_callbacks(NULL);
 }
 
 int cond_resched(void)
