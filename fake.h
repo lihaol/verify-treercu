@@ -175,8 +175,8 @@ int __thread need_softirq;
 #if 0
 #define raise_softirq(RCU_SOFTIRQ) do { \
   __CPROVER_ASSUME(need_softirq); \
-  rcu_process_callbacks(); \ 
-} while(0) 
+  rcu_process_callbacks(); \
+} while(0)
 #endif
 
 #ifdef TINY 
