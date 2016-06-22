@@ -92,13 +92,8 @@ int rcu_cpu_stall_suppress = 1; /* 1 = suppress stall warnings. */
 #define __noreturn
 
 #define __MUTEX_INITIALIZER(x) { .a = 0 }
-#ifdef CBMC
-#define READ_ONCE(var) (var)
-#define WRITE_ONCE(var, val) ((var) = (val))
-#else
 #define READ_ONCE(var) (*((volatile typeof(var) *)(&(var))))
 #define WRITE_ONCE(var, val) (*((volatile typeof(var) *)(&(var))) = (val))
-#endif
 #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]) + __must_be_array(arr))
 
 /* multi-cores */
