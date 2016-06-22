@@ -34,14 +34,12 @@ void timer_interrupt_loop() {
 /*
  * Test harness
  */
-
 int x;
 int y;
 
 int __unbuffered_cnt;
 int __unbuffered_tpr_x;
 int __unbuffered_tpr_y;
-
 
 #ifdef RUN
 struct thread_info {
@@ -53,11 +51,6 @@ void rcu_reader(void)
 {
 	rcu_read_lock();
 	__unbuffered_tpr_x = x;
-#ifdef FORCE_FAILURE
-	rcu_read_unlock();
-	cond_resched();
-	rcu_read_lock();
-#endif
 	__unbuffered_tpr_y = y;
 	rcu_read_unlock();
 }
@@ -74,9 +67,7 @@ void *thread_update(void *arg)
 	fake_acquire_cpu();
 
 	x = 1;
-#ifndef FORCE_FAILURE_2
 	synchronize_rcu();
-#endif
 	y = 1;
 
 	fake_release_cpu();
