@@ -185,7 +185,7 @@ unsigned int __thread my_smp_processor_id;
 
 /* barriers */
 #define barrier() __asm__ __volatile__("": : :"memory")
-//#define smp_mb() __sync_synchronize() // Lihao
+//#define smp_mb() __sync_synchronize()
 #define smp_mb() asm volatile("mfence":::"memory")
 #define smp_mb__before_atomic() smp_mb()
 #define smp_mb__after_atomic() smp_mb()

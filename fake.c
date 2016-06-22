@@ -40,7 +40,7 @@ void kfree(const void *p)
 /* Model callback wakeme_after_rcu() */
 int wait_rcu_gp_flag;
 
-// Lihao: works for single grace period
+// Works for a single grace period
 void wait_rcu_gp(call_rcu_func_t crf)
 {
 	WRITE_ONCE(wait_rcu_gp_flag, 1);
