@@ -135,7 +135,7 @@ void (*cpu_relax_func)(void) = cpu_relax_poll;
 
 #define cpu_relax() cpu_relax_func()
 
-/*
+#if 0
 #define WARN_ON_ONCE(c) ({ int __c = (c);  if (__c) abort(); c; })
 
 #define WARN_ONCE(c, format...) WARN_ON_ONCE(c)
@@ -151,7 +151,7 @@ void (*cpu_relax_func)(void) = cpu_relax_poll;
 		if (c) \
 			abort(); \
 	} while (0)
-*/
+#endif
 
 #define offsetof(TYPE, MEMBER) ((size_t) &((TYPE *)0)->MEMBER)
 
@@ -177,7 +177,7 @@ void (*cpu_relax_func)(void) = cpu_relax_poll;
 
 #define set_cpus_allowed_ptr(a, b) do { } while (0)
 
-/*
+#if 0
 struct rcu_head {
 	struct callback_head *next;
 	void (*func)(struct callback_head *head);
@@ -187,13 +187,13 @@ static inline void call_rcu(struct rcu_head *head, void (*func)(struct rcu_head 
 {
 	func(head);  // Don't try this at home!!!  It will normally break. 
 }
-*/
+#endif
 
 struct irq_work {
 	int a;
 };
 
-/*
+#if 0
 int __thread my_smp_processor_id;
 
 #define raw_smp_processor_id() my_smp_processor_id
@@ -202,8 +202,7 @@ static inline void cpu_init(int cpu)
 {
 	my_smp_processor_id = cpu;
 }
-*/
-
+#endif
 
 volatile unsigned long jiffies = 0;
 

@@ -72,7 +72,7 @@ struct callback_head {
 typedef void (*rcu_callback_t)(struct rcu_head *head);
 typedef void (*call_rcu_func_t)(struct rcu_head *head, rcu_callback_t func);
 
-/*
+#if 0
 typedef _Bool bool;
 enum {
 	false	= 0,
@@ -94,7 +94,7 @@ enum {
 #define LLONG_MIN	(-LLONG_MAX - 1)
 #define ULLONG_MAX	(~0ULL)
 #define SIZE_MAX	(~(size_t)0)
-*/
+#endif
 
 #define U8_MAX		((u8)~0U)
 #define S8_MAX		((s8)(U8_MAX>>1))
@@ -141,7 +141,7 @@ enum {
 #define smp_mb() __sync_synchronize()
 #endif
 
-/*
+#if 0
 int noassert;
 
 #ifdef CBMC_ORDERING_BUG
@@ -161,7 +161,7 @@ int noassert;
 #define BUG_ON(c) WARN_ON(c)
 
 #define SET_NOASSERT() do { noassert = 1; smp_mb(); } while (0)
-*/
+#endif
 
 #ifdef TINY
 #define smp_processor_id() 0
@@ -172,10 +172,12 @@ int noassert;
 int __thread need_softirq;
 #define raise_softirq(x) do { need_softirq = 1; } while (0)
 
-//#define raise_softirq(RCU_SOFTIRQ) do { \
-//  __CPROVER_ASSUME(need_softirq); \
-//  rcu_process_callbacks(); \ 
-//} while(0) 
+#if 0
+#define raise_softirq(RCU_SOFTIRQ) do { \
+  __CPROVER_ASSUME(need_softirq); \
+  rcu_process_callbacks(); \ 
+} while(0) 
+#endif
 
 #ifdef TINY 
 static inline void rcu_early_boot_tests(void)
