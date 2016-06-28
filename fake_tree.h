@@ -109,8 +109,12 @@ int rcu_cpu_stall_suppress = 1; /* 1 = suppress stall warnings. */
 #define for_each_possible_cpu(cpu) for ((cpu) = 0; (cpu) < NR_CPUS; (cpu)++)
 #define for_each_online_cpu(cpu)   for ((cpu) = 0; (cpu) < NR_CPUS; (cpu)++)
 
-#define per_cpu_ptr(p, cpu) (&(p)[cpu])
+#ifdef PER_CPU_DATA_ARRAY
+//#define per_cpu_ptr(p, cpu) (&(p)[cpu])
+#define per_cpu_ptr(p, cpu) ((p) + (cpu))
 #define per_cpu(x, cpu) ((x)[cpu])
+#endif
+
 #define cpu_notifier(fn, pri) do { (void)(fn); } while (0)
 #define pm_notifier(fn, pri)  do { (void)(fn); } while (0)
 

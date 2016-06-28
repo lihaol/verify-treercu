@@ -1338,11 +1338,7 @@ static int rcu_implicit_dynticks_qs(struct rcu_data *rdp,
 	 * is set too high, we override with half of the RCU CPU stall
 	 * warning delay.
 	 */
-#ifdef PER_CPU_DATA_ARRAY
-	rcrmp = &rcu_sched_qs_mask[rdp->cpu];
-#else
 	rcrmp = &per_cpu(rcu_sched_qs_mask, rdp->cpu);
-#endif
 	if (ULONG_CMP_GE(jiffies,
 			 rdp->rsp->gp_start + jiffies_till_sched_qs) ||
 	    ULONG_CMP_GE(jiffies, rdp->rsp->jiffies_resched)) {
@@ -1464,11 +1460,7 @@ static void print_other_cpu_stall(struct rcu_state *rsp, unsigned long gpnum)
 
 	print_cpu_stall_info_end();
 	for_each_possible_cpu(cpu)
-#ifdef PER_CPU_DATA_ARRAY
-		totqlen += (rsp->rda + cpu)->qlen;
-#else
 		totqlen += per_cpu_ptr(rsp->rda, cpu)->qlen;
-#endif
 	pr_cont("(detected by %d, t=%ld jiffies, g=%ld, c=%ld, q=%lu)\n",
 	       smp_processor_id(), (long)(jiffies - rsp->gp_start),
 	       (long)rsp->gpnum, (long)rsp->completed, totqlen);
@@ -1515,11 +1507,7 @@ static void print_cpu_stall(struct rcu_state *rsp)
 	print_cpu_stall_info(rsp, smp_processor_id());
 	print_cpu_stall_info_end();
 	for_each_possible_cpu(cpu)
-#ifdef PER_CPU_DATA_ARRAY
-		totqlen += (rsp->rda + cpu)->qlen;
-#else
 		totqlen += per_cpu_ptr(rsp->rda, cpu)->qlen;
-#endif
 	pr_cont(" (t=%lu jiffies g=%ld c=%ld q=%lu)\n",
 		jiffies - rsp->gp_start,
 		(long)rsp->gpnum, (long)rsp->completed, totqlen);
@@ -3003,11 +2991,7 @@ static void rcu_cleanup_dying_idle_cpu(int cpu, struct rcu_state *rsp)
 {
 	unsigned long flags;
 	unsigned long mask;
-#ifdef PER_CPU_DATA_ARRAY
-	struct rcu_data *rdp = rsp->rda + cpu;
-#else
 	struct rcu_data *rdp = per_cpu_ptr(rsp->rda, cpu);
-#endif
 	struct rcu_node *rnp = rdp->mynode;  /* Outgoing CPU's rdp & rnp. */
 
 	if (!IS_ENABLED(CONFIG_HOTPLUG_CPU))
@@ -3031,11 +3015,7 @@ static void rcu_cleanup_dying_idle_cpu(int cpu, struct rcu_state *rsp)
 static void rcu_cleanup_dead_cpu(int cpu, struct rcu_state *rsp)
 {
 	unsigned long flags;
-#ifdef PER_CPU_DATA_ARRAY
-	struct rcu_data *rdp = rsp->rda + cpu;
-#else
 	struct rcu_data *rdp = per_cpu_ptr(rsp->rda, cpu);
-#endif
 	struct rcu_node *rnp = rdp->mynode;  /* Outgoing CPU's rdp & rnp. */
 
 	if (!IS_ENABLED(CONFIG_HOTPLUG_CPU))
@@ -3259,11 +3239,7 @@ static void force_qs_rnp(struct rcu_state *rsp,
 		bit = 1;
 		for (; cpu <= rnp->grphi; cpu++, bit <<= 1) {
 			if ((rnp->qsmask & bit) != 0) {
-#ifdef PER_CPU_DATA_ARRAY
-				if (f(rsp->rda + cpu, isidle, maxj))
-#else
 				if (f(per_cpu_ptr(rsp->rda, cpu), isidle, maxj))
-#endif
 					mask |= bit;
 			}
 		}
@@ -3518,11 +3494,7 @@ __call_rcu(struct rcu_head *head, void (*func)(struct rcu_head *rcu),
 		int offline;
 
 		if (cpu != -1)
-#ifdef PER_CPU_DATA_ARRAY
-			rdp = rsp->rda + cpu;
-#else
 			rdp = per_cpu_ptr(rsp->rda, cpu);
-#endif
 		if (likely(rdp->mynode)) {
 			/* Post-boot, so this should be for a no-CBs CPU. */
 			offline = !__call_rcu_nocb(rdp, head, lazy, flags);
@@ -3920,11 +3892,7 @@ static struct rcu_node *exp_funnel_lock(struct rcu_state *rsp, unsigned long s)
 	 * can be inexact, as it is just promoting locality and is not
 	 * strictly needed for correctness.
 	 */
-#ifdef PER_CPU_DATA_ARRAY
-	rdp = rsp->rda + raw_smp_processor_id();
-#else
 	rdp = per_cpu_ptr(rsp->rda, raw_smp_processor_id());
-#endif
 	if (sync_exp_work_done(rsp, NULL, NULL, &rsp->expedited_workdone1, s))
 		return NULL;
 	mutex_lock(&rdp->exp_funnel_mutex);
@@ -3986,11 +3954,7 @@ static void synchronize_sched_expedited_wait(struct rcu_state *rsp)
 		pr_err("INFO: %s detected expedited stalls on CPUs: {",
 		       rsp->name);
 		for_each_online_cpu(cpu) {
-#ifdef PER_CPU_DATA_ARRAY
-			rdp = rsp->rda + cpu;
-#else
 			rdp = per_cpu_ptr(rsp->rda, cpu);
-#endif
 			if (rdp->exp_done)
 				continue;
 			pr_cont(" %d", cpu);
@@ -3998,11 +3962,7 @@ static void synchronize_sched_expedited_wait(struct rcu_state *rsp)
 		pr_cont(" } %lu jiffies s: %lu\n",
 			jiffies - jiffies_start, rsp->expedited_sequence);
 		for_each_online_cpu(cpu) {
-#ifdef PER_CPU_DATA_ARRAY
-			rdp = rsp->rda + cpu;
-#else
 			rdp = per_cpu_ptr(rsp->rda, cpu);
-#endif
 			if (rdp->exp_done)
 				continue;
 			dump_cpu_task(cpu);
@@ -4057,13 +4017,8 @@ void synchronize_sched_expedited(void)
 	init_waitqueue_head(&rsp->expedited_wq);
 	atomic_set(&rsp->expedited_need_qs, 1); /* Extra count avoids race. */
 	for_each_online_cpu(cpu) {
-#ifdef PER_CPU_DATA_ARRAY
-		struct rcu_data *rdp = rsp->rda + cpu;
-		struct rcu_dynticks *rdtp = &rcu_dynticks[cpu];
-#else
 		struct rcu_data *rdp = per_cpu_ptr(rsp->rda, cpu);
 		struct rcu_dynticks *rdtp = &per_cpu(rcu_dynticks, cpu);
-#endif
 
 		rdp->exp_done = false;
 
@@ -4357,11 +4312,7 @@ static void _rcu_barrier(struct rcu_state *rsp)
 	for_each_possible_cpu(cpu) {
 		if (!cpu_online(cpu) && !rcu_is_nocb_cpu(cpu))
 			continue;
-#ifdef PER_CPU_DATA_ARRAY
-		rdp = rsp->rda + cpu;
-#else
 		rdp = per_cpu_ptr(rsp->rda, cpu);
-#endif
 		if (rcu_is_nocb_cpu(cpu)) {
 			if (!rcu_nocb_cpu_needs_barrier(rsp, cpu)) {
 				_rcu_barrier_trace(rsp, "OfflineNoCB", cpu,
@@ -4454,22 +4405,14 @@ rcu_boot_init_percpu_data(int cpu, struct rcu_state *rsp)
 {
 	static struct lock_class_key rcu_exp_sched_rdp_class;
 	unsigned long flags;
-#ifdef PER_CPU_DATA_ARRAY
-	struct rcu_data *rdp = rsp->rda + cpu;
-#else
 	struct rcu_data *rdp = per_cpu_ptr(rsp->rda, cpu);
-#endif
 	struct rcu_node *rnp = rcu_get_root(rsp);
 
 	/* Set up local state, ensuring consistent view of global state. */
 	raw_spin_lock_irqsave(&rnp->lock, flags);
 	rdp->grpmask = 1UL << (cpu - rdp->mynode->grplo);
 #ifdef VERIFY_RCU_DYNTICKS
-#ifdef PER_CPU_DATA_ARRAY
-	rdp->dynticks = &rcu_dynticks[cpu];
-#else
 	rdp->dynticks = &per_cpu(rcu_dynticks, cpu);
-#endif // #ifdef PER_CPU_DATA_ARRAY
 	WARN_ON_ONCE(rdp->dynticks->dynticks_nesting != DYNTICK_TASK_EXIT_IDLE);
 	WARN_ON_ONCE(atomic_read(&rdp->dynticks->dynticks) != 1);
 #endif // #ifdef VERIFY_RCU_DYNTICKS
@@ -4497,11 +4440,7 @@ rcu_init_percpu_data(int cpu, struct rcu_state *rsp)
 {
 	unsigned long flags;
 	unsigned long mask;
-#ifdef PER_CPU_DATA_ARRAY
-	struct rcu_data *rdp = rsp->rda + cpu;
-#else
 	struct rcu_data *rdp = per_cpu_ptr(rsp->rda, cpu);
-#endif
 	struct rcu_node *rnp = rcu_get_root(rsp);
 
 	/* Set up local state, ensuring consistent view of global state. */
@@ -4540,11 +4479,7 @@ rcu_init_percpu_data(int cpu, struct rcu_state *rsp)
 	rdp->completed = rnp->completed;
 	rdp->passed_quiesce = false;
 #ifdef VERIFY_RCU_FULL_STRUCT
-#ifdef PER_CPU_DATA_ARRAY
-	rdp->rcu_qs_ctr_snap = rcu_qs_ctr[cpu];
-#else
 	rdp->rcu_qs_ctr_snap = per_cpu(rcu_qs_ctr, cpu);
-#endif
 #endif
 	rdp->qs_pending = false;
 	trace_rcu_grace_period(rsp->name, rdp->gpnum, TPS("cpuonl"));
@@ -4570,11 +4505,7 @@ int rcu_cpu_notify(struct notifier_block *self,
 		   unsigned long action, void *hcpu)
 {
 	long cpu = (long)hcpu;
-#ifdef PER_CPU_DATA_ARRAY
-	struct rcu_data *rdp = rcu_state_p->rda + cpu;
-#else
 	struct rcu_data *rdp = per_cpu_ptr(rcu_state_p->rda, cpu);
-#endif
 	struct rcu_node *rnp = rdp->mynode;
 	struct rcu_state *rsp;
 #ifndef VERIFY_RCU_EACH_FLAVOUR
@@ -4618,11 +4549,7 @@ int rcu_cpu_notify(struct notifier_block *self,
 		do {
 #endif
 			rcu_cleanup_dead_cpu(cpu, rsp);
-#ifdef PER_CPU_DATA_ARRAY
-			do_nocb_deferred_wakeup(rsp->rda + cpu);
-#else
 			do_nocb_deferred_wakeup(per_cpu_ptr(rsp->rda, cpu));
-#endif
 #ifdef VERIFY_RCU_EACH_FLAVOUR
 		}
 #else
@@ -4858,11 +4785,7 @@ static void __init rcu_init_one(struct rcu_state *rsp,
 	for_each_possible_cpu(i) {
 		while (i > rnp->grphi)
 			rnp++;
-#ifdef PER_CPU_DATA_ARRAY
-		(rsp->rda + i)->mynode = rnp;
-#else
 		per_cpu_ptr(rsp->rda, i)->mynode = rnp;
-#endif
 		rcu_boot_init_percpu_data(i, rsp);
 	}
 #ifdef VERIFY_RCU_LIST
