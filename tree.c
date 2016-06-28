@@ -390,11 +390,7 @@ static void rcu_momentary_dyntick_idle(void)
 #else
 	rsp = &rcu_sched_state; do {
 #endif
-#ifdef PER_CPU_DATA_ARRAY
-		rdp = rsp->rda + smp_processor_id();
-#else
 		rdp = raw_cpu_ptr(rsp->rda);
-#endif
 		if (!(resched_mask & rsp->flavor_mask))
 			continue;
 		smp_mb(); /* rcu_sched_qs_mask before cond_resched_completed. */
@@ -2862,11 +2858,7 @@ rcu_send_cbs_to_orphanage(int cpu, struct rcu_state *rsp,
 static void rcu_adopt_orphan_cbs(struct rcu_state *rsp, unsigned long flags)
 {
 	int i;
-#ifdef PER_CPU_DATA_ARRAY
-	struct rcu_data *rdp = rsp->rda + smp_processor_id();
-#else
 	struct rcu_data *rdp = raw_cpu_ptr(rsp->rda);
-#endif
 
 	/* No-CBs CPUs are handled specially. */
 	if (!IS_ENABLED(CONFIG_HOTPLUG_CPU) ||
@@ -3297,11 +3289,7 @@ __rcu_process_callbacks(struct rcu_state *rsp)
 {
 	unsigned long flags;
 	bool needwake;
-#ifdef PER_CPU_DATA_ARRAY
-	struct rcu_data *rdp = rsp->rda + smp_processor_id();
-#else
 	struct rcu_data *rdp = raw_cpu_ptr(rsp->rda);
-#endif
 
 #ifdef VERIFY_RCU_FULL_STRUCT
 	WARN_ON_ONCE(rdp->beenonline == 0);
@@ -4238,11 +4226,7 @@ static void rcu_barrier_callback(struct rcu_head *rhp)
 static void rcu_barrier_func(void *type)
 {
 	struct rcu_state *rsp = type;
-#ifdef PER_CPU_DATA_ARRAY
-	struct rcu_data *rdp = rsp->rda + smp_processor_id();
-#else
 	struct rcu_data *rdp = raw_cpu_ptr(rsp->rda);
-#endif
 
 #ifdef VERIFY_RCU_FULL_STRUCT
 	_rcu_barrier_trace(rsp, "IRQ", -1, rsp->barrier_sequence);

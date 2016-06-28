@@ -1640,11 +1640,7 @@ static void rcu_oom_notify_cpu(void *unused)
 	struct rcu_data *rdp;
 
 	for_each_rcu_flavor(rsp) {
-#ifdef PER_CPU_DATA_ARRAY
-		rdp = rsp->rda + smp_processor_id();
-#else
 		rdp = raw_cpu_ptr(rsp->rda);
-#endif
 		if (rdp->qlen_lazy != 0) {
 			atomic_inc(&oom_callback_count);
 			rsp->call(&rdp->oom_head, rcu_oom_callback);
