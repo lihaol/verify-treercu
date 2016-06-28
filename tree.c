@@ -4501,7 +4501,7 @@ static int __init rcu_spawn_gp_kthread(void)
 			struct rcu_data *rdp;
                         int cpu_id;
                         for (cpu_id = 0; cpu_id < NR_CPUS; cpu_id++) {
-                                rdp = rsp->rda + cpu_id;
+                                rdp = per_cpu_ptr(rsp->rda, cpu_id);
                                 (void)__note_gp_changes(rsp, rdp->mynode, rdp);
                         }
 #endif

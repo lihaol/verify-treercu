@@ -10,7 +10,7 @@
 #undef VERIFY_RCU_EXPEDITED_GP
 #undef VERIFY_RCU_ORPHAN_CB
 
-#define NR_CPUS 2 
+#define NR_CPUS 2
 #define CONFIG_RCU_FANOUT_LEAF 16
 
 #define HZ 1000
@@ -112,13 +112,13 @@ int rcu_cpu_stall_suppress = 1; /* 1 = suppress stall warnings. */
 #ifdef PER_CPU_DATA_ARRAY
 //#define per_cpu_ptr(p, cpu) (&(p)[cpu])
 #define per_cpu_ptr(p, cpu) ((p) + (cpu))
-#define per_cpu(x, cpu) ((x)[cpu])
-#define raw_cpu_read(x) ((x)[smp_processor_id()])
+#define per_cpu(x, cpu)     ((x)[cpu])
+#define raw_cpu_ptr(p)      ((p) + smp_processor_id())
+#define raw_cpu_read(x)     ((x)[smp_processor_id()])
 #define raw_cpu_write(x, v) ((x)[smp_processor_id()] = (v))
-#define raw_cpu_ptr(p) ((p) + smp_processor_id())
-#define this_cpu_ptr(p) raw_cpu_ptr(p)
-#define this_cpu_inc(x) ((x)[smp_processor_id()])++
-#define __this_cpu_read(x) raw_cpu_read(x)
+#define this_cpu_inc(x)     ((x)[smp_processor_id()])++
+#define this_cpu_ptr(p)     raw_cpu_ptr(p)
+#define __this_cpu_read(x)  raw_cpu_read(x)
 #endif
 
 #define cpu_notifier(fn, pri) do { (void)(fn); } while (0)
