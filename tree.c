@@ -451,11 +451,7 @@ void rcu_all_qs(void)
 	if (unlikely(raw_cpu_read(rcu_sched_qs_mask)))
 		rcu_momentary_dyntick_idle();
 #ifdef VERIFY_RCU_FULL_STRUCT
-#ifdef PER_CPU_DATA_ARRAY
-        rcu_qs_ctr[smp_processor_id()]++;
-#else
 	this_cpu_inc(rcu_qs_ctr);
-#endif
 #endif
 }
 EXPORT_SYMBOL_GPL(rcu_all_qs);
