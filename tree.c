@@ -404,11 +404,7 @@ static void rcu_momentary_dyntick_idle(void)
 		 * quiescent state, with no need for this CPU to do anything
 		 * further.
 		 */
-#ifdef PER_CPU_DATA_ARRAY
-		rdtp = &rcu_dynticks[smp_processor_id()];
-#else
 		rdtp = this_cpu_ptr(&rcu_dynticks);
-#endif
 		smp_mb__before_atomic(); /* Earlier stuff before QS. */
 		atomic_add(2, &rdtp->dynticks);  /* QS. */
 		smp_mb__after_atomic(); /* Later stuff after QS. */
@@ -740,11 +736,7 @@ static void rcu_eqs_enter_common(long long oldval, bool user)
 {
 	struct rcu_state *rsp;
 	struct rcu_data *rdp;
-#ifdef PER_CPU_DATA_ARRAY
-	struct rcu_dynticks *rdtp = &rcu_dynticks[smp_processor_id()];
-#else
 	struct rcu_dynticks *rdtp = this_cpu_ptr(&rcu_dynticks);
-#endif
 
 	trace_rcu_dyntick(TPS("Start"), oldval, rdtp->dynticks_nesting);
 	if (IS_ENABLED(CONFIG_RCU_EQS_DEBUG) &&
@@ -763,11 +755,7 @@ static void rcu_eqs_enter_common(long long oldval, bool user)
 #else
 	rsp = &rcu_sched_state;
 #endif
-#ifdef PER_CPU_DATA_ARRAY
-		rdp = rsp->rda + smp_processor_id();
-#else
 		rdp = this_cpu_ptr(rsp->rda);
-#endif
 		do_nocb_deferred_wakeup(rdp);
 #ifdef VERIFY_RCU_EACH_FLAVOUR
 	}
@@ -803,11 +791,7 @@ static void rcu_eqs_enter(bool user)
 {
 	long long oldval;
 	struct rcu_dynticks *rdtp;
-#ifdef PER_CPU_DATA_ARRAY
-	rdtp = &rcu_dynticks[smp_processor_id()];
-#else
 	rdtp = this_cpu_ptr(&rcu_dynticks);
-#endif
 	oldval = rdtp->dynticks_nesting;
 	WARN_ON_ONCE(IS_ENABLED(CONFIG_RCU_EQS_DEBUG) &&
 		     (oldval & DYNTICK_TASK_NEST_MASK) == 0);
@@ -882,11 +866,7 @@ void rcu_irq_exit(void)
 	struct rcu_dynticks *rdtp;
 
 	local_irq_save(flags);
-#ifdef PER_CPU_DATA_ARRAY
-	rdtp = &rcu_dynticks[smp_processor_id()];
-#else
 	rdtp = this_cpu_ptr(&rcu_dynticks);
-#endif
 	oldval = rdtp->dynticks_nesting;
 	rdtp->dynticks_nesting--;
 	WARN_ON_ONCE(IS_ENABLED(CONFIG_RCU_EQS_DEBUG) &&
@@ -908,11 +888,7 @@ void rcu_irq_exit(void)
  */
 static void rcu_eqs_exit_common(long long oldval, int user)
 {
-#ifdef PER_CPU_DATA_ARRAY
-	struct rcu_dynticks *rdtp = &rcu_dynticks[smp_processor_id()];
-#else
 	struct rcu_dynticks *rdtp = this_cpu_ptr(&rcu_dynticks);
-#endif
 
 	rcu_dynticks_task_exit();
 	smp_mb__before_atomic();  /* Force ordering w/previous sojourn. */
@@ -945,11 +921,7 @@ static void rcu_eqs_exit(bool user)
 {
 	struct rcu_dynticks *rdtp;
 	long long oldval;
-#ifdef PER_CPU_DATA_ARRAY
-	rdtp = &rcu_dynticks[smp_processor_id()];
-#else
 	rdtp = this_cpu_ptr(&rcu_dynticks);
-#endif
 	oldval = rdtp->dynticks_nesting;
 	WARN_ON_ONCE(IS_ENABLED(CONFIG_RCU_EQS_DEBUG) && oldval < 0);
 	if (oldval & DYNTICK_TASK_NEST_MASK) {
@@ -1023,11 +995,7 @@ void rcu_irq_enter(void)
 	long long oldval;
 
 	local_irq_save(flags);
-#ifdef PER_CPU_DATA_ARRAY
-	rdtp = &rcu_dynticks[smp_processor_id()];
-#else
 	rdtp = this_cpu_ptr(&rcu_dynticks);
-#endif
 	oldval = rdtp->dynticks_nesting;
 	rdtp->dynticks_nesting++;
 	WARN_ON_ONCE(IS_ENABLED(CONFIG_RCU_EQS_DEBUG) &&
@@ -1051,11 +1019,7 @@ void rcu_irq_enter(void)
  */
 void rcu_nmi_enter(void)
 {
-#ifdef PER_CPU_DATA_ARRAY
-	struct rcu_dynticks *rdtp = &rcu_dynticks[smp_processor_id()];
-#else
 	struct rcu_dynticks *rdtp = this_cpu_ptr(&rcu_dynticks);
-#endif
 	int incby = 2;
 
 	/* Complain about underflow. */
@@ -1091,11 +1055,7 @@ void rcu_nmi_enter(void)
  */
 void rcu_nmi_exit(void)
 {
-#ifdef PER_CPU_DATA_ARRAY
-	struct rcu_dynticks *rdtp = &rcu_dynticks[smp_processor_id()];
-#else
 	struct rcu_dynticks *rdtp = this_cpu_ptr(&rcu_dynticks);
-#endif
 
 	/*
 	 * Check for ->dynticks_nmi_nesting underflow and bad ->dynticks.
@@ -1191,11 +1151,7 @@ bool rcu_lockdep_current_cpu_online(void)
 	if (in_nmi())
 		return true;
 	preempt_disable();
-#ifdef PER_CPU_DATA_ARRAY
-	rdp = &rcu_sched_data[smp_processor_id()];
-#else
 	rdp = this_cpu_ptr(&rcu_sched_data);
-#endif
 	rnp = rdp->mynode;
 	ret = (rdp->grpmask & rcu_rnp_online_cpus(rnp)) ||
 	      !rcu_scheduler_fully_active;
@@ -1772,11 +1728,7 @@ static int rcu_future_gp_cleanup(struct rcu_state *rsp, struct rcu_node *rnp)
 #else
 	int c = rnp->completed;
 	int needmore;
-#ifdef PER_CPU_DATA_ARRAY
-	struct rcu_data *rdp = rsp->rda + smp_processor_id();
-#else
 	struct rcu_data *rdp = this_cpu_ptr(rsp->rda);
-#endif
 
 	rcu_nocb_gp_cleanup(rsp, rnp);
 	rnp->need_future_gp[c & 0x1] = 0;
@@ -2167,11 +2119,7 @@ static int rcu_gp_init(struct rcu_state *rsp)
 		rcu_gp_slow(rsp, gp_init_delay);
 		raw_spin_lock_irq(&rnp->lock);
 		smp_mb__after_unlock_lock();
-#ifdef PER_CPU_DATA_ARRAY
-		rdp = rsp->rda + smp_processor_id();
-#else
 		rdp = this_cpu_ptr(rsp->rda);
-#endif
 		rcu_preempt_check_blocked_tasks(rnp);
 #ifdef FORCE_BUG_2
 		rnp->qsmask = 0;
@@ -2302,11 +2250,7 @@ static void rcu_gp_cleanup(struct rcu_state *rsp)
 		WARN_ON_ONCE(rcu_preempt_blocked_readers_cgp(rnp));
 		WARN_ON_ONCE(rnp->qsmask);
 		WRITE_ONCE(rnp->completed, rsp->gpnum);
-#ifdef PER_CPU_DATA_ARRAY
-		rdp = rsp->rda + smp_processor_id();
-#else
 		rdp = this_cpu_ptr(rsp->rda);
-#endif
 		if (rnp == rdp->mynode)
 			needgp = __note_gp_changes(rsp, rnp, rdp) || needgp;
 		/* smp_mb() provided by prior unlock-lock pair. */
@@ -2331,11 +2275,7 @@ static void rcu_gp_cleanup(struct rcu_state *rsp)
 #ifdef VERIFY_RCU_FULL_STRUCT
 	rsp->fqs_state = RCU_GP_IDLE;
 #endif
-#ifdef PER_CPU_DATA_ARRAY
-	rdp = rsp->rda + smp_processor_id();
-#else
 	rdp = this_cpu_ptr(rsp->rda);
-#endif
 	/* Advance CBs to reduce false positives below. */
 	needgp = rcu_advance_cbs(rsp, rnp, rdp) || needgp;
 	if (needgp || cpu_needs_another_gp(rsp, rdp)) {
@@ -2521,11 +2461,7 @@ rcu_start_gp_advanced(struct rcu_state *rsp, struct rcu_node *rnp,
  */
 static bool rcu_start_gp(struct rcu_state *rsp)
 {
-#ifdef PER_CPU_DATA_ARRAY
-	struct rcu_data *rdp = rsp->rda + smp_processor_id();
-#else
 	struct rcu_data *rdp = this_cpu_ptr(rsp->rda);
-#endif
 	struct rcu_node *rnp = rcu_get_root(rsp);
 	bool ret = false;
 
@@ -3454,11 +3390,7 @@ __call_rcu(struct rcu_head *head, void (*func)(struct rcu_head *rcu),
 	 * a quiescent state betweentimes.
 	 */
 	local_irq_save(flags);
-#ifdef PER_CPU_DATA_ARRAY
-	rdp = rsp->rda + smp_processor_id();
-#else
 	rdp = this_cpu_ptr(rsp->rda);
-#endif
 
 	/* Add the callback to our list. */
 	if (unlikely(rdp->nxttail[RCU_NEXT_TAIL] == NULL) || cpu != -1) {
@@ -4134,11 +4066,7 @@ static int rcu_pending(void)
 #else
 	rsp = &rcu_sched_state;
 #endif
-#ifdef PER_CPU_DATA_ARRAY
-		if (__rcu_pending(rsp, rsp->rda + smp_processor_id()))
-#else
 		if (__rcu_pending(rsp, this_cpu_ptr(rsp->rda)))
-#endif
 			return 1;
 	return 0;
 }
@@ -4163,11 +4091,7 @@ static bool __maybe_unused rcu_cpu_has_callbacks(bool *all_lazy)
 #else
 	rsp = &rcu_sched_state; do {
 #endif
-#ifdef PER_CPU_DATA_ARRAY
-		rdp = rsp->rda + smp_processor_id();
-#else
 		rdp = this_cpu_ptr(rsp->rda);
-#endif
 		if (!rdp->nxtlist)
 			continue;
 		hc = true;
