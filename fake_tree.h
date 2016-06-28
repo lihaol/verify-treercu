@@ -113,6 +113,8 @@ int rcu_cpu_stall_suppress = 1; /* 1 = suppress stall warnings. */
 //#define per_cpu_ptr(p, cpu) (&(p)[cpu])
 #define per_cpu_ptr(p, cpu) ((p) + (cpu))
 #define per_cpu(x, cpu) ((x)[cpu])
+#define raw_cpu_read(x) ((x)[smp_processor_id()])
+#define raw_cpu_write(x, v) ((x)[smp_processor_id()] = (v))
 #endif
 
 #define cpu_notifier(fn, pri) do { (void)(fn); } while (0)
