@@ -1856,7 +1856,7 @@ static bool rcu_advance_cbs(struct rcu_state *rsp, struct rcu_node *rnp,
 {
 #ifndef VERIFY_RCU_LIST
 	pass_rcu_gp();
-	return true;
+	return false;
 #else
 	int i, j;
 
