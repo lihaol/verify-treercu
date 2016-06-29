@@ -43,7 +43,8 @@ int wait_rcu_gp_flag;
 // Works for a single grace period
 void wait_rcu_gp(call_rcu_func_t crf)
 {
-	WRITE_ONCE(wait_rcu_gp_flag, 1);
+	//WRITE_ONCE(wait_rcu_gp_flag, 1);
+        __sync_bool_compare_and_swap(&wait_rcu_gp_flag, 0, 1);
 	rcu_note_context_switch();
 	rcu_process_callbacks(NULL);
 #ifdef CBMC
@@ -55,7 +56,8 @@ void wait_rcu_gp(call_rcu_func_t crf)
 
 void pass_rcu_gp(void) 
 {
-	WRITE_ONCE(wait_rcu_gp_flag, 0);
+	//WRITE_ONCE(wait_rcu_gp_flag, 0);
+        __sync_bool_compare_and_swap(&wait_rcu_gp_flag, 1, 0);
 }
 
 /*
