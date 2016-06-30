@@ -229,7 +229,7 @@ void wakeme_after_rcu(struct rcu_head *head);
 
 #if defined(CBMC) || defined(RUN) 
 void wait_rcu_gp(call_rcu_func_t crf);
-#else // #ifdef CBMC
+#else
 void __wait_rcu_gp(bool checktiny, int n, call_rcu_func_t *crcu_array,
 		   struct rcu_synchronize *rs_array);
 
@@ -242,7 +242,7 @@ do {									\
 } while (0)
 
 #define wait_rcu_gp(...) _wait_rcu_gp(false, __VA_ARGS__)
-#endif // #ifdef CBMC
+#endif // #if defined(CBMC) || defined(RUN) 
 
 /**
  * synchronize_rcu_mult - Wait concurrently for multiple grace periods

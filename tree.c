@@ -1712,7 +1712,7 @@ out:
 	if (c_out != NULL)
 		*c_out = c;
 	return ret;
-#endif
+#endif // #ifndef VERIFY_RCU_FULL_STRUCT
 }
 
 /*
@@ -1838,7 +1838,7 @@ static bool rcu_accelerate_cbs(struct rcu_state *rsp, struct rcu_node *rnp,
 	else
 		trace_rcu_grace_period(rsp->name, rdp->gpnum, TPS("AccReadyCB"));
 	return ret;
-#endif
+#endif // #ifndef VERIFY_RCU_LIST
 }
 
 /*
@@ -1887,7 +1887,7 @@ static bool rcu_advance_cbs(struct rcu_state *rsp, struct rcu_node *rnp,
 
 	/* Classify any remaining callbacks. */
 	return rcu_accelerate_cbs(rsp, rnp, rdp);
-#endif
+#endif // #ifndef VERIFY_RCU_LIST
 }
 
 /*
@@ -2635,7 +2635,7 @@ rcu_report_qs_rdp(int cpu, struct rcu_state *rsp, struct rcu_data *rdp)
 #else
 	if (rdp->passed_quiesce == 0 ||
 	    rdp->gpnum != rnp->gpnum || rnp->completed == rnp->gpnum) {
-#endif // #ifdef VERIFY_RCU_FULL_STRUCT
+#endif
 
 		/*
 		 * The grace period in which this quiescent state was
@@ -2646,7 +2646,7 @@ rcu_report_qs_rdp(int cpu, struct rcu_state *rsp, struct rcu_data *rdp)
 		rdp->passed_quiesce = 0;	/* need qs for new gp. */
 #ifdef VERIFY_RCU_FULL_STRUCT
 		rdp->rcu_qs_ctr_snap = __this_cpu_read(rcu_qs_ctr);
-#endif // #ifdef VERIFY_RCU_FULL_STRUCT
+#endif
 		raw_spin_unlock_irqrestore(&rnp->lock, flags);
 		return;
 	}
@@ -3027,7 +3027,7 @@ static void rcu_do_batch(struct rcu_state *rsp, struct rcu_data *rdp)
 	/* Re-invoke RCU core processing if there are callbacks remaining. */
 	if (cpu_has_callbacks_ready_to_invoke(rdp))
 		invoke_rcu_core();
-#endif
+#endif // #ifndef VERIFY_RCU_LIST
 }
 
 /*
@@ -3146,7 +3146,7 @@ static void force_qs_rnp(struct rcu_state *rsp,
 			raw_spin_unlock_irqrestore(&rnp->lock, flags);
 		}
 	}
-#endif
+#endif // #ifdef VERIFY_RCU_EXPEDITED_GP
 }
 
 /*
@@ -3192,7 +3192,7 @@ static void force_quiescent_state(struct rcu_state *rsp)
 	WRITE_ONCE(rsp->gp_flags, READ_ONCE(rsp->gp_flags) | RCU_GP_FLAG_FQS);
 	raw_spin_unlock_irqrestore(&rnp_old->lock, flags);
 	rcu_gp_kthread_wake(rsp);
-#endif
+#endif // #ifdef VERIFY_RCU_EXPEDITED_GP
 }
 
 /*
@@ -3233,7 +3233,7 @@ __rcu_process_callbacks(struct rcu_state *rsp)
 
 	/* Do any needed deferred wakeups of rcuo kthreads. */
 	do_nocb_deferred_wakeup(rdp);
-#endif
+#endif // #if !(defined(CBMC) || defined(RUN))
 }
 
 /*
@@ -3333,7 +3333,7 @@ static void __call_rcu_core(struct rcu_state *rsp, struct rcu_data *rdp,
 			rdp->qlen_last_fqs_check = rdp->qlen;
 		}
 	}
-#endif
+#endif // #ifdef VERIFY_RCU_LIST
 }
 
 /*
@@ -3417,7 +3417,7 @@ __call_rcu(struct rcu_head *head, void (*func)(struct rcu_head *rcu),
 	/* Go handle any RCU core processing required. */
 	__call_rcu_core(rsp, rdp, head, flags);
 	local_irq_restore(flags);
-#endif
+#endif // #ifdef VERIFY_RCU_LIST
 }
 
 /*
@@ -3562,7 +3562,7 @@ void synchronize_rcu_bh(void)
 		synchronize_rcu_bh_expedited();
 	else
 		wait_rcu_gp(call_rcu_bh);
-#endif
+#endif // #ifdef VERIFY_RCU_BH
 }
 EXPORT_SYMBOL_GPL(synchronize_rcu_bh);
 
@@ -3976,7 +3976,7 @@ static int __rcu_pending(struct rcu_state *rsp, struct rcu_data *rdp)
 		   rdp->passed_quiesce) {
 		return 1;
 	}
-#endif
+#endif // #ifdef VERIFY_RCU_FULL_STRUCT
 
 	/* Does this CPU have callbacks ready to invoke? */
 	if (cpu_has_callbacks_ready_to_invoke(rdp)) {
@@ -4219,7 +4219,7 @@ static void _rcu_barrier(struct rcu_state *rsp)
 
 	/* Other rcu_barrier() invocations can now safely proceed. */
 	mutex_unlock(&rsp->barrier_mutex);
-#endif
+#endif // #ifndef VERIFY_RCU_LIST
 }
 
 /**
@@ -4282,7 +4282,7 @@ rcu_boot_init_percpu_data(int cpu, struct rcu_state *rsp)
 	rdp->dynticks = &per_cpu(rcu_dynticks, cpu);
 	WARN_ON_ONCE(rdp->dynticks->dynticks_nesting != DYNTICK_TASK_EXIT_IDLE);
 	WARN_ON_ONCE(atomic_read(&rdp->dynticks->dynticks) != 1);
-#endif // #ifdef VERIFY_RCU_DYNTICKS
+#endif
 	rdp->cpu = cpu;
 	rdp->rsp = rsp;
 #ifdef VERIFY_RCU_FULL_STRUCT
@@ -4779,8 +4779,8 @@ void __init rcu_init(void)
         	rcu_dynticks[i].dynticks_idle = ATOMIC_INIT(1);
         #endif /* #ifdef CONFIG_NO_HZ_FULL_SYSIDLE */
         }
-#endif // #ifdef PER_CPU_DATA_ARRAY
-#endif // #ifdef VERIFY_RCU_DYNTICKS
+#endif
+#endif
 
 	rcu_init_geometry();
 
@@ -4789,12 +4789,12 @@ void __init rcu_init(void)
 	rcu_init_one(&rcu_bh_state, rcu_bh_data);
 #endif
 	rcu_init_one(&rcu_sched_state, rcu_sched_data);
-#else
+#else // #ifdef PER_CPU_DATA_ARRAY
 #ifdef VERIFY_RCU_BH
 	rcu_init_one(&rcu_bh_state, &rcu_bh_data);
 #endif
 	rcu_init_one(&rcu_sched_state, &rcu_sched_data);
-#endif	
+#endif // #ifdef PER_CPU_DATA_ARRAY
 	if (dump_tree)
 		rcu_dump_rcu_node_tree(&rcu_sched_state);
 	__rcu_init_preempt();

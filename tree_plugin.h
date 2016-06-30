@@ -1408,7 +1408,7 @@ static bool __maybe_unused rcu_try_advance_all_cbs(void)
 	struct rcu_data *rdp;
 #ifdef VERIFY_RCU_DYNTICKS
 	struct rcu_dynticks *rdtp = this_cpu_ptr(&rcu_dynticks);
-#endif // #ifdef VERIFY_RCU_DYNTICKS
+#endif
 	struct rcu_node *rnp;
 	struct rcu_state *rsp;
 
