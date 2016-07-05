@@ -10,7 +10,12 @@
 #undef VERIFY_RCU_EXPEDITED_GP
 #undef VERIFY_RCU_ORPHAN_CB
 
+#ifdef FORCE_BUG_7_2
+#define NR_CPUS 3
+#else
 #define NR_CPUS 2
+#endif
+
 #define CONFIG_RCU_FANOUT_LEAF 16
 
 #define HZ 1000

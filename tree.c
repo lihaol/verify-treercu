@@ -2535,7 +2535,7 @@ rcu_report_qs_rnp(unsigned long mask, struct rcu_state *rsp,
 						 mask, rnp->qsmask, rnp->level,
 						 rnp->grplo, rnp->grphi,
 						 !!rnp->gp_tasks);
-#ifndef FORCE_BUG_7
+#if !defined(FORCE_BUG_7) && !defined(FORCE_BUG_7_2)
 		if (rnp->qsmask != 0 || rcu_preempt_blocked_readers_cgp(rnp)) {
 
 			/* Other bits still set at this level, so done. */
