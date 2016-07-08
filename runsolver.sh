@@ -2,8 +2,8 @@
 
 logfile=$1
 
-# use '--mm tso' and '--mm pso' to specify memory model TSO (Intel's x86) and PSO (IBM's Power), respectively
-# default is SC (Sequential Consistency)
+# Use '--mm tso' and '--mm pso' to specify memory model TSO (Intel's x86) and PSO (IBM's Power), respectively
+# Default is SC (Sequential Consistency)
 MM=$2
 
 RUNSOLVER=~/runsolver/src/runsolver
