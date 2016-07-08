@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
 	pthread_t tpr;
 	struct thread_info tinfo_tu = {(0)};
 	struct thread_info tinfo_tpr = {(1)};
-#ifdef FORCE_BUG_7_2
+#ifdef 2_READER_THREADS
 	struct thread_info tinfo_tpr2 = {(2)};
 	pthread_t tpr2;
 #endif
@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
 	//rcu_verify_early_boot_tests();
 
 	// sanity check
-#ifdef FORCE_BUG_7_2
+#ifdef 2_READER_THREADS
         WARN_ON(NR_CPUS != 3);
 #else
         WARN_ON(NR_CPUS != 2);
@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
 		abort();
 	if (pthread_create(&tpr, NULL, thread_process_reader, &tinfo_tpr))
 		abort();
-#ifdef FORCE_BUG_7_2
+#ifdef 2_READER_THREADS
 	if (pthread_create(&tpr2, NULL, thread_process_reader, &tinfo_tpr2))
 		abort();
 #endif
@@ -155,7 +155,7 @@ int main(int argc, char *argv[])
 		abort();
 	if (pthread_join(tpr, NULL))
 		abort();
-#ifdef FORCE_BUG_7_2
+#ifdef 2_READER_THREADS
 	if (pthread_join(tpr2, NULL))
 		abort();
 #endif
@@ -184,7 +184,7 @@ int main(int argc, char *argv[])
 	//rcu_verify_early_boot_tests();
 	
 	// sanity check
-#ifdef FORCE_BUG_7_2
+#ifdef 2_READER_THREADS
         WARN_ON(NR_CPUS != 3);
 #else
         WARN_ON(NR_CPUS != 2);
@@ -199,12 +199,12 @@ int main(int argc, char *argv[])
 	
         unsigned int my_cpu_id0 = 0;
         unsigned int my_cpu_id1 = 1;
-#ifdef FORCE_BUG_7_2
+#ifdef 2_READER_THREADS
         unsigned int my_cpu_id2 = 2;
 #endif
 	__CPROVER_ASYNC_0: thread_update(&my_cpu_id0);
 	__CPROVER_ASYNC_1: thread_process_reader(&my_cpu_id1);
-#ifdef FORCE_BUG_7_2
+#ifdef 2_READER_THREADS
 	__CPROVER_ASYNC_2: thread_process_reader(&my_cpu_id2);
 #endif
 	

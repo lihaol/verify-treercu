@@ -10,7 +10,7 @@
 #undef VERIFY_RCU_EXPEDITED_GP
 #undef VERIFY_RCU_ORPHAN_CB
 
-#ifdef FORCE_BUG_7_2
+#ifdef 2_READER_THREADS
 #define NR_CPUS 3
 #else
 #define NR_CPUS 2
