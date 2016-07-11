@@ -16,8 +16,8 @@ LOOP2="--unwindset rcu_spawn_gp_kthread.0:4,rcu_init_levelspread.1:2,rcu_init_on
 
 # Use flag -DPROVE_GP to prove a grace period has completed
 # Use flags -DFORCE_BUG_* where * is between 1 and 7 inclusive to force different bug-injection scenarios
-# Add flag -D2_READER_THREADS if using 2 reader threads
-FLAGS="-DCBMC -DPER_CPU_DATA_ARRAY -DPROVE_GP"
+# Add flag -DREADER_THREADS_2 if using 2 reader threads
+FLAGS="-DCBMC -DPER_CPU_DATA_ARRAY -DFORCE_BUG_1"
 
 folder=${logfile}
 
