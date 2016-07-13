@@ -1,3 +1,9 @@
+#ifdef RUN
+#include <stdlib.h>
+#include <time.h>
+#include <unistd.h>
+#endif
+
 #include "fake.c"
 
 #define NUM_THREADS 2
@@ -51,6 +57,10 @@ void rcu_reader(void)
 {
 	rcu_read_lock();
 	__unbuffered_tpr_x = x;
+#ifdef RUN
+	srand(time(NULL));
+	usleep(rand()%1000000); // 0-999ms
+#endif
 	__unbuffered_tpr_y = y;
 	rcu_read_unlock();
 }
