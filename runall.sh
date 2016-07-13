@@ -1,20 +1,38 @@
 #!/bin/bash
 
-MAXRUN="1000"
+MAXRUN="100"
 TIMEOUT="20"
 FLAG="-DRUN -DPER_CPU_DATA_ARRAY"
+BUG=""
+EXPT=""
 
 echo ${MAXRUN}' runs for each bug scenario'
 echo 'Each run times out in '${TIMEOUT}' seconds'
 
-for i in {1,7}
+for i in {-1..8}
 do
+  if [ $i == -1 ]
+  then
+    EXPT="PROVE"
+  elif [ $i == 0 ]
+  then
+    BUG="-DPROVE_GP"
+    EXPT="PROVE-GP"
+  elif [ $i == 8 ]
+  then
+    BUG="-DFORCE_BUG_7 -DREADER_THREADS_2"
+    EXPT="BUG_7_2"
+  else
+    BUG="-DFORCE_BUG_"$i
+    EXPT="BUG_"$i
+  fi
+
   rm tree 
-  cc -I . -g -o tree ${FLAG} -DFORCE_BUG_$i main.c -lpthread
+  cc -I . -g -o tree ${FLAG} ${BUG} main.c -lpthread
 
   for j in `seq 1 ${MAXRUN}`
   do
-    echo 'BUG_'$i' Run '$j
+    echo ${EXPT}' Run '$j
     timeout ${TIMEOUT} ./runall_helper.sh
   done
 done
