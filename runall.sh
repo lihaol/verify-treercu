@@ -6,8 +6,9 @@ FLAG="-DRUN -DPER_CPU_DATA_ARRAY"
 BUG=""
 EXPT=""
 
-echo ${MAXRUN}' runs for each bug scenario'
-echo 'Each run times out in '${TIMEOUT}' seconds'
+echo '* '${MAXRUN}' runs for each bug scenario'
+echo '* Each run times out in '${TIMEOUT}' seconds'
+echo ''
 
 for i in {-1..8}
 do
@@ -30,9 +31,15 @@ do
   rm tree 
   cc -I . -g -o tree ${FLAG} ${BUG} main.c -lpthread
 
+  echo '=================================='
+  echo ''
+  echo 'Start running '${EXPT}':'
+  echo ''
+
   for j in `seq 1 ${MAXRUN}`
   do
-    echo ${EXPT}' Run '$j
+    echo ${EXPT}' run '$j
     timeout ${TIMEOUT} ./runall_helper.sh
+    echo ''
   done
 done
