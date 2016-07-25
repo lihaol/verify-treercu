@@ -1,4 +1,4 @@
-if ./tree
+if ./$1
 then
 	echo successful
 else
