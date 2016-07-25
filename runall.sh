@@ -6,7 +6,7 @@ FLAG="-DRUN -DPER_CPU_DATA_ARRAY"
 BUG=""
 EXPT=""
 
-echo '* '${MAXRUN}' runs for each bug scenario'
+echo '* '${MAXRUN}' runs for each scenario'
 echo '* Each run times out in '${TIMEOUT}' seconds'
 echo ''
 
@@ -18,7 +18,7 @@ do
   elif [ $i == 0 ]
   then
     BUG="-DPROVE_GP"
-    EXPT="PROVE-GP"
+    EXPT="PROVE_GP"
   elif [ $i == 8 ]
   then
     BUG="-DFORCE_BUG_7 -DREADER_THREADS_2"
@@ -28,18 +28,24 @@ do
     EXPT="BUG_"$i
   fi
 
-  rm tree 
-  cc -I . -g -o tree ${FLAG} ${BUG} main.c -lpthread
+  EXEC='tree_'${EXPT}
+
+  if [ -f ${EXEC} ]
+  then
+    rm ${EXEC}
+  fi
+
+  cc -I . -g -o ${EXEC} ${FLAG} ${BUG} main.c -lpthread
 
   echo '=================================='
   echo ''
-  echo 'Start running '${EXPT}':'
+  echo 'Start '${MAXRUN}' runs for scenario '${EXPT}':'
   echo ''
 
   for j in `seq 1 ${MAXRUN}`
   do
     echo ${EXPT}' run '$j
-    timeout ${TIMEOUT} ./runall_helper.sh
+    timeout ${TIMEOUT} ./run_helper.sh ${EXEC}
     echo ''
   done
 done
