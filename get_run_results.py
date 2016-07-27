@@ -25,11 +25,9 @@ for ll in lines:
 		expt = line_tokens[-1]
 		total_run = int(line_tokens[1])
 		run_count = 0
-		#print "Start here"
 		continue
 
 	if line.startswith(expt):
-		#print "New run"
 		run_count += 1
 		curr_run = int(line.split()[-1])
 		assert run_count == curr_run
@@ -39,7 +37,6 @@ for ll in lines:
 		else: # success or fail
 			timeout_flag = True
 	else:
-		#print "Here?"
 		if 'Assertion' in line and 'failed' in line:
 			failure_count += 1
 			timeout_flag = False
