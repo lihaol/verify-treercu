@@ -97,6 +97,8 @@ struct rcu_state rcu_sched_state = {
 	.rda = rcu_sched_data, 
 #ifdef VERIFY_RCU_LIST
 	.call = call_rcu_sched, 
+#endif
+#ifdef VERIFY_RCU_QS_FORCING
 	.fqs_state = RCU_GP_IDLE, 
 #endif
 	.gpnum = 0UL - 300UL, 
@@ -2268,7 +2270,7 @@ static void rcu_gp_cleanup(struct rcu_state *rsp)
 	/* Declare grace period done. */
 	WRITE_ONCE(rsp->completed, rsp->gpnum);
 	trace_rcu_grace_period(rsp->name, rsp->completed, TPS("end"));
-#ifdef VERIFY_RCU_FULL_STRUCT
+#ifdef VERIFY_RCU_QS_FORCING
 	rsp->fqs_state = RCU_GP_IDLE;
 #endif
 	rdp = this_cpu_ptr(rsp->rda);
