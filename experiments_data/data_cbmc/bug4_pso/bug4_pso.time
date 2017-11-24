@@ -1,0 +1,12 @@
+# WCTIME: wall clock time in seconds
+WCTIME=30355
+# CPUTIME: CPU time in seconds
+CPUTIME=30376.5
+# USERTIME: CPU time spent in user mode in seconds
+USERTIME=30361.9
+# SYSTEMTIME: CPU time spent in system mode in seconds
+SYSTEMTIME=14.5335
+# CPUUSAGE: CPUTIME/WCTIME in percent
+CPUUSAGE=100.071
+# MAXVM: maximum virtual memory used in KiB
+MAXVM=31273812

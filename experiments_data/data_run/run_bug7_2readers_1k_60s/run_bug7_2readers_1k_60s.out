@@ -1,0 +1,3487 @@
+Start 1000 runs for scenario BUG_7_2READERS
+Each run times out in 60s
+
+BUG_7_2READERS run 1
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 31284 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 2
+successful
+
+BUG_7_2READERS run 3
+successful
+
+BUG_7_2READERS run 4
+successful
+
+BUG_7_2READERS run 5
+successful
+
+BUG_7_2READERS run 6
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 31318 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 7
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 31325 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 8
+successful
+
+BUG_7_2READERS run 9
+successful
+
+BUG_7_2READERS run 10
+successful
+
+BUG_7_2READERS run 11
+successful
+
+BUG_7_2READERS run 12
+successful
+
+BUG_7_2READERS run 13
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 31363 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 14
+successful
+
+BUG_7_2READERS run 15
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 31376 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 16
+successful
+
+BUG_7_2READERS run 17
+successful
+
+BUG_7_2READERS run 18
+successful
+
+BUG_7_2READERS run 19
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 31401 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 20
+successful
+
+BUG_7_2READERS run 21
+successful
+
+BUG_7_2READERS run 22
+successful
+
+BUG_7_2READERS run 23
+successful
+
+BUG_7_2READERS run 24
+successful
+
+BUG_7_2READERS run 25
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 31438 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 26
+successful
+
+BUG_7_2READERS run 27
+successful
+
+BUG_7_2READERS run 28
+successful
+
+BUG_7_2READERS run 29
+successful
+
+BUG_7_2READERS run 30
+successful
+
+BUG_7_2READERS run 31
+successful
+
+BUG_7_2READERS run 32
+successful
+
+BUG_7_2READERS run 33
+successful
+
+BUG_7_2READERS run 34
+successful
+
+BUG_7_2READERS run 35
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 31499 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 36
+successful
+
+BUG_7_2READERS run 37
+successful
+
+BUG_7_2READERS run 38
+successful
+
+BUG_7_2READERS run 39
+successful
+
+BUG_7_2READERS run 40
+successful
+
+BUG_7_2READERS run 41
+successful
+
+BUG_7_2READERS run 42
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 31542 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 43
+successful
+
+BUG_7_2READERS run 44
+successful
+
+BUG_7_2READERS run 45
+successful
+
+BUG_7_2READERS run 46
+successful
+
+BUG_7_2READERS run 47
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 31573 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 48
+successful
+
+BUG_7_2READERS run 49
+successful
+
+BUG_7_2READERS run 50
+successful
+
+BUG_7_2READERS run 51
+successful
+
+BUG_7_2READERS run 52
+successful
+
+BUG_7_2READERS run 53
+successful
+
+BUG_7_2READERS run 54
+successful
+
+BUG_7_2READERS run 55
+successful
+
+BUG_7_2READERS run 56
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 31628 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 57
+successful
+
+BUG_7_2READERS run 58
+successful
+
+BUG_7_2READERS run 59
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 31647 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 60
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 31654 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 61
+successful
+
+BUG_7_2READERS run 62
+successful
+
+BUG_7_2READERS run 63
+successful
+
+BUG_7_2READERS run 64
+successful
+
+BUG_7_2READERS run 65
+successful
+
+BUG_7_2READERS run 66
+successful
+
+BUG_7_2READERS run 67
+successful
+
+BUG_7_2READERS run 68
+successful
+
+BUG_7_2READERS run 69
+successful
+
+BUG_7_2READERS run 70
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 31715 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 71
+successful
+
+BUG_7_2READERS run 72
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 31728 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 73
+successful
+
+BUG_7_2READERS run 74
+successful
+
+BUG_7_2READERS run 75
+successful
+
+BUG_7_2READERS run 76
+successful
+
+BUG_7_2READERS run 77
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 31759 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 78
+successful
+
+BUG_7_2READERS run 79
+successful
+
+BUG_7_2READERS run 80
+successful
+
+BUG_7_2READERS run 81
+successful
+
+BUG_7_2READERS run 82
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 31790 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 83
+successful
+
+BUG_7_2READERS run 84
+successful
+
+BUG_7_2READERS run 85
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 31809 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 86
+successful
+
+BUG_7_2READERS run 87
+successful
+
+BUG_7_2READERS run 88
+successful
+
+BUG_7_2READERS run 89
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 31834 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 90
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 31841 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 91
+successful
+
+BUG_7_2READERS run 92
+successful
+
+BUG_7_2READERS run 93
+successful
+
+BUG_7_2READERS run 94
+successful
+
+BUG_7_2READERS run 95
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 31872 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 96
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 31879 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 97
+successful
+
+BUG_7_2READERS run 98
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 31892 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 99
+successful
+
+BUG_7_2READERS run 100
+successful
+
+BUG_7_2READERS run 101
+successful
+
+BUG_7_2READERS run 102
+successful
+
+BUG_7_2READERS run 103
+successful
+
+BUG_7_2READERS run 104
+successful
+
+BUG_7_2READERS run 105
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 31935 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 106
+successful
+
+BUG_7_2READERS run 107
+successful
+
+BUG_7_2READERS run 108
+successful
+
+BUG_7_2READERS run 109
+successful
+
+BUG_7_2READERS run 110
+successful
+
+BUG_7_2READERS run 111
+successful
+
+BUG_7_2READERS run 112
+successful
+
+BUG_7_2READERS run 113
+successful
+
+BUG_7_2READERS run 114
+successful
+
+BUG_7_2READERS run 115
+successful
+
+BUG_7_2READERS run 116
+successful
+
+BUG_7_2READERS run 117
+successful
+
+BUG_7_2READERS run 118
+successful
+
+BUG_7_2READERS run 119
+successful
+
+BUG_7_2READERS run 120
+successful
+
+BUG_7_2READERS run 121
+successful
+
+BUG_7_2READERS run 122
+successful
+
+BUG_7_2READERS run 123
+successful
+
+BUG_7_2READERS run 124
+successful
+
+BUG_7_2READERS run 125
+successful
+
+BUG_7_2READERS run 126
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 32065 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 127
+successful
+
+BUG_7_2READERS run 128
+successful
+
+BUG_7_2READERS run 129
+successful
+
+BUG_7_2READERS run 130
+successful
+
+BUG_7_2READERS run 131
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 32096 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 132
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 32103 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 133
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 32112 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 134
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 32119 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 135
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 32126 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 136
+successful
+
+BUG_7_2READERS run 137
+successful
+
+BUG_7_2READERS run 138
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 32145 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 139
+successful
+
+BUG_7_2READERS run 140
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 32158 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 141
+successful
+
+BUG_7_2READERS run 142
+successful
+
+BUG_7_2READERS run 143
+successful
+
+BUG_7_2READERS run 144
+successful
+
+BUG_7_2READERS run 145
+successful
+
+BUG_7_2READERS run 146
+successful
+
+BUG_7_2READERS run 147
+successful
+
+BUG_7_2READERS run 148
+successful
+
+BUG_7_2READERS run 149
+successful
+
+BUG_7_2READERS run 150
+successful
+
+BUG_7_2READERS run 151
+successful
+
+BUG_7_2READERS run 152
+successful
+
+BUG_7_2READERS run 153
+successful
+
+BUG_7_2READERS run 154
+successful
+
+BUG_7_2READERS run 155
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 32249 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 156
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 32256 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 157
+successful
+
+BUG_7_2READERS run 158
+successful
+
+BUG_7_2READERS run 159
+successful
+
+BUG_7_2READERS run 160
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 32281 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 161
+successful
+
+BUG_7_2READERS run 162
+successful
+
+BUG_7_2READERS run 163
+successful
+
+BUG_7_2READERS run 164
+successful
+
+BUG_7_2READERS run 165
+successful
+
+BUG_7_2READERS run 166
+successful
+
+BUG_7_2READERS run 167
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 32324 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 168
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 32331 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 169
+successful
+
+BUG_7_2READERS run 170
+successful
+
+BUG_7_2READERS run 171
+successful
+
+BUG_7_2READERS run 172
+successful
+
+BUG_7_2READERS run 173
+successful
+
+BUG_7_2READERS run 174
+successful
+
+BUG_7_2READERS run 175
+successful
+
+BUG_7_2READERS run 176
+successful
+
+BUG_7_2READERS run 177
+successful
+
+BUG_7_2READERS run 178
+successful
+
+BUG_7_2READERS run 179
+successful
+
+BUG_7_2READERS run 180
+successful
+
+BUG_7_2READERS run 181
+successful
+
+BUG_7_2READERS run 182
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 32419 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 183
+successful
+
+BUG_7_2READERS run 184
+successful
+
+BUG_7_2READERS run 185
+successful
+
+BUG_7_2READERS run 186
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 32444 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 187
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 32451 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 188
+successful
+
+BUG_7_2READERS run 189
+successful
+
+BUG_7_2READERS run 190
+successful
+
+BUG_7_2READERS run 191
+successful
+
+BUG_7_2READERS run 192
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 32487 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 193
+successful
+
+BUG_7_2READERS run 194
+successful
+
+BUG_7_2READERS run 195
+successful
+
+BUG_7_2READERS run 196
+successful
+
+BUG_7_2READERS run 197
+successful
+
+BUG_7_2READERS run 198
+successful
+
+BUG_7_2READERS run 199
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 32535 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 200
+successful
+
+BUG_7_2READERS run 201
+successful
+
+BUG_7_2READERS run 202
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 32554 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 203
+successful
+
+BUG_7_2READERS run 204
+successful
+
+BUG_7_2READERS run 205
+successful
+
+BUG_7_2READERS run 206
+successful
+
+BUG_7_2READERS run 207
+successful
+
+BUG_7_2READERS run 208
+successful
+
+BUG_7_2READERS run 209
+successful
+
+BUG_7_2READERS run 210
+successful
+
+BUG_7_2READERS run 211
+successful
+
+BUG_7_2READERS run 212
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 32616 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 213
+successful
+
+BUG_7_2READERS run 214
+successful
+
+BUG_7_2READERS run 215
+successful
+
+BUG_7_2READERS run 216
+successful
+
+BUG_7_2READERS run 217
+successful
+
+BUG_7_2READERS run 218
+successful
+
+BUG_7_2READERS run 219
+successful
+
+BUG_7_2READERS run 220
+successful
+
+BUG_7_2READERS run 221
+successful
+
+BUG_7_2READERS run 222
+successful
+
+BUG_7_2READERS run 223
+successful
+
+BUG_7_2READERS run 224
+successful
+
+BUG_7_2READERS run 225
+successful
+
+BUG_7_2READERS run 226
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 32704 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 227
+successful
+
+BUG_7_2READERS run 228
+successful
+
+BUG_7_2READERS run 229
+successful
+
+BUG_7_2READERS run 230
+successful
+
+BUG_7_2READERS run 231
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 32735 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 232
+successful
+
+BUG_7_2READERS run 233
+successful
+
+BUG_7_2READERS run 234
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 32754 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 235
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6: 32761 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 236
+successful
+
+BUG_7_2READERS run 237
+successful
+
+BUG_7_2READERS run 238
+successful
+
+BUG_7_2READERS run 239
+successful
+
+BUG_7_2READERS run 240
+successful
+
+BUG_7_2READERS run 241
+successful
+
+BUG_7_2READERS run 242
+successful
+
+BUG_7_2READERS run 243
+successful
+
+BUG_7_2READERS run 244
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:   352 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 245
+successful
+
+BUG_7_2READERS run 246
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:   365 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 247
+successful
+
+BUG_7_2READERS run 248
+successful
+
+BUG_7_2READERS run 249
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:   384 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 250
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:   391 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 251
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:   398 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 252
+successful
+
+BUG_7_2READERS run 253
+successful
+
+BUG_7_2READERS run 254
+successful
+
+BUG_7_2READERS run 255
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:   423 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 256
+successful
+
+BUG_7_2READERS run 257
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:   438 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 258
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:   445 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 259
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:   455 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 260
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:   462 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 261
+successful
+
+BUG_7_2READERS run 262
+successful
+
+BUG_7_2READERS run 263
+successful
+
+BUG_7_2READERS run 264
+successful
+
+BUG_7_2READERS run 265
+successful
+
+BUG_7_2READERS run 266
+successful
+
+BUG_7_2READERS run 267
+successful
+
+BUG_7_2READERS run 268
+successful
+
+BUG_7_2READERS run 269
+successful
+
+BUG_7_2READERS run 270
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:   528 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 271
+successful
+
+BUG_7_2READERS run 272
+successful
+
+BUG_7_2READERS run 273
+successful
+
+BUG_7_2READERS run 274
+successful
+
+BUG_7_2READERS run 275
+successful
+
+BUG_7_2READERS run 276
+successful
+
+BUG_7_2READERS run 277
+successful
+
+BUG_7_2READERS run 278
+successful
+
+BUG_7_2READERS run 279
+successful
+
+BUG_7_2READERS run 280
+successful
+
+BUG_7_2READERS run 281
+successful
+
+BUG_7_2READERS run 282
+successful
+
+BUG_7_2READERS run 283
+successful
+
+BUG_7_2READERS run 284
+successful
+
+BUG_7_2READERS run 285
+successful
+
+BUG_7_2READERS run 286
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:   628 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 287
+successful
+
+BUG_7_2READERS run 288
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:   641 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 289
+successful
+
+BUG_7_2READERS run 290
+successful
+
+BUG_7_2READERS run 291
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:   660 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 292
+successful
+
+BUG_7_2READERS run 293
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:   673 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 294
+successful
+
+BUG_7_2READERS run 295
+successful
+
+BUG_7_2READERS run 296
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:   692 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 297
+successful
+
+BUG_7_2READERS run 298
+successful
+
+BUG_7_2READERS run 299
+successful
+
+BUG_7_2READERS run 300
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:   717 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 301
+successful
+
+BUG_7_2READERS run 302
+successful
+
+BUG_7_2READERS run 303
+successful
+
+BUG_7_2READERS run 304
+successful
+
+BUG_7_2READERS run 305
+successful
+
+BUG_7_2READERS run 306
+successful
+
+BUG_7_2READERS run 307
+successful
+
+BUG_7_2READERS run 308
+successful
+
+BUG_7_2READERS run 309
+successful
+
+BUG_7_2READERS run 310
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:   778 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 311
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:   785 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 312
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:   792 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 313
+successful
+
+BUG_7_2READERS run 314
+successful
+
+BUG_7_2READERS run 315
+successful
+
+BUG_7_2READERS run 316
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:   817 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 317
+successful
+
+BUG_7_2READERS run 318
+successful
+
+BUG_7_2READERS run 319
+successful
+
+BUG_7_2READERS run 320
+successful
+
+BUG_7_2READERS run 321
+successful
+
+BUG_7_2READERS run 322
+successful
+
+BUG_7_2READERS run 323
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:   860 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 324
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:   867 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 325
+successful
+
+BUG_7_2READERS run 326
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:   880 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 327
+successful
+
+BUG_7_2READERS run 328
+successful
+
+BUG_7_2READERS run 329
+successful
+
+BUG_7_2READERS run 330
+successful
+
+BUG_7_2READERS run 331
+successful
+
+BUG_7_2READERS run 332
+successful
+
+BUG_7_2READERS run 333
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:   929 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 334
+successful
+
+BUG_7_2READERS run 335
+successful
+
+BUG_7_2READERS run 336
+successful
+
+BUG_7_2READERS run 337
+successful
+
+BUG_7_2READERS run 338
+successful
+
+BUG_7_2READERS run 339
+successful
+
+BUG_7_2READERS run 340
+successful
+
+BUG_7_2READERS run 341
+successful
+
+BUG_7_2READERS run 342
+successful
+
+BUG_7_2READERS run 343
+successful
+
+BUG_7_2READERS run 344
+successful
+
+BUG_7_2READERS run 345
+successful
+
+BUG_7_2READERS run 346
+successful
+
+BUG_7_2READERS run 347
+successful
+
+BUG_7_2READERS run 348
+successful
+
+BUG_7_2READERS run 349
+successful
+
+BUG_7_2READERS run 350
+successful
+
+BUG_7_2READERS run 351
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1083 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 352
+successful
+
+BUG_7_2READERS run 353
+successful
+
+BUG_7_2READERS run 354
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1102 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 355
+successful
+
+BUG_7_2READERS run 356
+successful
+
+BUG_7_2READERS run 357
+successful
+
+BUG_7_2READERS run 358
+successful
+
+BUG_7_2READERS run 359
+successful
+
+BUG_7_2READERS run 360
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1141 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 361
+successful
+
+BUG_7_2READERS run 362
+successful
+
+BUG_7_2READERS run 363
+successful
+
+BUG_7_2READERS run 364
+successful
+
+BUG_7_2READERS run 365
+successful
+
+BUG_7_2READERS run 366
+successful
+
+BUG_7_2READERS run 367
+successful
+
+BUG_7_2READERS run 368
+successful
+
+BUG_7_2READERS run 369
+successful
+
+BUG_7_2READERS run 370
+successful
+
+BUG_7_2READERS run 371
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1210 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 372
+successful
+
+BUG_7_2READERS run 373
+successful
+
+BUG_7_2READERS run 374
+successful
+
+BUG_7_2READERS run 375
+successful
+
+BUG_7_2READERS run 376
+successful
+
+BUG_7_2READERS run 377
+successful
+
+BUG_7_2READERS run 378
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1253 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 379
+successful
+
+BUG_7_2READERS run 380
+successful
+
+BUG_7_2READERS run 381
+successful
+
+BUG_7_2READERS run 382
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1281 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 383
+successful
+
+BUG_7_2READERS run 384
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1294 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 385
+successful
+
+BUG_7_2READERS run 386
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1307 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 387
+successful
+
+BUG_7_2READERS run 388
+successful
+
+BUG_7_2READERS run 389
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1326 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 390
+successful
+
+BUG_7_2READERS run 391
+successful
+
+BUG_7_2READERS run 392
+successful
+
+BUG_7_2READERS run 393
+successful
+
+BUG_7_2READERS run 394
+successful
+
+BUG_7_2READERS run 395
+successful
+
+BUG_7_2READERS run 396
+successful
+
+BUG_7_2READERS run 397
+successful
+
+BUG_7_2READERS run 398
+successful
+
+BUG_7_2READERS run 399
+successful
+
+BUG_7_2READERS run 400
+successful
+
+BUG_7_2READERS run 401
+successful
+
+BUG_7_2READERS run 402
+successful
+
+BUG_7_2READERS run 403
+successful
+
+BUG_7_2READERS run 404
+successful
+
+BUG_7_2READERS run 405
+successful
+
+BUG_7_2READERS run 406
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1431 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 407
+successful
+
+BUG_7_2READERS run 408
+successful
+
+BUG_7_2READERS run 409
+successful
+
+BUG_7_2READERS run 410
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1469 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 411
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1476 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 412
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1483 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 413
+successful
+
+BUG_7_2READERS run 414
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1496 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 415
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1505 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 416
+successful
+
+BUG_7_2READERS run 417
+successful
+
+BUG_7_2READERS run 418
+successful
+
+BUG_7_2READERS run 419
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1536 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 420
+successful
+
+BUG_7_2READERS run 421
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1570 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 422
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1581 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 423
+successful
+
+BUG_7_2READERS run 424
+successful
+
+BUG_7_2READERS run 425
+successful
+
+BUG_7_2READERS run 426
+successful
+
+BUG_7_2READERS run 427
+successful
+
+BUG_7_2READERS run 428
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1618 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 429
+successful
+
+BUG_7_2READERS run 430
+successful
+
+BUG_7_2READERS run 431
+successful
+
+BUG_7_2READERS run 432
+successful
+
+BUG_7_2READERS run 433
+successful
+
+BUG_7_2READERS run 434
+successful
+
+BUG_7_2READERS run 435
+successful
+
+BUG_7_2READERS run 436
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1669 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 437
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1676 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 438
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1688 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 439
+successful
+
+BUG_7_2READERS run 440
+successful
+
+BUG_7_2READERS run 441
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1707 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 442
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1714 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 443
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1721 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 444
+successful
+
+BUG_7_2READERS run 445
+successful
+
+BUG_7_2READERS run 446
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1740 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 447
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1747 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 448
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1754 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 449
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1761 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 450
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1768 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 451
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1775 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 452
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1782 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 453
+successful
+
+BUG_7_2READERS run 454
+successful
+
+BUG_7_2READERS run 455
+successful
+
+BUG_7_2READERS run 456
+successful
+
+BUG_7_2READERS run 457
+successful
+
+BUG_7_2READERS run 458
+successful
+
+BUG_7_2READERS run 459
+successful
+
+BUG_7_2READERS run 460
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1831 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 461
+successful
+
+BUG_7_2READERS run 462
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1844 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 463
+successful
+
+BUG_7_2READERS run 464
+successful
+
+BUG_7_2READERS run 465
+successful
+
+BUG_7_2READERS run 466
+successful
+
+BUG_7_2READERS run 467
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1875 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 468
+successful
+
+BUG_7_2READERS run 469
+successful
+
+BUG_7_2READERS run 470
+successful
+
+BUG_7_2READERS run 471
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1903 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 472
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1910 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 473
+successful
+
+BUG_7_2READERS run 474
+successful
+
+BUG_7_2READERS run 475
+successful
+
+BUG_7_2READERS run 476
+successful
+
+BUG_7_2READERS run 477
+successful
+
+BUG_7_2READERS run 478
+successful
+
+BUG_7_2READERS run 479
+successful
+
+BUG_7_2READERS run 480
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  1959 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 481
+successful
+
+BUG_7_2READERS run 482
+successful
+
+BUG_7_2READERS run 483
+successful
+
+BUG_7_2READERS run 484
+successful
+
+BUG_7_2READERS run 485
+successful
+
+BUG_7_2READERS run 486
+successful
+
+BUG_7_2READERS run 487
+successful
+
+BUG_7_2READERS run 488
+successful
+
+BUG_7_2READERS run 489
+successful
+
+BUG_7_2READERS run 490
+successful
+
+BUG_7_2READERS run 491
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2026 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 492
+successful
+
+BUG_7_2READERS run 493
+successful
+
+BUG_7_2READERS run 494
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2045 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 495
+successful
+
+BUG_7_2READERS run 496
+successful
+
+BUG_7_2READERS run 497
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2064 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 498
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2071 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 499
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2078 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 500
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2085 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 501
+successful
+
+BUG_7_2READERS run 502
+successful
+
+BUG_7_2READERS run 503
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2104 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 504
+successful
+
+BUG_7_2READERS run 505
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2117 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 506
+successful
+
+BUG_7_2READERS run 507
+successful
+
+BUG_7_2READERS run 508
+successful
+
+BUG_7_2READERS run 509
+successful
+
+BUG_7_2READERS run 510
+successful
+
+BUG_7_2READERS run 511
+successful
+
+BUG_7_2READERS run 512
+successful
+
+BUG_7_2READERS run 513
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2166 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 514
+successful
+
+BUG_7_2READERS run 515
+successful
+
+BUG_7_2READERS run 516
+successful
+
+BUG_7_2READERS run 517
+successful
+
+BUG_7_2READERS run 518
+successful
+
+BUG_7_2READERS run 519
+successful
+
+BUG_7_2READERS run 520
+successful
+
+BUG_7_2READERS run 521
+successful
+
+BUG_7_2READERS run 522
+successful
+
+BUG_7_2READERS run 523
+successful
+
+BUG_7_2READERS run 524
+successful
+
+BUG_7_2READERS run 525
+successful
+
+BUG_7_2READERS run 526
+successful
+
+BUG_7_2READERS run 527
+successful
+
+BUG_7_2READERS run 528
+successful
+
+BUG_7_2READERS run 529
+successful
+
+BUG_7_2READERS run 530
+successful
+
+BUG_7_2READERS run 531
+successful
+
+BUG_7_2READERS run 532
+successful
+
+BUG_7_2READERS run 533
+successful
+
+BUG_7_2READERS run 534
+successful
+
+BUG_7_2READERS run 535
+successful
+
+BUG_7_2READERS run 536
+successful
+
+BUG_7_2READERS run 537
+successful
+
+BUG_7_2READERS run 538
+successful
+
+BUG_7_2READERS run 539
+successful
+
+BUG_7_2READERS run 540
+successful
+
+BUG_7_2READERS run 541
+successful
+
+BUG_7_2READERS run 542
+successful
+
+BUG_7_2READERS run 543
+successful
+
+BUG_7_2READERS run 544
+successful
+
+BUG_7_2READERS run 545
+successful
+
+BUG_7_2READERS run 546
+successful
+
+BUG_7_2READERS run 547
+successful
+
+BUG_7_2READERS run 548
+successful
+
+BUG_7_2READERS run 549
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2383 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 550
+successful
+
+BUG_7_2READERS run 551
+successful
+
+BUG_7_2READERS run 552
+successful
+
+BUG_7_2READERS run 553
+successful
+
+BUG_7_2READERS run 554
+successful
+
+BUG_7_2READERS run 555
+successful
+
+BUG_7_2READERS run 556
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2426 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 557
+successful
+
+BUG_7_2READERS run 558
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2439 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 559
+successful
+
+BUG_7_2READERS run 560
+successful
+
+BUG_7_2READERS run 561
+successful
+
+BUG_7_2READERS run 562
+successful
+
+BUG_7_2READERS run 563
+successful
+
+BUG_7_2READERS run 564
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2476 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 565
+successful
+
+BUG_7_2READERS run 566
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2492 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 567
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2499 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 568
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2506 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 569
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2513 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 570
+successful
+
+BUG_7_2READERS run 571
+successful
+
+BUG_7_2READERS run 572
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2532 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 573
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2539 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 574
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2546 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 575
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2553 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 576
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2560 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 577
+successful
+
+BUG_7_2READERS run 578
+successful
+
+BUG_7_2READERS run 579
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2579 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 580
+successful
+
+BUG_7_2READERS run 581
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2592 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 582
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2599 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 583
+successful
+
+BUG_7_2READERS run 584
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2612 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 585
+successful
+
+BUG_7_2READERS run 586
+successful
+
+BUG_7_2READERS run 587
+successful
+
+BUG_7_2READERS run 588
+successful
+
+BUG_7_2READERS run 589
+successful
+
+BUG_7_2READERS run 590
+successful
+
+BUG_7_2READERS run 591
+successful
+
+BUG_7_2READERS run 592
+successful
+
+BUG_7_2READERS run 593
+successful
+
+BUG_7_2READERS run 594
+successful
+
+BUG_7_2READERS run 595
+successful
+
+BUG_7_2READERS run 596
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2685 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 597
+successful
+
+BUG_7_2READERS run 598
+successful
+
+BUG_7_2READERS run 599
+successful
+
+BUG_7_2READERS run 600
+successful
+
+BUG_7_2READERS run 601
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2716 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 602
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2723 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 603
+successful
+
+BUG_7_2READERS run 604
+successful
+
+BUG_7_2READERS run 605
+successful
+
+BUG_7_2READERS run 606
+successful
+
+BUG_7_2READERS run 607
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2754 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 608
+successful
+
+BUG_7_2READERS run 609
+successful
+
+BUG_7_2READERS run 610
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2773 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 611
+successful
+
+BUG_7_2READERS run 612
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2786 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 613
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2793 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 614
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2800 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 615
+successful
+
+BUG_7_2READERS run 616
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2813 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 617
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2820 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 618
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2827 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 619
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2834 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 620
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2841 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 621
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2848 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 622
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2855 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 623
+successful
+
+BUG_7_2READERS run 624
+successful
+
+BUG_7_2READERS run 625
+successful
+
+BUG_7_2READERS run 626
+successful
+
+BUG_7_2READERS run 627
+successful
+
+BUG_7_2READERS run 628
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2892 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 629
+successful
+
+BUG_7_2READERS run 630
+successful
+
+BUG_7_2READERS run 631
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2911 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 632
+successful
+
+BUG_7_2READERS run 633
+successful
+
+BUG_7_2READERS run 634
+successful
+
+BUG_7_2READERS run 635
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2936 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 636
+successful
+
+BUG_7_2READERS run 637
+successful
+
+BUG_7_2READERS run 638
+successful
+
+BUG_7_2READERS run 639
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2964 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 640
+successful
+
+BUG_7_2READERS run 641
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2977 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 642
+successful
+
+BUG_7_2READERS run 643
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2990 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 644
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  2997 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 645
+successful
+
+BUG_7_2READERS run 646
+successful
+
+BUG_7_2READERS run 647
+successful
+
+BUG_7_2READERS run 648
+successful
+
+BUG_7_2READERS run 649
+successful
+
+BUG_7_2READERS run 650
+successful
+
+BUG_7_2READERS run 651
+successful
+
+BUG_7_2READERS run 652
+successful
+
+BUG_7_2READERS run 653
+successful
+
+BUG_7_2READERS run 654
+successful
+
+BUG_7_2READERS run 655
+successful
+
+BUG_7_2READERS run 656
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3070 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 657
+successful
+
+BUG_7_2READERS run 658
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3083 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 659
+successful
+
+BUG_7_2READERS run 660
+successful
+
+BUG_7_2READERS run 661
+successful
+
+BUG_7_2READERS run 662
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3110 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 663
+successful
+
+BUG_7_2READERS run 664
+successful
+
+BUG_7_2READERS run 665
+successful
+
+BUG_7_2READERS run 666
+successful
+
+BUG_7_2READERS run 667
+successful
+
+BUG_7_2READERS run 668
+successful
+
+BUG_7_2READERS run 669
+successful
+
+BUG_7_2READERS run 670
+successful
+
+BUG_7_2READERS run 671
+successful
+
+BUG_7_2READERS run 672
+successful
+
+BUG_7_2READERS run 673
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3180 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 674
+successful
+
+BUG_7_2READERS run 675
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3193 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 676
+successful
+
+BUG_7_2READERS run 677
+successful
+
+BUG_7_2READERS run 678
+successful
+
+BUG_7_2READERS run 679
+successful
+
+BUG_7_2READERS run 680
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3224 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 681
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3231 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 682
+successful
+
+BUG_7_2READERS run 683
+successful
+
+BUG_7_2READERS run 684
+successful
+
+BUG_7_2READERS run 685
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3256 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 686
+successful
+
+BUG_7_2READERS run 687
+successful
+
+BUG_7_2READERS run 688
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3280 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 689
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3287 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 690
+successful
+
+BUG_7_2READERS run 691
+successful
+
+BUG_7_2READERS run 692
+successful
+
+BUG_7_2READERS run 693
+successful
+
+BUG_7_2READERS run 694
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3318 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 695
+successful
+
+BUG_7_2READERS run 696
+successful
+
+BUG_7_2READERS run 697
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3337 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 698
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3344 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 699
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3351 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 700
+successful
+
+BUG_7_2READERS run 701
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3364 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 702
+successful
+
+BUG_7_2READERS run 703
+successful
+
+BUG_7_2READERS run 704
+successful
+
+BUG_7_2READERS run 705
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3389 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 706
+successful
+
+BUG_7_2READERS run 707
+successful
+
+BUG_7_2READERS run 708
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3411 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 709
+successful
+
+BUG_7_2READERS run 710
+successful
+
+BUG_7_2READERS run 711
+successful
+
+BUG_7_2READERS run 712
+successful
+
+BUG_7_2READERS run 713
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3442 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 714
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3449 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 715
+successful
+
+BUG_7_2READERS run 716
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3462 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 717
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3469 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 718
+successful
+
+BUG_7_2READERS run 719
+successful
+
+BUG_7_2READERS run 720
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3488 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 721
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3495 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 722
+successful
+
+BUG_7_2READERS run 723
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3508 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 724
+successful
+
+BUG_7_2READERS run 725
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3521 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 726
+successful
+
+BUG_7_2READERS run 727
+successful
+
+BUG_7_2READERS run 728
+successful
+
+BUG_7_2READERS run 729
+successful
+
+BUG_7_2READERS run 730
+successful
+
+BUG_7_2READERS run 731
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3558 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 732
+successful
+
+BUG_7_2READERS run 733
+successful
+
+BUG_7_2READERS run 734
+successful
+
+BUG_7_2READERS run 735
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3583 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 736
+successful
+
+BUG_7_2READERS run 737
+successful
+
+BUG_7_2READERS run 738
+successful
+
+BUG_7_2READERS run 739
+successful
+
+BUG_7_2READERS run 740
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3614 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 741
+successful
+
+BUG_7_2READERS run 742
+successful
+
+BUG_7_2READERS run 743
+successful
+
+BUG_7_2READERS run 744
+successful
+
+BUG_7_2READERS run 745
+successful
+
+BUG_7_2READERS run 746
+successful
+
+BUG_7_2READERS run 747
+successful
+
+BUG_7_2READERS run 748
+successful
+
+BUG_7_2READERS run 749
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3669 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 750
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3676 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 751
+successful
+
+BUG_7_2READERS run 752
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3689 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 753
+successful
+
+BUG_7_2READERS run 754
+successful
+
+BUG_7_2READERS run 755
+successful
+
+BUG_7_2READERS run 756
+successful
+
+BUG_7_2READERS run 757
+successful
+
+BUG_7_2READERS run 758
+successful
+
+BUG_7_2READERS run 759
+successful
+
+BUG_7_2READERS run 760
+successful
+
+BUG_7_2READERS run 761
+successful
+
+BUG_7_2READERS run 762
+successful
+
+BUG_7_2READERS run 763
+successful
+
+BUG_7_2READERS run 764
+successful
+
+BUG_7_2READERS run 765
+successful
+
+BUG_7_2READERS run 766
+successful
+
+BUG_7_2READERS run 767
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3780 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 768
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3787 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 769
+successful
+
+BUG_7_2READERS run 770
+successful
+
+BUG_7_2READERS run 771
+successful
+
+BUG_7_2READERS run 772
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3812 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 773
+successful
+
+BUG_7_2READERS run 774
+successful
+
+BUG_7_2READERS run 775
+successful
+
+BUG_7_2READERS run 776
+successful
+
+BUG_7_2READERS run 777
+successful
+
+BUG_7_2READERS run 778
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3849 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 779
+successful
+
+BUG_7_2READERS run 780
+successful
+
+BUG_7_2READERS run 781
+successful
+
+BUG_7_2READERS run 782
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3874 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 783
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3881 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 784
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3888 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 785
+successful
+
+BUG_7_2READERS run 786
+successful
+
+BUG_7_2READERS run 787
+successful
+
+BUG_7_2READERS run 788
+successful
+
+BUG_7_2READERS run 789
+successful
+
+BUG_7_2READERS run 790
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3925 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 791
+successful
+
+BUG_7_2READERS run 792
+successful
+
+BUG_7_2READERS run 793
+successful
+
+BUG_7_2READERS run 794
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3950 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 795
+successful
+
+BUG_7_2READERS run 796
+successful
+
+BUG_7_2READERS run 797
+successful
+
+BUG_7_2READERS run 798
+successful
+
+BUG_7_2READERS run 799
+successful
+
+BUG_7_2READERS run 800
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  3987 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 801
+successful
+
+BUG_7_2READERS run 802
+successful
+
+BUG_7_2READERS run 803
+successful
+
+BUG_7_2READERS run 804
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4012 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 805
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4019 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 806
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4026 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 807
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4033 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 808
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4040 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 809
+successful
+
+BUG_7_2READERS run 810
+successful
+
+BUG_7_2READERS run 811
+successful
+
+BUG_7_2READERS run 812
+successful
+
+BUG_7_2READERS run 813
+successful
+
+BUG_7_2READERS run 814
+successful
+
+BUG_7_2READERS run 815
+successful
+
+BUG_7_2READERS run 816
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4092 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 817
+successful
+
+BUG_7_2READERS run 818
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4105 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 819
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4112 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 820
+successful
+
+BUG_7_2READERS run 821
+successful
+
+BUG_7_2READERS run 822
+successful
+
+BUG_7_2READERS run 823
+successful
+
+BUG_7_2READERS run 824
+successful
+
+BUG_7_2READERS run 825
+successful
+
+BUG_7_2READERS run 826
+successful
+
+BUG_7_2READERS run 827
+successful
+
+BUG_7_2READERS run 828
+successful
+
+BUG_7_2READERS run 829
+successful
+
+BUG_7_2READERS run 830
+successful
+
+BUG_7_2READERS run 831
+successful
+
+BUG_7_2READERS run 832
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4191 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 833
+successful
+
+BUG_7_2READERS run 834
+successful
+
+BUG_7_2READERS run 835
+successful
+
+BUG_7_2READERS run 836
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4216 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 837
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4223 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 838
+successful
+
+BUG_7_2READERS run 839
+successful
+
+BUG_7_2READERS run 840
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4245 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 841
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4252 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 842
+successful
+
+BUG_7_2READERS run 843
+successful
+
+BUG_7_2READERS run 844
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4271 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 845
+successful
+
+BUG_7_2READERS run 846
+successful
+
+BUG_7_2READERS run 847
+successful
+
+BUG_7_2READERS run 848
+successful
+
+BUG_7_2READERS run 849
+successful
+
+BUG_7_2READERS run 850
+successful
+
+BUG_7_2READERS run 851
+successful
+
+BUG_7_2READERS run 852
+successful
+
+BUG_7_2READERS run 853
+successful
+
+BUG_7_2READERS run 854
+successful
+
+BUG_7_2READERS run 855
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4338 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 856
+successful
+
+BUG_7_2READERS run 857
+successful
+
+BUG_7_2READERS run 858
+successful
+
+BUG_7_2READERS run 859
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4363 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 860
+successful
+
+BUG_7_2READERS run 861
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4376 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 862
+successful
+
+BUG_7_2READERS run 863
+successful
+
+BUG_7_2READERS run 864
+successful
+
+BUG_7_2READERS run 865
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4401 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 866
+successful
+
+BUG_7_2READERS run 867
+successful
+
+BUG_7_2READERS run 868
+successful
+
+BUG_7_2READERS run 869
+successful
+
+BUG_7_2READERS run 870
+successful
+
+BUG_7_2READERS run 871
+successful
+
+BUG_7_2READERS run 872
+successful
+
+BUG_7_2READERS run 873
+successful
+
+BUG_7_2READERS run 874
+successful
+
+BUG_7_2READERS run 875
+successful
+
+BUG_7_2READERS run 876
+successful
+
+BUG_7_2READERS run 877
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4487 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 878
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4494 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 879
+successful
+
+BUG_7_2READERS run 880
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4507 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 881
+successful
+
+BUG_7_2READERS run 882
+successful
+
+BUG_7_2READERS run 883
+successful
+
+BUG_7_2READERS run 884
+successful
+
+BUG_7_2READERS run 885
+successful
+
+BUG_7_2READERS run 886
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4544 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 887
+successful
+
+BUG_7_2READERS run 888
+successful
+
+BUG_7_2READERS run 889
+successful
+
+BUG_7_2READERS run 890
+successful
+
+BUG_7_2READERS run 891
+successful
+
+BUG_7_2READERS run 892
+successful
+
+BUG_7_2READERS run 893
+successful
+
+BUG_7_2READERS run 894
+successful
+
+BUG_7_2READERS run 895
+successful
+
+BUG_7_2READERS run 896
+successful
+
+BUG_7_2READERS run 897
+successful
+
+BUG_7_2READERS run 898
+successful
+
+BUG_7_2READERS run 899
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4623 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 900
+successful
+
+BUG_7_2READERS run 901
+successful
+
+BUG_7_2READERS run 902
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4642 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 903
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4649 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 904
+successful
+
+BUG_7_2READERS run 905
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4665 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 906
+successful
+
+BUG_7_2READERS run 907
+successful
+
+BUG_7_2READERS run 908
+successful
+
+BUG_7_2READERS run 909
+successful
+
+BUG_7_2READERS run 910
+successful
+
+BUG_7_2READERS run 911
+successful
+
+BUG_7_2READERS run 912
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4708 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 913
+successful
+
+BUG_7_2READERS run 914
+successful
+
+BUG_7_2READERS run 915
+successful
+
+BUG_7_2READERS run 916
+successful
+
+BUG_7_2READERS run 917
+successful
+
+BUG_7_2READERS run 918
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4745 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 919
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4752 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 920
+successful
+
+BUG_7_2READERS run 921
+successful
+
+BUG_7_2READERS run 922
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4771 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 923
+successful
+
+BUG_7_2READERS run 924
+successful
+
+BUG_7_2READERS run 925
+successful
+
+BUG_7_2READERS run 926
+successful
+
+BUG_7_2READERS run 927
+successful
+
+BUG_7_2READERS run 928
+successful
+
+BUG_7_2READERS run 929
+successful
+
+BUG_7_2READERS run 930
+successful
+
+BUG_7_2READERS run 931
+successful
+
+BUG_7_2READERS run 932
+successful
+
+BUG_7_2READERS run 933
+successful
+
+BUG_7_2READERS run 934
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4844 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 935
+successful
+
+BUG_7_2READERS run 936
+successful
+
+BUG_7_2READERS run 937
+successful
+
+BUG_7_2READERS run 938
+successful
+
+BUG_7_2READERS run 939
+successful
+
+BUG_7_2READERS run 940
+successful
+
+BUG_7_2READERS run 941
+successful
+
+BUG_7_2READERS run 942
+successful
+
+BUG_7_2READERS run 943
+successful
+
+BUG_7_2READERS run 944
+successful
+
+BUG_7_2READERS run 945
+successful
+
+BUG_7_2READERS run 946
+successful
+
+BUG_7_2READERS run 947
+successful
+
+BUG_7_2READERS run 948
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4929 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 949
+successful
+
+BUG_7_2READERS run 950
+successful
+
+BUG_7_2READERS run 951
+successful
+
+BUG_7_2READERS run 952
+successful
+
+BUG_7_2READERS run 953
+successful
+
+BUG_7_2READERS run 954
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4966 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 955
+successful
+
+BUG_7_2READERS run 956
+successful
+
+BUG_7_2READERS run 957
+successful
+
+BUG_7_2READERS run 958
+successful
+
+BUG_7_2READERS run 959
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  4997 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 960
+successful
+
+BUG_7_2READERS run 961
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  5010 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 962
+successful
+
+BUG_7_2READERS run 963
+successful
+
+BUG_7_2READERS run 964
+successful
+
+BUG_7_2READERS run 965
+successful
+
+BUG_7_2READERS run 966
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  5041 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 967
+successful
+
+BUG_7_2READERS run 968
+successful
+
+BUG_7_2READERS run 969
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  5060 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 970
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  5067 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 971
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  5074 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 972
+successful
+
+BUG_7_2READERS run 973
+successful
+
+BUG_7_2READERS run 974
+successful
+
+BUG_7_2READERS run 975
+successful
+
+BUG_7_2READERS run 976
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  5105 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 977
+successful
+
+BUG_7_2READERS run 978
+successful
+
+BUG_7_2READERS run 979
+successful
+
+BUG_7_2READERS run 980
+successful
+
+BUG_7_2READERS run 981
+successful
+
+BUG_7_2READERS run 982
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  5142 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 983
+successful
+
+BUG_7_2READERS run 984
+tree_BUG_7_2READERS: main.c:177: main: Assertion `__unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1' failed.
+./run_helper.sh: line 6:  5158 Aborted                 (core dumped) ./$1
+FAILED
+
+BUG_7_2READERS run 985
+successful
+
+BUG_7_2READERS run 986
+successful
+
+BUG_7_2READERS run 987
+successful
+
+BUG_7_2READERS run 988
+successful
+
+BUG_7_2READERS run 989
+successful
+
+BUG_7_2READERS run 990
+successful
+
+BUG_7_2READERS run 991
+successful
+
+BUG_7_2READERS run 992
+successful
+
+BUG_7_2READERS run 993
+successful
+
+BUG_7_2READERS run 994
+successful
+
+BUG_7_2READERS run 995
+successful
+
+BUG_7_2READERS run 996
+successful
+
+BUG_7_2READERS run 997
+successful
+
+BUG_7_2READERS run 998
+successful
+
+BUG_7_2READERS run 999
+successful
+
+BUG_7_2READERS run 1000
+successful
+

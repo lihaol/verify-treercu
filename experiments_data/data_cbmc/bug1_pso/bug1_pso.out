@@ -1,0 +1,1982 @@
+CBMC version 5.4 64-bit x86_64 linux
+Parsing main.c
+Converting
+Type-checking main
+Generating GOTO Program
+Adding CPROVER library (x86_64)
+Function Pointer Removal
+Partial Inlining
+Generic Property Instrumentation
+Starting Bounded Model Checking
+Unwinding loop rcu_init_one.0 iteration 1 (2 max) file tree.c line 4587 function rcu_init_one thread 0
+Unwinding loop rcu_init_levelspread.1 iteration 1 (2 max) file tree.c line 4552 function rcu_init_levelspread thread 0
+Unwinding loop rcu_init_one.3 iteration 1 (2 max) file tree.c line 4602 function rcu_init_one thread 0
+Not unwinding loop rcu_init_one.3 iteration 2 (2 max) file tree.c line 4602 function rcu_init_one thread 0
+Unwinding loop rcu_init_one.4 iteration 1 (2 max) file tree.c line 4599 function rcu_init_one thread 0
+Not unwinding loop rcu_init_one.5 iteration 1 (1 max) file tree.c line 4653 function rcu_init_one thread 0
+Unwinding loop rcu_init_one.6 iteration 1 (3 max) file tree.c line 4652 function rcu_init_one thread 0
+Not unwinding loop rcu_init_one.5 iteration 1 (1 max) file tree.c line 4653 function rcu_init_one thread 0
+Unwinding loop rcu_init_one.6 iteration 2 (3 max) file tree.c line 4652 function rcu_init_one thread 0
+Unwinding loop rcu_init.3 iteration 1 (3 max) file tree.c line 4810 function rcu_init thread 0
+Unwinding loop rcu_init.3 iteration 2 (3 max) file tree.c line 4810 function rcu_init thread 0
+Not unwinding loop rcu_init_new_rnp.0 iteration 1 (1 max) file tree.c line 4256 function rcu_init_new_rnp thread 0
+Unwinding loop rcu_spawn_gp_kthread.0 iteration 1 (3 max) file tree.c line 4503 function rcu_spawn_gp_kthread thread 0
+Unwinding loop rcu_spawn_gp_kthread.0 iteration 2 (3 max) file tree.c line 4503 function rcu_spawn_gp_kthread thread 0
+Not unwinding loop rcu_report_qs_rnp.2 iteration 1 (1 max) file tree.c line 2522 function rcu_report_qs_rnp thread 2
+Adding PSO constraints
+size of program expression: 1514657 steps
+no slicing due to threads
+Generated 1 VCC(s), 1 remaining after simplification
+Passing problem to propositional reduction
+converting SSA
+Running propositional reduction
+Post-processing
+Solving with MiniSAT 2.2.1 with simplifier
+16548819 variables, 80481851 clauses
+SAT checker: instance is SATISFIABLE
+Runtime decision procedure: 2746.31s
+Building error trace
+
+Counterexample:
+
+State 29 file tree.c line 4683 function rcu_init_geometry thread 0
+----------------------------------------------------
+  jiffies_till_first_fqs=3 (00000000000000000000000000000011)
+
+State 31 file tree.c line 4595 function rcu_init_one thread 0
+----------------------------------------------------
+  fl_mask=2 (00000010)
+
+State 32 file tree.c line 4599 function rcu_init_one thread 0
+----------------------------------------------------
+  i=0 (00000000000000000000000000000000)
+
+State 34 file tree.c line 4600 function rcu_init_one thread 0
+----------------------------------------------------
+  cpustride=2 (00000000000000000000000000000010)
+
+State 35 file tree.c line 4601 function rcu_init_one thread 0
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 36 file tree.c line 4602 function rcu_init_one thread 0
+----------------------------------------------------
+  j=0 (00000000000000000000000000000000)
+
+State 39 file tree.c line 4603 function rcu_init_one thread 0
+----------------------------------------------------
+  lock=((int *)NULL) (00000000000000000000000000000000)
+
+State 40 file tree.c line 4603 function rcu_init_one thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 41 file fake.c line 202 function raw_spin_lock_init thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=0, .gpnum=0ul, .completed=0ul, .qsmask=0ul, .qsmaskinit=0ul,
+    .qsmaskinitnext=0ul, .grpmask=0ul,
+    .grplo=0, .grphi=0, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 44 file tree.c line 4629 function rcu_init_one thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=0, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=0ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 45 file tree.c line 4602 function rcu_init_one thread 0
+----------------------------------------------------
+  j=1 (00000000000000000000000000000001)
+
+State 46 file tree.c line 4602 function rcu_init_one thread 0
+----------------------------------------------------
+  rnp=rcu_sched_state.level (00000011000000000000000000101100)
+
+State 49 file tree.c line 4599 function rcu_init_one thread 0
+----------------------------------------------------
+  i=-1 (11111111111111111111111111111111)
+
+State 52 file tree.c line 4651 function rcu_init_one thread 0
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 53 file tree.c line 4652 function rcu_init_one thread 0
+----------------------------------------------------
+  i=0 (00000000000000000000000000000000)
+
+State 58 file tree.c line 4656 function rcu_init_one thread 0
+----------------------------------------------------
+  cpu=0 (00000000000000000000000000000000)
+
+State 59 file tree.c line 4656 function rcu_init_one thread 0
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 60 file tree.c line 4274 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  flags=0 (00000000000000000000000000000000)
+
+State 61 file tree.c line 4275 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  rdp=((struct rcu_data { unsigned int completed; unsigned int gpnum; _Bool passed_quiesce; _Bool qs_pending; unsigned short int $pad0; struct rcu_node *mynode; unsigned int grpmask; int cpu; struct rcu_state *rsp; } *)NULL) (00000000000000000000000000000000)
+
+State 62 file tree.c line 4275 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  rdp=&rcu_sched_data[0].completed (00000010000000000000000000000000)
+
+State 63 file tree.c line 4276 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  rnp=((struct rcu_node { int lock; unsigned int gpnum; unsigned int completed; unsigned int qsmask; unsigned int qsmaskinit; unsigned int qsmaskinitnext; unsigned int grpmask; int grplo; int grphi; unsigned char grpnum; unsigned char level; unsigned short int $pad0; struct rcu_node *parent; } *)NULL) (00000000000000000000000000000000)
+
+State 66 file tree.c line 4276 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 69 file tree.c line 4276 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 72 file tree.c line 4279 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 73 file tree.c line 4279 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  flags=0 (00000000000000000000000000000000)
+
+State 76 file fake.c line 148 function local_irq_disable thread 0
+----------------------------------------------------
+  local_irq_depth[0]=1 (00000000000000000000000000000001)
+
+State 80 file fake.c line 271 function raw_spin_lock_irqsave thread 0
+----------------------------------------------------
+  lock=((int *)NULL) (00000000000000000000000000000000)
+
+State 81 file fake.c line 271 function raw_spin_lock_irqsave thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 83 file fake.c line 215 function raw_spin_lock_helper thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=1, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=0ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000001, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 88 file tree.c line 4291 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  rdp=&rcu_sched_data[0].completed (00000010000000000000000000000000)
+
+State 92 file tree.c line 4292 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 93 file tree.c line 4292 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  flags=0 (00000000000000000000000000000000)
+
+State 95 file fake.c line 276 function raw_spin_unlock_irqrestore thread 0
+----------------------------------------------------
+  lock=((int *)NULL) (00000000000000000000000000000000)
+
+State 96 file fake.c line 276 function raw_spin_unlock_irqrestore thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 97 file fake.c line 226 function raw_spin_unlock_helper thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=0, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=0ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 101 file fake.c line 166 function local_irq_enable thread 0
+----------------------------------------------------
+  local_irq_depth[0]=0 (00000000000000000000000000000000)
+
+State 108 file tree.c line 4652 function rcu_init_one thread 0
+----------------------------------------------------
+  i=1 (00000000000000000000000000000001)
+
+State 112 file fake.c line 148 function local_irq_disable thread 0
+----------------------------------------------------
+  local_irq_depth[0]=1 (00000000000000000000000000000001)
+
+State 116 file fake.c line 271 function raw_spin_lock_irqsave thread 0
+----------------------------------------------------
+  lock=((int *)NULL) (00000000000000000000000000000000)
+
+State 117 file fake.c line 271 function raw_spin_lock_irqsave thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 119 file fake.c line 215 function raw_spin_lock_helper thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=1, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=0ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000001, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 122 file tree.c line 4291 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  rdp=&rcu_sched_data[1].completed (00000010000000000000000000011100)
+
+State 126 file tree.c line 4292 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 127 file tree.c line 4292 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  flags=0 (00000000000000000000000000000000)
+
+State 129 file fake.c line 276 function raw_spin_unlock_irqrestore thread 0
+----------------------------------------------------
+  lock=((int *)NULL) (00000000000000000000000000000000)
+
+State 130 file fake.c line 276 function raw_spin_unlock_irqrestore thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 131 file fake.c line 226 function raw_spin_unlock_helper thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=0, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=0ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 132 file fake.c line 166 function local_irq_enable thread 0
+----------------------------------------------------
+  local_irq_depth[0]=0 (00000000000000000000000000000000)
+
+State 139 file tree.c line 4652 function rcu_init_one thread 0
+----------------------------------------------------
+  i=2 (00000000000000000000000000000010)
+
+State 150 file tree.c line 4810 function rcu_init thread 0
+----------------------------------------------------
+  cpu=0 (00000000000000000000000000000000)
+
+State 154 file tree.c line 4811 function rcu_init thread 0
+----------------------------------------------------
+  self=((struct notifier_block *)NULL) (00000000000000000000000000000000)
+
+State 155 file tree.c line 4811 function rcu_init thread 0
+----------------------------------------------------
+  action=3 (00000000000000000000000000000011)
+
+State 156 file tree.c line 4811 function rcu_init thread 0
+----------------------------------------------------
+  hcpu=NULL (00000000000000000000000000000000)
+
+State 157 file tree.c line 4374 function rcu_cpu_notify thread 0
+----------------------------------------------------
+  cpu=0 (00000000000000000000000000000000)
+
+State 158 file tree.c line 4374 function rcu_cpu_notify thread 0
+----------------------------------------------------
+  cpu=0 (00000000000000000000000000000000)
+
+State 159 file tree.c line 4375 function rcu_cpu_notify thread 0
+----------------------------------------------------
+  rdp=((struct rcu_data { unsigned int completed; unsigned int gpnum; _Bool passed_quiesce; _Bool qs_pending; unsigned short int $pad0; struct rcu_node *mynode; unsigned int grpmask; int cpu; struct rcu_state *rsp; } *)NULL) (00000000000000000000000000000000)
+
+State 160 file tree.c line 4375 function rcu_cpu_notify thread 0
+----------------------------------------------------
+  rdp=&rcu_sched_data[0].completed (00000010000000000000000000000000)
+
+State 161 file tree.c line 4376 function rcu_cpu_notify thread 0
+----------------------------------------------------
+  rnp=((struct rcu_node { int lock; unsigned int gpnum; unsigned int completed; unsigned int qsmask; unsigned int qsmaskinit; unsigned int qsmaskinitnext; unsigned int grpmask; int grplo; int grphi; unsigned char grpnum; unsigned char level; unsigned short int $pad0; struct rcu_node *parent; } *)NULL) (00000000000000000000000000000000)
+
+State 162 file tree.c line 4376 function rcu_cpu_notify thread 0
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 163 file tree.c line 4377 function rcu_cpu_notify thread 0
+----------------------------------------------------
+  rsp=((struct rcu_state { struct rcu_node node[1]; struct rcu_node *level[2]; struct rcu_data *rda; unsigned int gpnum; unsigned int completed; short int gp_flags; short int gp_state; } *)NULL) (00000000000000000000000000000000)
+
+State 164 file tree.c line 4379 function rcu_cpu_notify thread 0
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 168 file tree.c line 4385 function rcu_cpu_notify thread 0
+----------------------------------------------------
+  cpu=0 (00000000000000000000000000000000)
+
+State 169 file tree.c line 4358 function rcu_prepare_cpu thread 0
+----------------------------------------------------
+  rsp=((struct rcu_state { struct rcu_node node[1]; struct rcu_node *level[2]; struct rcu_data *rda; unsigned int gpnum; unsigned int completed; short int gp_flags; short int gp_state; } *)NULL) (00000000000000000000000000000000)
+
+State 170 file tree.c line 4363 function rcu_prepare_cpu thread 0
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 173 file tree.c line 4365 function rcu_prepare_cpu thread 0
+----------------------------------------------------
+  cpu=0 (00000000000000000000000000000000)
+
+State 174 file tree.c line 4365 function rcu_prepare_cpu thread 0
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 175 file tree.c line 4308 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  flags=0 (00000000000000000000000000000000)
+
+State 176 file tree.c line 4309 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  mask=0 (00000000000000000000000000000000)
+
+State 177 file tree.c line 4310 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  rdp=((struct rcu_data { unsigned int completed; unsigned int gpnum; _Bool passed_quiesce; _Bool qs_pending; unsigned short int $pad0; struct rcu_node *mynode; unsigned int grpmask; int cpu; struct rcu_state *rsp; } *)NULL) (00000000000000000000000000000000)
+
+State 178 file tree.c line 4310 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  rdp=&rcu_sched_data[0].completed (00000010000000000000000000000000)
+
+State 179 file tree.c line 4311 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  rnp=((struct rcu_node { int lock; unsigned int gpnum; unsigned int completed; unsigned int qsmask; unsigned int qsmaskinit; unsigned int qsmaskinitnext; unsigned int grpmask; int grplo; int grphi; unsigned char grpnum; unsigned char level; unsigned short int $pad0; struct rcu_node *parent; } *)NULL) (00000000000000000000000000000000)
+
+State 182 file tree.c line 4311 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 185 file tree.c line 4311 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 188 file tree.c line 4314 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 189 file tree.c line 4314 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  flags=0 (00000000000000000000000000000000)
+
+State 192 file fake.c line 148 function local_irq_disable thread 0
+----------------------------------------------------
+  local_irq_depth[0]=1 (00000000000000000000000000000001)
+
+State 196 file fake.c line 271 function raw_spin_lock_irqsave thread 0
+----------------------------------------------------
+  lock=((int *)NULL) (00000000000000000000000000000000)
+
+State 197 file fake.c line 271 function raw_spin_lock_irqsave thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 199 file fake.c line 215 function raw_spin_lock_helper thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=1, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=0ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000001, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 200 file tree.c line 4344 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=1, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=1ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000001, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 201 file tree.c line 4347 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  rcu_sched_data[POINTER_OFFSET(rdp!0@1) / 28].passed_quiesce={ { .completed=4294966996, .gpnum=4294966996, .passed_quiesce=FALSE,
+    .qs_pending=FALSE, .$pad0=0,
+    .mynode=rcu_sched_state.node, .grpmask=1,
+    .cpu=0, .rsp=rcu_sched_state.node }, 
+    { .completed=0, .gpnum=0, .passed_quiesce=FALSE, .qs_pending=FALSE,
+    .$pad0=0, .mynode=rcu_sched_state.node, .grpmask=2,
+    .cpu=1, .rsp=rcu_sched_state.node } }[POINTER_OFFSET(&rcu_sched_data[0].completed) / 28].passed_quiesce (?)
+
+State 202 file fake.c line 166 function local_irq_enable thread 0
+----------------------------------------------------
+  local_irq_depth[0]=0 (00000000000000000000000000000000)
+
+State 210 file tree.c line 4386 function rcu_cpu_notify thread 0
+----------------------------------------------------
+  cpu=0 (00000000000000000000000000000000)
+
+State 214 file tree.c line 4387 function rcu_cpu_notify thread 0
+----------------------------------------------------
+  cpu=0 (00000000000000000000000000000000)
+
+State 220 file tree.c line 4810 function rcu_init thread 0
+----------------------------------------------------
+  cpu=1 (00000000000000000000000000000001)
+
+State 225 file tree.c line 4811 function rcu_init thread 0
+----------------------------------------------------
+  self=((struct notifier_block *)NULL) (00000000000000000000000000000000)
+
+State 226 file tree.c line 4811 function rcu_init thread 0
+----------------------------------------------------
+  action=3 (00000000000000000000000000000011)
+
+State 227 file tree.c line 4811 function rcu_init thread 0
+----------------------------------------------------
+  hcpu=NULL + 1 (00000000000000000000000000000001)
+
+State 228 file tree.c line 4374 function rcu_cpu_notify thread 0
+----------------------------------------------------
+  cpu=0 (00000000000000000000000000000000)
+
+State 229 file tree.c line 4374 function rcu_cpu_notify thread 0
+----------------------------------------------------
+  cpu=1 (00000000000000000000000000000001)
+
+State 230 file tree.c line 4375 function rcu_cpu_notify thread 0
+----------------------------------------------------
+  rdp=((struct rcu_data { unsigned int completed; unsigned int gpnum; _Bool passed_quiesce; _Bool qs_pending; unsigned short int $pad0; struct rcu_node *mynode; unsigned int grpmask; int cpu; struct rcu_state *rsp; } *)NULL) (00000000000000000000000000000000)
+
+State 231 file tree.c line 4375 function rcu_cpu_notify thread 0
+----------------------------------------------------
+  rdp=&rcu_sched_data[1].completed (00000010000000000000000000011100)
+
+State 232 file tree.c line 4376 function rcu_cpu_notify thread 0
+----------------------------------------------------
+  rnp=((struct rcu_node { int lock; unsigned int gpnum; unsigned int completed; unsigned int qsmask; unsigned int qsmaskinit; unsigned int qsmaskinitnext; unsigned int grpmask; int grplo; int grphi; unsigned char grpnum; unsigned char level; unsigned short int $pad0; struct rcu_node *parent; } *)NULL) (00000000000000000000000000000000)
+
+State 233 file tree.c line 4376 function rcu_cpu_notify thread 0
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 234 file tree.c line 4377 function rcu_cpu_notify thread 0
+----------------------------------------------------
+  rsp=((struct rcu_state { struct rcu_node node[1]; struct rcu_node *level[2]; struct rcu_data *rda; unsigned int gpnum; unsigned int completed; short int gp_flags; short int gp_state; } *)NULL) (00000000000000000000000000000000)
+
+State 235 file tree.c line 4379 function rcu_cpu_notify thread 0
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 239 file tree.c line 4385 function rcu_cpu_notify thread 0
+----------------------------------------------------
+  cpu=1 (00000000000000000000000000000001)
+
+State 240 file tree.c line 4358 function rcu_prepare_cpu thread 0
+----------------------------------------------------
+  rsp=((struct rcu_state { struct rcu_node node[1]; struct rcu_node *level[2]; struct rcu_data *rda; unsigned int gpnum; unsigned int completed; short int gp_flags; short int gp_state; } *)NULL) (00000000000000000000000000000000)
+
+State 241 file tree.c line 4363 function rcu_prepare_cpu thread 0
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 244 file tree.c line 4365 function rcu_prepare_cpu thread 0
+----------------------------------------------------
+  cpu=1 (00000000000000000000000000000001)
+
+State 245 file tree.c line 4365 function rcu_prepare_cpu thread 0
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 246 file tree.c line 4308 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  flags=0 (00000000000000000000000000000000)
+
+State 247 file tree.c line 4309 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  mask=0 (00000000000000000000000000000000)
+
+State 248 file tree.c line 4310 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  rdp=((struct rcu_data { unsigned int completed; unsigned int gpnum; _Bool passed_quiesce; _Bool qs_pending; unsigned short int $pad0; struct rcu_node *mynode; unsigned int grpmask; int cpu; struct rcu_state *rsp; } *)NULL) (00000000000000000000000000000000)
+
+State 249 file tree.c line 4310 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  rdp=&rcu_sched_data[1].completed (00000010000000000000000000011100)
+
+State 250 file tree.c line 4311 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  rnp=((struct rcu_node { int lock; unsigned int gpnum; unsigned int completed; unsigned int qsmask; unsigned int qsmaskinit; unsigned int qsmaskinitnext; unsigned int grpmask; int grplo; int grphi; unsigned char grpnum; unsigned char level; unsigned short int $pad0; struct rcu_node *parent; } *)NULL) (00000000000000000000000000000000)
+
+State 253 file tree.c line 4311 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 256 file tree.c line 4311 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 259 file tree.c line 4314 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 260 file tree.c line 4314 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  flags=0 (00000000000000000000000000000000)
+
+State 263 file fake.c line 148 function local_irq_disable thread 0
+----------------------------------------------------
+  local_irq_depth[0]=1 (00000000000000000000000000000001)
+
+State 267 file fake.c line 271 function raw_spin_lock_irqsave thread 0
+----------------------------------------------------
+  lock=((int *)NULL) (00000000000000000000000000000000)
+
+State 268 file fake.c line 271 function raw_spin_lock_irqsave thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 270 file fake.c line 215 function raw_spin_lock_helper thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=1, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=1ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000001, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 272 file fake.c line 215 function raw_spin_lock_helper thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=1, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=1ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000001, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 276 file tree.c line 4351 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  rcu_sched_data[POINTER_OFFSET(rdp!0@2) / 28].qs_pending={ { .completed=4294966996, .gpnum=4294966996, .passed_quiesce=FALSE,
+    .qs_pending=FALSE, .$pad0=0,
+    .mynode=rcu_sched_state.node, .grpmask=1,
+    .cpu=0, .rsp=rcu_sched_state.node }, 
+    { .completed=4294966996, .gpnum=4294966996, .passed_quiesce=FALSE,
+    .qs_pending=FALSE, .$pad0=0,
+    .mynode=rcu_sched_state.node, .grpmask=2,
+    .cpu=1, .rsp=rcu_sched_state.node } }[POINTER_OFFSET(&rcu_sched_data[1].completed) / 28].qs_pending (?)
+
+State 280 file tree.c line 4353 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 281 file tree.c line 4353 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  flags=0 (00000000000000000000000000000000)
+
+State 283 file fake.c line 276 function raw_spin_unlock_irqrestore thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 284 file fake.c line 276 function raw_spin_unlock_irqrestore thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 285 file fake.c line 226 function raw_spin_unlock_helper thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=0, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=3ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000011, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 289 file fake.c line 166 function local_irq_enable thread 0
+----------------------------------------------------
+  local_irq_depth[0]=0 (00000000000000000000000000000000)
+
+State 297 file tree.c line 4386 function rcu_cpu_notify thread 0
+----------------------------------------------------
+  cpu=1 (00000000000000000000000000000001)
+
+State 301 file tree.c line 4387 function rcu_cpu_notify thread 0
+----------------------------------------------------
+  cpu=1 (00000000000000000000000000000001)
+
+State 307 file tree.c line 4810 function rcu_init thread 0
+----------------------------------------------------
+  cpu=2 (00000000000000000000000000000010)
+
+State 313 file tree.c line 4457 function rcu_spawn_gp_kthread thread 0
+----------------------------------------------------
+  rnp=((struct rcu_node { int lock; unsigned int gpnum; unsigned int completed; unsigned int qsmask; unsigned int qsmaskinit; unsigned int qsmaskinitnext; unsigned int grpmask; int grplo; int grphi; unsigned char grpnum; unsigned char level; unsigned short int $pad0; struct rcu_node *parent; } *)NULL) (00000000000000000000000000000000)
+
+State 314 file tree.c line 4458 function rcu_spawn_gp_kthread thread 0
+----------------------------------------------------
+  rsp=((struct rcu_state { struct rcu_node node[1]; struct rcu_node *level[2]; struct rcu_data *rda; unsigned int gpnum; unsigned int completed; short int gp_flags; short int gp_state; } *)NULL) (00000000000000000000000000000000)
+
+State 315 file fake.c line 148 function local_irq_disable thread 0
+----------------------------------------------------
+  local_irq_depth[0]=1 (00000000000000000000000000000001)
+
+State 319 file fake.c line 285 function raw_spin_lock_irq thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 320 file fake.c line 285 function raw_spin_lock_irq thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 322 file fake.c line 215 function raw_spin_lock_helper thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=1, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=3ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=1, .gp_state=0 } ({ { { 00000000000000000000000000000001, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000011, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000001, 0000000000000000 })
+
+State 327 file fake.c line 166 function local_irq_enable thread 0
+----------------------------------------------------
+  local_irq_depth[0]=0 (00000000000000000000000000000000)
+
+State 331 file tree.c line 2040 function rcu_gp_init thread 0
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 334 file tree.c line 2044 function rcu_gp_init thread 0
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 335 file tree.c line 2044 function rcu_gp_init thread 0
+----------------------------------------------------
+  delay=0 (00000000000000000000000000000000)
+
+State 339 file tree.c line 2045 function rcu_gp_init thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 342 file fake.c line 148 function local_irq_disable thread 0
+----------------------------------------------------
+  local_irq_depth[0]=1 (00000000000000000000000000000001)
+
+State 346 file fake.c line 285 function raw_spin_lock_irq thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 347 file fake.c line 285 function raw_spin_lock_irq thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 349 file fake.c line 215 function raw_spin_lock_helper thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=1, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=3ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966997, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000001, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000011, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010101, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 354 file tree.c line 2059 function rcu_gp_init thread 0
+----------------------------------------------------
+  oldmask=0 (00000000000000000000000000000000)
+
+State 355 file fake.c line 166 function local_irq_enable thread 0
+----------------------------------------------------
+  local_irq_depth[0]=0 (00000000000000000000000000000000)
+
+State 360 file tree.c line 2114 function rcu_gp_init thread 0
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 363 file tree.c line 2115 function rcu_gp_init thread 0
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 364 file tree.c line 2115 function rcu_gp_init thread 0
+----------------------------------------------------
+  delay=0 (00000000000000000000000000000000)
+
+State 368 file tree.c line 2116 function rcu_gp_init thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 371 file fake.c line 148 function local_irq_disable thread 0
+----------------------------------------------------
+  local_irq_depth[0]=1 (00000000000000000000000000000001)
+
+State 375 file fake.c line 285 function raw_spin_lock_irq thread 0
+----------------------------------------------------
+  lock=((int *)NULL) (00000000000000000000000000000000)
+
+State 376 file fake.c line 285 function raw_spin_lock_irq thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 378 file fake.c line 215 function raw_spin_lock_helper thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=1, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=3ul, .qsmaskinitnext=3ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966997, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000001, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000011, 00000000000000000000000000000011, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010101, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 382 file tree.c line 2118 function rcu_gp_init thread 0
+----------------------------------------------------
+  rdp=&rcu_sched_data[0].completed (00000010000000000000000000000000)
+
+State 385 file tree.c line 2119 function rcu_gp_init thread 0
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 387 file tree.c line 2123 function rcu_gp_init thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=1, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=3ul,
+    .qsmaskinit=3ul, .qsmaskinitnext=3ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966997, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000001, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000011, 00000000000000000000000000000011, 00000000000000000000000000000011, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010101, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 389 file tree.c line 1937 function __note_gp_changes thread 0
+----------------------------------------------------
+  rcu_sched_data[POINTER_OFFSET(rdp!0@1) / 28].passed_quiesce={ { .completed=4294966996, .gpnum=4294966997, .passed_quiesce=FALSE,
+    .qs_pending=FALSE, .$pad0=0,
+    .mynode=rcu_sched_state.node, .grpmask=1,
+    .cpu=0, .rsp=rcu_sched_state.node }, 
+    { .completed=4294966996, .gpnum=4294966996, .passed_quiesce=FALSE,
+    .qs_pending=FALSE, .$pad0=0,
+    .mynode=rcu_sched_state.node, .grpmask=2,
+    .cpu=1, .rsp=rcu_sched_state.node } }[POINTER_OFFSET(&rcu_sched_data[0].completed) / 28].passed_quiesce (?)
+
+State 395 file tree.c line 2130 function rcu_gp_init thread 0
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 400 file tree.c line 2134 function rcu_gp_init thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 402 file fake.c line 290 function raw_spin_unlock_irq thread 0
+----------------------------------------------------
+  lock=((int *)NULL) (00000000000000000000000000000000)
+
+State 403 file fake.c line 290 function raw_spin_unlock_irq thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 404 file fake.c line 226 function raw_spin_unlock_helper thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=0, .gpnum=4294966997ul, .completed=4294966996ul, .qsmask=3ul,
+    .qsmaskinit=3ul, .qsmaskinitnext=3ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966997, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000000, 11111111111111111111111011010101, 11111111111111111111111011010100, 00000000000000000000000000000011, 00000000000000000000000000000011, 00000000000000000000000000000011, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010101, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 405 file fake.c line 166 function local_irq_enable thread 0
+----------------------------------------------------
+  local_irq_depth[0]=0 (00000000000000000000000000000000)
+
+State 425 file tree.c line 4498 function rcu_spawn_gp_kthread thread 0
+----------------------------------------------------
+  ret=TRUE (00000001)
+
+State 426 file tree.c line 4501 function rcu_spawn_gp_kthread thread 0
+----------------------------------------------------
+  rdp=((struct rcu_data { unsigned int completed; unsigned int gpnum; _Bool passed_quiesce; _Bool qs_pending; unsigned short int $pad0; struct rcu_node *mynode; unsigned int grpmask; int cpu; struct rcu_state *rsp; } *)NULL) (00000000000000000000000000000000)
+
+State 427 file tree.c line 4502 function rcu_spawn_gp_kthread thread 0
+----------------------------------------------------
+  cpu_id=0 (00000000000000000000000000000000)
+
+State 428 file tree.c line 4503 function rcu_spawn_gp_kthread thread 0
+----------------------------------------------------
+  cpu_id=0 (00000000000000000000000000000000)
+
+State 430 file tree.c line 4504 function rcu_spawn_gp_kthread thread 0
+----------------------------------------------------
+  rdp=&rcu_sched_data[0].completed (00000010000000000000000000000000)
+
+State 433 file tree.c line 4505 function rcu_spawn_gp_kthread thread 0
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 434 file tree.c line 4505 function rcu_spawn_gp_kthread thread 0
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 435 file tree.c line 4505 function rcu_spawn_gp_kthread thread 0
+----------------------------------------------------
+  rdp=&rcu_sched_data[0].completed (00000010000000000000000000000000)
+
+State 436 file tree.c line 1902 function __note_gp_changes thread 0
+----------------------------------------------------
+  ret=FALSE (00000000)
+
+State 440 file tree.c line 1913 function __note_gp_changes thread 0
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 441 file tree.c line 1913 function __note_gp_changes thread 0
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 442 file tree.c line 1913 function __note_gp_changes thread 0
+----------------------------------------------------
+  rdp=&rcu_sched_data[0].completed (00000010000000000000000000000000)
+
+State 445 file tree.c line 1913 function __note_gp_changes thread 0
+----------------------------------------------------
+  ret=FALSE (00000000)
+
+State 451 file tree.c line 4503 function rcu_spawn_gp_kthread thread 0
+----------------------------------------------------
+  cpu_id=1 (00000000000000000000000000000001)
+
+State 454 file tree.c line 4504 function rcu_spawn_gp_kthread thread 0
+----------------------------------------------------
+  rdp=&rcu_sched_data[1].completed (00000010000000000000000000011100)
+
+State 457 file tree.c line 4505 function rcu_spawn_gp_kthread thread 0
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 458 file tree.c line 4505 function rcu_spawn_gp_kthread thread 0
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 459 file tree.c line 4505 function rcu_spawn_gp_kthread thread 0
+----------------------------------------------------
+  rdp=&rcu_sched_data[1].completed (00000010000000000000000000011100)
+
+State 460 file tree.c line 1902 function __note_gp_changes thread 0
+----------------------------------------------------
+  ret=FALSE (00000000)
+
+State 464 file tree.c line 1913 function __note_gp_changes thread 0
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 465 file tree.c line 1913 function __note_gp_changes thread 0
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 466 file tree.c line 1913 function __note_gp_changes thread 0
+----------------------------------------------------
+  rdp=&rcu_sched_data[1].completed (00000010000000000000000000011100)
+
+State 469 file tree.c line 1913 function __note_gp_changes thread 0
+----------------------------------------------------
+  ret=FALSE (00000000)
+
+State 476 file tree.c line 4503 function rcu_spawn_gp_kthread thread 0
+----------------------------------------------------
+  cpu_id=2 (00000000000000000000000000000010)
+
+State 489 file main.c line 200 function main thread 0
+----------------------------------------------------
+  my_cpu_id0=0 (00000000000000000000000000000000)
+
+State 490 file main.c line 200 function main thread 0
+----------------------------------------------------
+  my_cpu_id0=0 (00000000000000000000000000000000)
+
+State 491 file main.c line 201 function main thread 0
+----------------------------------------------------
+  my_cpu_id1=0 (00000000000000000000000000000000)
+
+State 492 file main.c line 201 function main thread 0
+----------------------------------------------------
+  my_cpu_id1=1 (00000000000000000000000000000001)
+
+State 605 file tree.c line 4616 function rcu_init_one thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=0, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=0ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 608 file tree.c line 4287 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  rcu_sched_data[POINTER_OFFSET(rdp!0@1) / 28].rsp={ { .completed=0, .gpnum=0, .passed_quiesce=FALSE, .qs_pending=FALSE,
+    .$pad0=0, .mynode=rcu_sched_state.node, .grpmask=1,
+    .cpu=0, .rsp=rcu_sched_state.node }, 
+    { .completed=0, .gpnum=0, .passed_quiesce=FALSE, .qs_pending=FALSE,
+    .$pad0=0, .mynode=((struct rcu_node *)NULL), .grpmask=0,
+    .cpu=0, .rsp=((struct rcu_state *)NULL) } }[POINTER_OFFSET(&rcu_sched_data[0].completed) / 28].rsp (?)
+
+State 609 file tree.c line 4613 function rcu_init_one thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=0, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=0ul, .grpmask=0ul,
+    .grplo=0, .grphi=0, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 610 file tree.c line 4346 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  rcu_sched_data[POINTER_OFFSET(rdp!0@1) / 28].completed={ { .completed=4294966996, .gpnum=4294966996, .passed_quiesce=FALSE,
+    .qs_pending=FALSE, .$pad0=0,
+    .mynode=rcu_sched_state.node, .grpmask=1,
+    .cpu=0, .rsp=rcu_sched_state.node }, 
+    { .completed=0, .gpnum=0, .passed_quiesce=FALSE, .qs_pending=FALSE,
+    .$pad0=0, .mynode=rcu_sched_state.node, .grpmask=2,
+    .cpu=1, .rsp=rcu_sched_state.node } }[POINTER_OFFSET(&rcu_sched_data[0].completed) / 28].completed (?)
+
+State 611 file tree.c line 4345 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  rcu_sched_data[POINTER_OFFSET(rdp!0@2) / 28].gpnum={ { .completed=4294966996, .gpnum=4294966996, .passed_quiesce=FALSE,
+    .qs_pending=FALSE, .$pad0=0,
+    .mynode=rcu_sched_state.node, .grpmask=1,
+    .cpu=0, .rsp=rcu_sched_state.node }, 
+    { .completed=0, .gpnum=4294966996, .passed_quiesce=FALSE, .qs_pending=FALSE,
+    .$pad0=0, .mynode=rcu_sched_state.node, .grpmask=2,
+    .cpu=1, .rsp=rcu_sched_state.node } }[POINTER_OFFSET(&rcu_sched_data[1].completed) / 28].gpnum (?)
+
+State 612 file tree.c line 4346 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  rcu_sched_data[POINTER_OFFSET(rdp!0@2) / 28].completed={ { .completed=4294966996, .gpnum=4294966996, .passed_quiesce=FALSE,
+    .qs_pending=FALSE, .$pad0=0,
+    .mynode=rcu_sched_state.node, .grpmask=1,
+    .cpu=0, .rsp=rcu_sched_state.node }, 
+    { .completed=4294966996, .gpnum=4294966996, .passed_quiesce=FALSE,
+    .qs_pending=FALSE, .$pad0=0,
+    .mynode=rcu_sched_state.node, .grpmask=2,
+    .cpu=1, .rsp=rcu_sched_state.node } }[POINTER_OFFSET(&rcu_sched_data[1].completed) / 28].completed (?)
+
+State 613 file tree.c line 4347 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  rcu_sched_data[POINTER_OFFSET(rdp!0@2) / 28].passed_quiesce={ { .completed=4294966996, .gpnum=4294966996, .passed_quiesce=FALSE,
+    .qs_pending=FALSE, .$pad0=0,
+    .mynode=rcu_sched_state.node, .grpmask=1,
+    .cpu=0, .rsp=rcu_sched_state.node }, 
+    { .completed=4294966996, .gpnum=4294966996, .passed_quiesce=FALSE,
+    .qs_pending=FALSE, .$pad0=0,
+    .mynode=rcu_sched_state.node, .grpmask=2,
+    .cpu=1, .rsp=rcu_sched_state.node } }[POINTER_OFFSET(&rcu_sched_data[1].completed) / 28].passed_quiesce (?)
+
+State 614 file tree.c line 1935 function __note_gp_changes thread 0
+----------------------------------------------------
+  rcu_sched_data[POINTER_OFFSET(rdp!0@1) / 28].gpnum={ { .completed=4294966996, .gpnum=4294966997, .passed_quiesce=FALSE,
+    .qs_pending=FALSE, .$pad0=0,
+    .mynode=rcu_sched_state.node, .grpmask=1,
+    .cpu=0, .rsp=rcu_sched_state.node }, 
+    { .completed=4294966996, .gpnum=4294966996, .passed_quiesce=FALSE,
+    .qs_pending=FALSE, .$pad0=0,
+    .mynode=rcu_sched_state.node, .grpmask=2,
+    .cpu=1, .rsp=rcu_sched_state.node } }[POINTER_OFFSET(&rcu_sched_data[0].completed) / 28].gpnum (?)
+
+State 615 file tree.c line 1935 function __note_gp_changes thread 0
+----------------------------------------------------
+  rcu_sched_data[POINTER_OFFSET(rdp!0@3) / 28].gpnum={ { .completed=4294966996, .gpnum=4294966997, .passed_quiesce=FALSE,
+    .qs_pending=TRUE, .$pad0=0,
+    .mynode=rcu_sched_state.node, .grpmask=1,
+    .cpu=0, .rsp=rcu_sched_state.node }, 
+    { .completed=4294966996, .gpnum=4294966997, .passed_quiesce=FALSE,
+    .qs_pending=FALSE, .$pad0=0,
+    .mynode=rcu_sched_state.node, .grpmask=2,
+    .cpu=1, .rsp=rcu_sched_state.node } }[POINTER_OFFSET(&rcu_sched_data[1].completed) / 28].gpnum (?)
+
+State 616 file tree.c line 1937 function __note_gp_changes thread 0
+----------------------------------------------------
+  rcu_sched_data[POINTER_OFFSET(rdp!0@3) / 28].passed_quiesce={ { .completed=4294966996, .gpnum=4294966997, .passed_quiesce=FALSE,
+    .qs_pending=TRUE, .$pad0=0,
+    .mynode=rcu_sched_state.node, .grpmask=1,
+    .cpu=0, .rsp=rcu_sched_state.node }, 
+    { .completed=4294966996, .gpnum=4294966997, .passed_quiesce=FALSE,
+    .qs_pending=FALSE, .$pad0=0,
+    .mynode=rcu_sched_state.node, .grpmask=2,
+    .cpu=1, .rsp=rcu_sched_state.node } }[POINTER_OFFSET(&rcu_sched_data[1].completed) / 28].passed_quiesce (?)
+
+State 617 file tree.c line 4286 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  rcu_sched_data[POINTER_OFFSET(rdp!0@2) / 28].cpu={ { .completed=0, .gpnum=0, .passed_quiesce=FALSE, .qs_pending=FALSE,
+    .$pad0=0, .mynode=rcu_sched_state.node, .grpmask=1,
+    .cpu=0, .rsp=rcu_sched_state.node }, 
+    { .completed=0, .gpnum=0, .passed_quiesce=FALSE, .qs_pending=FALSE,
+    .$pad0=0, .mynode=rcu_sched_state.node, .grpmask=2,
+    .cpu=1, .rsp=((struct rcu_state *)NULL) } }[POINTER_OFFSET(&rcu_sched_data[1].completed) / 28].cpu (?)
+
+State 618 file tree.c line 4620 function rcu_init_one thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=0, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=0ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 619 file tree.c line 4621 function rcu_init_one thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=0, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=0ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 620 file tree.c line 4286 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  rcu_sched_data[POINTER_OFFSET(rdp!0@1) / 28].cpu={ { .completed=0, .gpnum=0, .passed_quiesce=FALSE, .qs_pending=FALSE,
+    .$pad0=0, .mynode=rcu_sched_state.node, .grpmask=1,
+    .cpu=0, .rsp=((struct rcu_state *)NULL) }, 
+    { .completed=0, .gpnum=0, .passed_quiesce=FALSE, .qs_pending=FALSE,
+    .$pad0=0, .mynode=((struct rcu_node *)NULL), .grpmask=0,
+    .cpu=0, .rsp=((struct rcu_state *)NULL) } }[POINTER_OFFSET(&rcu_sched_data[0].completed) / 28].cpu (?)
+
+State 621 file tree.c line 4287 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  rcu_sched_data[POINTER_OFFSET(rdp!0@2) / 28].rsp={ { .completed=0, .gpnum=0, .passed_quiesce=FALSE, .qs_pending=FALSE,
+    .$pad0=0, .mynode=rcu_sched_state.node, .grpmask=1,
+    .cpu=0, .rsp=rcu_sched_state.node }, 
+    { .completed=0, .gpnum=0, .passed_quiesce=FALSE, .qs_pending=FALSE,
+    .$pad0=0, .mynode=rcu_sched_state.node, .grpmask=2,
+    .cpu=1, .rsp=rcu_sched_state.node } }[POINTER_OFFSET(&rcu_sched_data[1].completed) / 28].rsp (?)
+
+State 625 file fake.c line 226 function raw_spin_unlock_helper thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=0, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=0ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 629 file tree.c line 4340 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 630 file tree.c line 4341 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  mask=1 (00000000000000000000000000000001)
+
+State 633 file tree.c line 4342 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 636 file fake.c line 236 function raw_spin_lock thread 0
+----------------------------------------------------
+  lock=((int *)NULL) (00000000000000000000000000000000)
+
+State 637 file fake.c line 236 function raw_spin_lock thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 638 file tree.c line 4351 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  rcu_sched_data[POINTER_OFFSET(rdp!0@1) / 28].qs_pending={ { .completed=4294966996, .gpnum=4294966996, .passed_quiesce=FALSE,
+    .qs_pending=FALSE, .$pad0=0,
+    .mynode=rcu_sched_state.node, .grpmask=1,
+    .cpu=0, .rsp=rcu_sched_state.node }, 
+    { .completed=0, .gpnum=0, .passed_quiesce=FALSE, .qs_pending=FALSE,
+    .$pad0=0, .mynode=rcu_sched_state.node, .grpmask=2,
+    .cpu=1, .rsp=rcu_sched_state.node } }[POINTER_OFFSET(&rcu_sched_data[0].completed) / 28].qs_pending (?)
+
+State 639 file fake.c line 226 function raw_spin_unlock_helper thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=0, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=1ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 647 file tree.c line 4333 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 649 file fake.c line 241 function raw_spin_unlock thread 0
+----------------------------------------------------
+  lock=((int *)NULL) (00000000000000000000000000000000)
+
+State 650 file fake.c line 241 function raw_spin_unlock thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 651 file fake.c line 226 function raw_spin_unlock_helper thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=0, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=1ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 655 file tree.c line 4340 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 656 file tree.c line 4341 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  mask=2 (00000000000000000000000000000010)
+
+State 659 file tree.c line 4342 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 662 file fake.c line 236 function raw_spin_lock thread 0
+----------------------------------------------------
+  lock=((int *)NULL) (00000000000000000000000000000000)
+
+State 663 file fake.c line 236 function raw_spin_lock thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 664 file tree.c line 4497 function rcu_spawn_gp_kthread thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=0, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=3ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=1, .gp_state=0 } ({ { { 00000000000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000011, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000001, 0000000000000000 })
+
+State 665 file tree.c line 4498 function rcu_spawn_gp_kthread thread 0
+----------------------------------------------------
+  ret=FALSE (00000000)
+
+State 669 file tree.c line 4498 function rcu_spawn_gp_kthread thread 0
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 670 file tree.c line 1999 function rcu_gp_init thread 0
+----------------------------------------------------
+  oldmask=0 (00000000000000000000000000000000)
+
+State 671 file tree.c line 2000 function rcu_gp_init thread 0
+----------------------------------------------------
+  rdp=((struct rcu_data { unsigned int completed; unsigned int gpnum; _Bool passed_quiesce; _Bool qs_pending; unsigned short int $pad0; struct rcu_node *mynode; unsigned int grpmask; int cpu; struct rcu_state *rsp; } *)NULL) (00000000000000000000000000000000)
+
+State 672 file tree.c line 2001 function rcu_gp_init thread 0
+----------------------------------------------------
+  rnp=((struct rcu_node { int lock; unsigned int gpnum; unsigned int completed; unsigned int qsmask; unsigned int qsmaskinit; unsigned int qsmaskinitnext; unsigned int grpmask; int grplo; int grphi; unsigned char grpnum; unsigned char level; unsigned short int $pad0; struct rcu_node *parent; } *)NULL) (00000000000000000000000000000000)
+
+State 675 file tree.c line 2001 function rcu_gp_init thread 0
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 678 file tree.c line 2001 function rcu_gp_init thread 0
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 681 file tree.c line 2006 function rcu_gp_init thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 684 file fake.c line 226 function raw_spin_unlock_helper thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=0, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=3ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966997, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000011, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010101, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 688 file tree.c line 2060 function rcu_gp_init thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=1, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=3ul, .qsmaskinitnext=3ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966997, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000001, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000011, 00000000000000000000000000000011, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010101, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 693 file tree.c line 2065 function rcu_gp_init thread 0
+----------------------------------------------------
+  rnp_leaf=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 694 file tree.c line 4253 function rcu_init_new_rnp thread 0
+----------------------------------------------------
+  mask=0 (00000000000000000000000000000000)
+
+State 695 file tree.c line 4254 function rcu_init_new_rnp thread 0
+----------------------------------------------------
+  rnp=((struct rcu_node { int lock; unsigned int gpnum; unsigned int completed; unsigned int qsmask; unsigned int qsmaskinit; unsigned int qsmaskinitnext; unsigned int grpmask; int grplo; int grphi; unsigned char grpnum; unsigned char level; unsigned short int $pad0; struct rcu_node *parent; } *)NULL) (00000000000000000000000000000000)
+
+State 696 file tree.c line 4254 function rcu_init_new_rnp thread 0
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 697 file tree.c line 4257 function rcu_init_new_rnp thread 0
+----------------------------------------------------
+  mask=0 (00000000000000000000000000000000)
+
+State 698 file tree.c line 4258 function rcu_init_new_rnp thread 0
+----------------------------------------------------
+  rnp=((struct rcu_node { int lock; unsigned int gpnum; unsigned int completed; unsigned int qsmask; unsigned int qsmaskinit; unsigned int qsmaskinitnext; unsigned int grpmask; int grplo; int grphi; unsigned char grpnum; unsigned char level; unsigned short int $pad0; struct rcu_node *parent; } *)NULL) (00000000000000000000000000000000)
+
+State 704 file tree.c line 2094 function rcu_gp_init thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 706 file fake.c line 290 function raw_spin_unlock_irq thread 0
+----------------------------------------------------
+  lock=((int *)NULL) (00000000000000000000000000000000)
+
+State 707 file fake.c line 290 function raw_spin_unlock_irq thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 708 file fake.c line 226 function raw_spin_unlock_helper thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=0, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=3ul, .qsmaskinitnext=3ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966997, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000011, 00000000000000000000000000000011, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010101, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 712 file tree.c line 2125 function rcu_gp_init thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=1, .gpnum=4294966997ul, .completed=4294966996ul, .qsmask=3ul,
+    .qsmaskinit=3ul, .qsmaskinitnext=3ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966997, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000001, 11111111111111111111111011010101, 11111111111111111111111011010100, 00000000000000000000000000000011, 00000000000000000000000000000011, 00000000000000000000000000000011, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010101, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 719 file tree.c line 2129 function rcu_gp_init thread 0
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 720 file tree.c line 2129 function rcu_gp_init thread 0
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 721 file tree.c line 2129 function rcu_gp_init thread 0
+----------------------------------------------------
+  rdp=&rcu_sched_data[0].completed (00000010000000000000000000000000)
+
+State 722 file tree.c line 1902 function __note_gp_changes thread 0
+----------------------------------------------------
+  ret=FALSE (00000000)
+
+State 726 file tree.c line 1913 function __note_gp_changes thread 0
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 727 file tree.c line 1913 function __note_gp_changes thread 0
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 728 file tree.c line 1913 function __note_gp_changes thread 0
+----------------------------------------------------
+  rdp=&rcu_sched_data[0].completed (00000010000000000000000000000000)
+
+State 731 file tree.c line 1913 function __note_gp_changes thread 0
+----------------------------------------------------
+  ret=FALSE (00000000)
+
+State 734 file tree.c line 1944 function __note_gp_changes thread 0
+----------------------------------------------------
+  rcu_sched_data[POINTER_OFFSET(rdp!0@1) / 28].qs_pending={ { .completed=4294966996, .gpnum=4294966997, .passed_quiesce=FALSE,
+    .qs_pending=TRUE, .$pad0=0,
+    .mynode=rcu_sched_state.node, .grpmask=1,
+    .cpu=0, .rsp=rcu_sched_state.node }, 
+    { .completed=4294966996, .gpnum=4294966996, .passed_quiesce=FALSE,
+    .qs_pending=FALSE, .$pad0=0,
+    .mynode=rcu_sched_state.node, .grpmask=2,
+    .cpu=1, .rsp=rcu_sched_state.node } }[POINTER_OFFSET(&rcu_sched_data[0].completed) / 28].qs_pending (?)
+
+State 738 file tree.c line 4614 function rcu_init_one thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=0, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=0ul, .grpmask=0ul,
+    .grplo=0, .grphi=0, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 739 file tree.c line 4615 function rcu_init_one thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=0, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=0ul, .grpmask=0ul,
+    .grplo=0, .grphi=0, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 744 file tree.c line 4333 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 746 file fake.c line 241 function raw_spin_unlock thread 0
+----------------------------------------------------
+  lock=((int *)NULL) (00000000000000000000000000000000)
+
+State 747 file fake.c line 241 function raw_spin_unlock thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 748 file tree.c line 2029 function rcu_gp_init thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=1, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=3ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966997, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000001, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000011, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010101, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 753 file tree.c line 2031 function rcu_gp_init thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 755 file fake.c line 290 function raw_spin_unlock_irq thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 756 file fake.c line 290 function raw_spin_unlock_irq thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 757 file tree.c line 2013 function rcu_gp_init thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=1, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=3ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000001, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000011, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 761 file tree.c line 2015 function rcu_gp_init thread 0
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 768 file tree.c line 4655 function rcu_init_one thread 0
+----------------------------------------------------
+  rcu_sched_data[POINTER_OFFSET(rcu_sched_state.rda + i!0@1) / 28].mynode={ { .completed=0, .gpnum=0, .passed_quiesce=FALSE, .qs_pending=FALSE,
+    .$pad0=0, .mynode=rcu_sched_state.node, .grpmask=1,
+    .cpu=0, .rsp=rcu_sched_state.node }, 
+    { .completed=0, .gpnum=0, .passed_quiesce=FALSE, .qs_pending=FALSE,
+    .$pad0=0, .mynode=rcu_sched_state.node, .grpmask=0,
+    .cpu=0, .rsp=((struct rcu_state *)NULL) } }[(28 + POINTER_OFFSET(&rcu_sched_data[0].completed)) / 28].mynode (?)
+
+State 779  thread 0
+----------------------------------------------------
+  argv'[2050]=irep("(\"nil\")")[2050] (?)
+
+State 782 file main.c line 177 thread 0
+----------------------------------------------------
+  argc=2050 (00000000000000000000100000000010)
+
+State 783 file main.c line 177 thread 0
+----------------------------------------------------
+  argv=argv' (00000111000000000000000000000000)
+
+State 786 file tree.c line 4767 function rcu_init thread 0
+----------------------------------------------------
+  cpu=0 (00000000000000000000000000000000)
+
+State 798 file tree.c line 4670 function rcu_init_geometry thread 0
+----------------------------------------------------
+  d=0 (00000000000000000000000000000000)
+
+State 799 file tree.c line 4671 function rcu_init_geometry thread 0
+----------------------------------------------------
+  i=0 (00000000000000000000000000000000)
+
+State 800 file tree.c line 4672 function rcu_init_geometry thread 0
+----------------------------------------------------
+  rcu_capacity={ 0 } ({ 00000000000000000000000000000000 })
+
+State 801 file tree.c line 4681 function rcu_init_geometry thread 0
+----------------------------------------------------
+  d=3 (00000000000000000000000000000011)
+
+State 803 file tree.c line 4622 function rcu_init_one thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=0, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=0ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 807 file tree.c line 4656 function rcu_init_one thread 0
+----------------------------------------------------
+  cpu=1 (00000000000000000000000000000001)
+
+State 808 file tree.c line 4656 function rcu_init_one thread 0
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 809 file tree.c line 4274 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  flags=0 (00000000000000000000000000000000)
+
+State 810 file tree.c line 4275 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  rdp=((struct rcu_data { unsigned int completed; unsigned int gpnum; _Bool passed_quiesce; _Bool qs_pending; unsigned short int $pad0; struct rcu_node *mynode; unsigned int grpmask; int cpu; struct rcu_state *rsp; } *)NULL) (00000000000000000000000000000000)
+
+State 811 file tree.c line 4275 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  rdp=&rcu_sched_data[1].completed (00000010000000000000000000011100)
+
+State 812 file tree.c line 4276 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  rnp=((struct rcu_node { int lock; unsigned int gpnum; unsigned int completed; unsigned int qsmask; unsigned int qsmaskinit; unsigned int qsmaskinitnext; unsigned int grpmask; int grplo; int grphi; unsigned char grpnum; unsigned char level; unsigned short int $pad0; struct rcu_node *parent; } *)NULL) (00000000000000000000000000000000)
+
+State 815 file tree.c line 4276 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 818 file tree.c line 4276 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 821 file tree.c line 4279 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 822 file tree.c line 4279 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  flags=0 (00000000000000000000000000000000)
+
+State 826 file fake.c line 215 function raw_spin_lock_helper thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=1, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=0ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000001, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 830 file tree.c line 4344 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=1, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=3ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000001, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000011, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 831 file tree.c line 4477 function rcu_spawn_gp_kthread thread 0
+----------------------------------------------------
+  rcu_scheduler_fully_active=1 (00000000000000000000000000000001)
+
+State 832 file tree.c line 4481 function rcu_spawn_gp_kthread thread 0
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 836 file tree.c line 4655 function rcu_init_one thread 0
+----------------------------------------------------
+  rcu_sched_data[POINTER_OFFSET(rcu_sched_state.rda + i!0@1) / 28].mynode={ { .completed=0, .gpnum=0, .passed_quiesce=FALSE, .qs_pending=FALSE,
+    .$pad0=0, .mynode=rcu_sched_state.node, .grpmask=0,
+    .cpu=0, .rsp=((struct rcu_state *)NULL) }, 
+    { .completed=0, .gpnum=0, .passed_quiesce=FALSE, .qs_pending=FALSE,
+    .$pad0=0, .mynode=((struct rcu_node *)NULL), .grpmask=0,
+    .cpu=0, .rsp=((struct rcu_state *)NULL) } }[POINTER_OFFSET(&rcu_sched_data[0].completed) / 28].mynode (?)
+
+State 837 file tree.c line 4280 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  rcu_sched_data[POINTER_OFFSET(rdp!0@2) / 28].grpmask={ { .completed=0, .gpnum=0, .passed_quiesce=FALSE, .qs_pending=FALSE,
+    .$pad0=0, .mynode=rcu_sched_state.node, .grpmask=1,
+    .cpu=0, .rsp=rcu_sched_state.node }, 
+    { .completed=0, .gpnum=0, .passed_quiesce=FALSE, .qs_pending=FALSE,
+    .$pad0=0, .mynode=rcu_sched_state.node, .grpmask=2,
+    .cpu=0, .rsp=((struct rcu_state *)NULL) } }[POINTER_OFFSET(&rcu_sched_data[1].completed) / 28].grpmask (?)
+
+State 838 file tree.c line 4345 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  rcu_sched_data[POINTER_OFFSET(rdp!0@1) / 28].gpnum={ { .completed=0, .gpnum=4294966996, .passed_quiesce=FALSE, .qs_pending=FALSE,
+    .$pad0=0, .mynode=rcu_sched_state.node, .grpmask=1,
+    .cpu=0, .rsp=rcu_sched_state.node }, 
+    { .completed=0, .gpnum=0, .passed_quiesce=FALSE, .qs_pending=FALSE,
+    .$pad0=0, .mynode=rcu_sched_state.node, .grpmask=2,
+    .cpu=1, .rsp=rcu_sched_state.node } }[POINTER_OFFSET(&rcu_sched_data[0].completed) / 28].gpnum (?)
+
+State 839 file tree.c line 4611 function rcu_init_one thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=0, .gpnum=4294966996ul, .completed=0ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=0ul, .grpmask=0ul,
+    .grplo=0, .grphi=0, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000000, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 849 file tree.c line 4685 function rcu_init_geometry thread 0
+----------------------------------------------------
+  jiffies_till_next_fqs=3 (00000000000000000000000000000011)
+
+State 855 file tree.c line 4791 function rcu_init thread 0
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 856 file tree.c line 4791 function rcu_init thread 0
+----------------------------------------------------
+  rda=&rcu_sched_data[0].completed (00000010000000000000000000000000)
+
+State 857 file tree.c line 4572 function rcu_init_one thread 0
+----------------------------------------------------
+  levelcnt={ 0 } ({ 00000000000000000000000000000000 })
+
+State 858 file tree.c line 4573 function rcu_init_one thread 0
+----------------------------------------------------
+  levelspread={ 0 } ({ 00000000000000000000000000000000 })
+
+State 859 file tree.c line 4574 function rcu_init_one thread 0
+----------------------------------------------------
+  cpustride=0 (00000000000000000000000000000000)
+
+State 860 file tree.c line 4574 function rcu_init_one thread 0
+----------------------------------------------------
+  cpustride=1 (00000000000000000000000000000001)
+
+State 861 file tree.c line 4575 function rcu_init_one thread 0
+----------------------------------------------------
+  i=0 (00000000000000000000000000000000)
+
+State 862 file tree.c line 4576 function rcu_init_one thread 0
+----------------------------------------------------
+  j=0 (00000000000000000000000000000000)
+
+State 863 file tree.c line 4577 function rcu_init_one thread 0
+----------------------------------------------------
+  rnp=((struct rcu_node { int lock; unsigned int gpnum; unsigned int completed; unsigned int qsmask; unsigned int qsmaskinit; unsigned int qsmaskinitnext; unsigned int grpmask; int grplo; int grphi; unsigned char grpnum; unsigned char level; unsigned short int $pad0; struct rcu_node *parent; } *)NULL) (00000000000000000000000000000000)
+
+State 865 file tree.c line 4587 function rcu_init_one thread 0
+----------------------------------------------------
+  i=0 (00000000000000000000000000000000)
+
+State 867 file tree.c line 4588 function rcu_init_one thread 0
+----------------------------------------------------
+  levelcnt[0]=1 (00000000000000000000000000000001)
+
+State 868 file tree.c line 4587 function rcu_init_one thread 0
+----------------------------------------------------
+  i=1 (00000000000000000000000000000001)
+
+State 871 file tree.c line 4589 function rcu_init_one thread 0
+----------------------------------------------------
+  i=1 (00000000000000000000000000000001)
+
+State 875 file tree.c line 4591 function rcu_init_one thread 0
+----------------------------------------------------
+  levelspread=levelspread!0@1 (00001000000000000000000000000000)
+
+State 876 file tree.c line 4591 function rcu_init_one thread 0
+----------------------------------------------------
+  levelcnt=levelcnt!0@1 (00001001000000000000000000000000)
+
+State 877 file tree.c line 4541 function rcu_init_levelspread thread 0
+----------------------------------------------------
+  i=0 (00000000000000000000000000000000)
+
+State 879 file tree.c line 4548 function rcu_init_levelspread thread 0
+----------------------------------------------------
+  ccur=0 (00000000000000000000000000000000)
+
+State 880 file tree.c line 4549 function rcu_init_levelspread thread 0
+----------------------------------------------------
+  cprv=0 (00000000000000000000000000000000)
+
+State 881 file tree.c line 4551 function rcu_init_levelspread thread 0
+----------------------------------------------------
+  cprv=2 (00000000000000000000000000000010)
+
+State 882 file tree.c line 4552 function rcu_init_levelspread thread 0
+----------------------------------------------------
+  i=0 (00000000000000000000000000000000)
+
+State 884 file tree.c line 4553 function rcu_init_levelspread thread 0
+----------------------------------------------------
+  ccur=1 (00000000000000000000000000000001)
+
+State 885 file tree.c line 4554 function rcu_init_levelspread thread 0
+----------------------------------------------------
+  levelspread[0]=2 (00000000000000000000000000000010)
+
+State 886 file tree.c line 4555 function rcu_init_levelspread thread 0
+----------------------------------------------------
+  cprv=1 (00000000000000000000000000000001)
+
+State 887 file tree.c line 4552 function rcu_init_levelspread thread 0
+----------------------------------------------------
+  i=-1 (11111111111111111111111111111111)
+
+State 891 file tree.c line 4612 function rcu_init_one thread 0
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=0, .gpnum=4294966996ul, .completed=4294966996ul, .qsmask=0ul,
+    .qsmaskinit=0ul, .qsmaskinitnext=0ul, .grpmask=0ul,
+    .grplo=0, .grphi=0, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966996, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010100, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 892 file tree.c line 1944 function __note_gp_changes thread 0
+----------------------------------------------------
+  rcu_sched_data[POINTER_OFFSET(rdp!0@3) / 28].qs_pending={ { .completed=4294966996, .gpnum=4294966997, .passed_quiesce=FALSE,
+    .qs_pending=TRUE, .$pad0=0,
+    .mynode=rcu_sched_state.node, .grpmask=1,
+    .cpu=0, .rsp=rcu_sched_state.node }, 
+    { .completed=4294966996, .gpnum=4294966997, .passed_quiesce=FALSE,
+    .qs_pending=TRUE, .$pad0=0,
+    .mynode=rcu_sched_state.node, .grpmask=2,
+    .cpu=1, .rsp=rcu_sched_state.node } }[POINTER_OFFSET(&rcu_sched_data[1].completed) / 28].qs_pending (?)
+
+State 901 file tree.c line 4353 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 902 file tree.c line 4353 function rcu_init_percpu_data thread 0
+----------------------------------------------------
+  flags=0 (00000000000000000000000000000000)
+
+State 904 file fake.c line 276 function raw_spin_unlock_irqrestore thread 0
+----------------------------------------------------
+  lock=((int *)NULL) (00000000000000000000000000000000)
+
+State 905 file fake.c line 276 function raw_spin_unlock_irqrestore thread 0
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 906 file tree.c line 4280 function rcu_boot_init_percpu_data thread 0
+----------------------------------------------------
+  rcu_sched_data[POINTER_OFFSET(rdp!0@1) / 28].grpmask={ { .completed=0, .gpnum=0, .passed_quiesce=FALSE, .qs_pending=FALSE,
+    .$pad0=0, .mynode=rcu_sched_state.node, .grpmask=1,
+    .cpu=0, .rsp=((struct rcu_state *)NULL) }, 
+    { .completed=0, .gpnum=0, .passed_quiesce=FALSE, .qs_pending=FALSE,
+    .$pad0=0, .mynode=((struct rcu_node *)NULL), .grpmask=0,
+    .cpu=0, .rsp=((struct rcu_state *)NULL) } }[POINTER_OFFSET(&rcu_sched_data[0].completed) / 28].grpmask (?)
+
+State 907 file fake.c line 91 function fake_acquire_cpu thread 2
+----------------------------------------------------
+  cpu_lock[1]=1 (00000000000000000000000000000001)
+
+State 918 file fake.c line 91 function fake_acquire_cpu thread 1
+----------------------------------------------------
+  cpu_lock[0]=1 (00000000000000000000000000000001)
+
+State 920 file main.c line 71 function thread_update thread 1
+----------------------------------------------------
+  y=1 (00000000000000000000000000000001)
+
+State 923 file fake.c line 107 function fake_release_cpu thread 2
+----------------------------------------------------
+  cpu_lock[1]=0 (00000000000000000000000000000000)
+
+State 930 file fake.c line 107 function fake_release_cpu thread 1
+----------------------------------------------------
+  cpu_lock[0]=0 (00000000000000000000000000000000)
+
+State 940 file main.c line 95 function thread_process_reader thread 2
+----------------------------------------------------
+  unused=((struct softirq_action { } *)NULL) (00000000000000000000000000000000)
+
+State 941 file tree.c line 3244 function rcu_process_callbacks thread 2
+----------------------------------------------------
+  rsp=((struct rcu_state { struct rcu_node node[1]; struct rcu_node *level[2]; struct rcu_data *rda; unsigned int gpnum; unsigned int completed; short int gp_flags; short int gp_state; } *)NULL) (00000000000000000000000000000000)
+
+State 943 file tree.c line 3252 function rcu_process_callbacks thread 2
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 946 file tree.c line 3254 function rcu_process_callbacks thread 2
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 947 file tree.c line 3206 function __rcu_process_callbacks thread 2
+----------------------------------------------------
+  flags=0 (00000000000000000000000000000000)
+
+State 948 file tree.c line 3207 function __rcu_process_callbacks thread 2
+----------------------------------------------------
+  needwake=FALSE (00000000)
+
+State 949 file tree.c line 3208 function __rcu_process_callbacks thread 2
+----------------------------------------------------
+  rdp=((struct rcu_data { unsigned int completed; unsigned int gpnum; _Bool passed_quiesce; _Bool qs_pending; unsigned short int $pad0; struct rcu_node *mynode; unsigned int grpmask; int cpu; struct rcu_state *rsp; } *)NULL) (00000000000000000000000000000000)
+
+State 950 file tree.c line 299 function rcu_sched_qs thread 2
+----------------------------------------------------
+  rcu_sched_data[(int)my_smp_processor_id!2].passed_quiesce=TRUE (00000001)
+
+State 955 file tree.c line 3208 function __rcu_process_callbacks thread 2
+----------------------------------------------------
+  rdp=&rcu_sched_data[1].completed (00000010000000000000000000011100)
+
+State 958 file tree.c line 3215 function __rcu_process_callbacks thread 2
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 959 file tree.c line 3215 function __rcu_process_callbacks thread 2
+----------------------------------------------------
+  rdp=&rcu_sched_data[1].completed (00000010000000000000000000011100)
+
+State 962 file tree.c line 2682 function rcu_check_quiescent_state thread 2
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 963 file tree.c line 2682 function rcu_check_quiescent_state thread 2
+----------------------------------------------------
+  rdp=&rcu_sched_data[1].completed (00000010000000000000000000011100)
+
+State 964 file tree.c line 1961 function note_gp_changes thread 2
+----------------------------------------------------
+  flags=0 (00000000000000000000000000000000)
+
+State 965 file tree.c line 1962 function note_gp_changes thread 2
+----------------------------------------------------
+  needwake=FALSE (00000000)
+
+State 966 file tree.c line 1963 function note_gp_changes thread 2
+----------------------------------------------------
+  rnp=((struct rcu_node { int lock; unsigned int gpnum; unsigned int completed; unsigned int qsmask; unsigned int qsmaskinit; unsigned int qsmaskinitnext; unsigned int grpmask; int grplo; int grphi; unsigned char grpnum; unsigned char level; unsigned short int $pad0; struct rcu_node *parent; } *)NULL) (00000000000000000000000000000000)
+
+State 969 file main.c line 69 function thread_update thread 1
+----------------------------------------------------
+  x=1 (00000000000000000000000000000001)
+
+State 974 file tree.c line 1966 function note_gp_changes thread 2
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 977 file tree.c line 299 function rcu_sched_qs thread 1
+----------------------------------------------------
+  rcu_sched_data[(int)my_smp_processor_id!1].passed_quiesce=TRUE (00000001)
+
+State 991 file fake.c line 148 function local_irq_disable thread 2
+----------------------------------------------------
+  local_irq_depth[1]=1 (00000000000000000000000000000001)
+
+State 1001 file main.c line 53 function rcu_reader thread 2
+----------------------------------------------------
+  __unbuffered_tpr_x=0 (00000000000000000000000000000000)
+
+State 1002 file tree.c line 2707 function rcu_check_quiescent_state thread 2
+----------------------------------------------------
+  cpu=1 (00000000000000000000000000000001)
+
+State 1003 file tree.c line 2707 function rcu_check_quiescent_state thread 2
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 1004 file tree.c line 2707 function rcu_check_quiescent_state thread 2
+----------------------------------------------------
+  rdp=&rcu_sched_data[1].completed (00000010000000000000000000011100)
+
+State 1005 file tree.c line 2622 function rcu_report_qs_rdp thread 2
+----------------------------------------------------
+  flags=0 (00000000000000000000000000000000)
+
+State 1006 file tree.c line 2623 function rcu_report_qs_rdp thread 2
+----------------------------------------------------
+  mask=0 (00000000000000000000000000000000)
+
+State 1007 file tree.c line 2624 function rcu_report_qs_rdp thread 2
+----------------------------------------------------
+  needwake=FALSE (00000000)
+
+State 1008 file tree.c line 2625 function rcu_report_qs_rdp thread 2
+----------------------------------------------------
+  rnp=((struct rcu_node { int lock; unsigned int gpnum; unsigned int completed; unsigned int qsmask; unsigned int qsmaskinit; unsigned int qsmaskinitnext; unsigned int grpmask; int grplo; int grphi; unsigned char grpnum; unsigned char level; unsigned short int $pad0; struct rcu_node *parent; } *)NULL) (00000000000000000000000000000000)
+
+State 1009 file tree.c line 2627 function rcu_report_qs_rdp thread 2
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 1012 file tree.c line 2628 function rcu_report_qs_rdp thread 2
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 1013 file tree.c line 2628 function rcu_report_qs_rdp thread 2
+----------------------------------------------------
+  flags=0 (00000000000000000000000000000000)
+
+State 1016 file fake.c line 215 function raw_spin_lock_helper thread 2
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=1, .gpnum=4294966997ul, .completed=4294966996ul, .qsmask=3ul,
+    .qsmaskinit=3ul, .qsmaskinitnext=3ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966997, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000001, 11111111111111111111111011010101, 11111111111111111111111011010100, 00000000000000000000000000000011, 00000000000000000000000000000011, 00000000000000000000000000000011, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010101, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 1030 file tree.c line 2653 function rcu_report_qs_rdp thread 2
+----------------------------------------------------
+  mask=2 (00000000000000000000000000000010)
+
+State 1032 file tree.c line 2665 function rcu_report_qs_rdp thread 2
+----------------------------------------------------
+  mask=2 (00000000000000000000000000000010)
+
+State 1033 file tree.c line 2665 function rcu_report_qs_rdp thread 2
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 1034 file tree.c line 2665 function rcu_report_qs_rdp thread 2
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 1035 file tree.c line 2665 function rcu_report_qs_rdp thread 2
+----------------------------------------------------
+  gps=4294966997 (11111111111111111111111011010101)
+
+State 1036 file tree.c line 2665 function rcu_report_qs_rdp thread 2
+----------------------------------------------------
+  flags=0 (00000000000000000000000000000000)
+
+State 1037 file tree.c line 2518 function rcu_report_qs_rnp thread 2
+----------------------------------------------------
+  oldmask=0 (00000000000000000000000000000000)
+
+State 1038 file tree.c line 2518 function rcu_report_qs_rnp thread 2
+----------------------------------------------------
+  oldmask=0 (00000000000000000000000000000000)
+
+State 1039 file tree.c line 2519 function rcu_report_qs_rnp thread 2
+----------------------------------------------------
+  rnp_c=((struct rcu_node { int lock; unsigned int gpnum; unsigned int completed; unsigned int qsmask; unsigned int qsmaskinit; unsigned int qsmaskinitnext; unsigned int grpmask; int grplo; int grphi; unsigned char grpnum; unsigned char level; unsigned short int $pad0; struct rcu_node *parent; } *)NULL) (00000000000000000000000000000000)
+
+State 1044 file tree.c line 2663 function rcu_report_qs_rdp thread 2
+----------------------------------------------------
+  rsp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 1045 file tree.c line 2663 function rcu_report_qs_rdp thread 2
+----------------------------------------------------
+  rnp=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 1046 file tree.c line 2663 function rcu_report_qs_rdp thread 2
+----------------------------------------------------
+  rdp=&rcu_sched_data[1].completed (00000010000000000000000000011100)
+
+State 1049 file tree.c line 2663 function rcu_report_qs_rdp thread 2
+----------------------------------------------------
+  needwake=FALSE (00000000)
+
+State 1054 file main.c line 54 function rcu_reader thread 2
+----------------------------------------------------
+  __unbuffered_tpr_y=1 (00000000000000000000000000000001)
+
+State 1071 file tree.c line 2542 function rcu_report_qs_rnp thread 2
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 1072 file tree.c line 2542 function rcu_report_qs_rnp thread 2
+----------------------------------------------------
+  flags=0 (00000000000000000000000000000000)
+
+State 1074 file fake.c line 276 function raw_spin_unlock_irqrestore thread 2
+----------------------------------------------------
+  lock=((int *)NULL) (00000000000000000000000000000000)
+
+State 1075 file fake.c line 276 function raw_spin_unlock_irqrestore thread 2
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 1076 file fake.c line 226 function raw_spin_unlock_helper thread 2
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=0, .gpnum=4294966997ul, .completed=4294966996ul, .qsmask=1ul,
+    .qsmaskinit=3ul, .qsmaskinitnext=3ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966997, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000000, 11111111111111111111111011010101, 11111111111111111111111011010100, 00000000000000000000000000000001, 00000000000000000000000000000011, 00000000000000000000000000000011, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010101, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 1080 file fake.c line 166 function local_irq_enable thread 2
+----------------------------------------------------
+  local_irq_depth[1]=0 (00000000000000000000000000000000)
+
+State 1086 file tree.c line 2533 function rcu_report_qs_rnp thread 2
+----------------------------------------------------
+  rcu_sched_state={ .node={ { .lock=1, .gpnum=4294966997ul, .completed=4294966996ul, .qsmask=1ul,
+    .qsmaskinit=3ul, .qsmaskinitnext=3ul, .grpmask=0ul,
+    .grplo=0, .grphi=1, .grpnum=0, .level=0,
+    .$pad0=0, .parent=((struct rcu_node *)NULL) } }, .level={ rcu_sched_state.node, ((struct rcu_node *)NULL) },
+    .rda=&rcu_sched_data[0].completed,
+    .gpnum=4294966997, .completed=4294966996,
+    .gp_flags=0, .gp_state=0 } ({ { { 00000000000000000000000000000001, 11111111111111111111111011010101, 11111111111111111111111011010100, 00000000000000000000000000000001, 00000000000000000000000000000011, 00000000000000000000000000000011, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000001, 00000000, 00000000, 0000000000000000, 00000000000000000000000000000000 } }, { 00000011000000000000000000000000, 00000000000000000000000000000000 }, 00000010000000000000000000000000, 11111111111111111111111011010101, 11111111111111111111111011010100, 0000000000000000, 0000000000000000 })
+
+State 1087 file tree.c line 2657 function rcu_report_qs_rdp thread 2
+----------------------------------------------------
+  rcu_sched_data[POINTER_OFFSET(rdp!2@1) / 28].qs_pending={ { .completed=4294966996, .gpnum=4294966997, .passed_quiesce=TRUE,
+    .qs_pending=TRUE, .$pad0=0,
+    .mynode=rcu_sched_state.node, .grpmask=1,
+    .cpu=0, .rsp=rcu_sched_state.node }, 
+    { .completed=4294966996, .gpnum=4294966997, .passed_quiesce=TRUE,
+    .qs_pending=FALSE, .$pad0=0,
+    .mynode=rcu_sched_state.node, .grpmask=2,
+    .cpu=1, .rsp=rcu_sched_state.node } }[POINTER_OFFSET(&rcu_sched_data[1].completed) / 28].qs_pending (?)
+
+State 1088 file fake.c line 166 function local_irq_enable thread 2
+----------------------------------------------------
+  local_irq_depth[1]=0 (00000000000000000000000000000000)
+
+State 1100 file fake.c line 148 function local_irq_disable thread 2
+----------------------------------------------------
+  local_irq_depth[1]=1 (00000000000000000000000000000001)
+
+State 1104 file fake.c line 271 function raw_spin_lock_irqsave thread 2
+----------------------------------------------------
+  lock=((int *)NULL) (00000000000000000000000000000000)
+
+State 1105 file fake.c line 271 function raw_spin_lock_irqsave thread 2
+----------------------------------------------------
+  lock=rcu_sched_state.node (00000011000000000000000000000000)
+
+State 1106 file main.c line 77 function thread_update thread 1
+----------------------------------------------------
+  __unbuffered_cnt=1 (00000000000000000000000000000001)
+
+State 1111 file main.c line 206 function main thread 2
+----------------------------------------------------
+  arg=&my_cpu_id1!2@0 (00001011000000000000000000000000)
+
+State 1112 file main.c line 84 function thread_process_reader thread 2
+----------------------------------------------------
+  my_smp_processor_id=1 (00000000000000000000000000000001)
+
+State 1115 file main.c line 100 function thread_process_reader thread 2
+----------------------------------------------------
+  __unbuffered_cnt=2 (00000000000000000000000000000010)
+
+Violated property:
+  file main.c line 216 function main
+  assertion __unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1
+  __unbuffered_tpr_y == 0 || __unbuffered_tpr_x == 1
+
+VERIFICATION FAILED
